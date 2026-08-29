@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.el-arte-del-jaque.com/sitemap.xml
