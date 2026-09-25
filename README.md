@@ -11,7 +11,8 @@ para el título de cada página y el resaltado del menú activo, en el marco del
 
 ## Figma
 
-Enlace al prototipo de Figma: https://www.figma.com/proto/HnivPYR3kpvHwk225olJnL/Wireframing--Copia-?node-id=1156169-107&t=4nXvyhOtqRiE2W4T-1
+Enlace al prototipo de Figma: 
+[Ver prototipo en Figma](https://www.figma.com/proto/HnivPYR3kpvHwk225olJnL/Wireframing--Copia-?node-id=1156169-107&t=4nXvyhOtqRiE2W4T-1)
 
 ## Tecnologías utilizadas
 
@@ -50,14 +51,22 @@ el-arte-del-jaque/
 │   ├── recursos.php
 │   ├── sobre-el-sitio.php
 │   └── tacticas.php
+├── capturas/
+│   ├── localhost.png
+│   ├── header-php.png
+│   ├── nav-php.png
+│   ├── footer-php.png
+│   ├── titulo-dinamico-uno.png
+│   ├── titulo-dinamico-dos.png
+│   ├── Menu-Activo.png
+│   └── env-example.png
 ├── index.php
 ├── robots.txt
 ├── sitemap.xml
 ├── .env                  Variables de entorno locales (NO se sube a Git)
-├── .env.example           Plantilla pública de variables de entorno
+├── .env.example          Plantilla pública de variables de entorno
 ├── .gitignore
 └── README.md
-```
 
 ## Modularización (SSI) y SSR
 
@@ -147,15 +156,14 @@ Este trabajo corresponde a la rama:
 feature/migracion-php-ssi
 ```
 
-Commits sugeridos (organizados por tema, no todos en uno solo):
-
 ```text
-feat: migra paginas html a php
-feat: agrega plantillas header nav y footer
-feat: implementa titulos dinamicos
-feat: implementa navegacion activa
-feat: agrega configuracion de entorno
-docs: actualiza README con instrucciones
+chore: eliminar copia duplicada del proyecto
+feat: migrar paginas HTML a PHP
+feat: agregar estructura SSI
+feat: integrar SSI y renderizado SSR en las paginas
+chore: configurar variables de entorno
+fix: actualizar referencias de HTML a PHP
+docs: actualizar README para TP4
 ```
 
 > [TODO: crear la rama, realizar los commits y el Pull Request desde tu
@@ -164,21 +172,27 @@ docs: actualiza README con instrucciones
 
 ## Evidencias
 
-*(Completar con capturas propias antes de la entrega)*
-
-- [ ] Sitio funcionando en `localhost` (página de inicio)
-- [ ] Contenido de `includes/header.php`
-- [ ] Contenido de `includes/nav.php`
-- [ ] Contenido de `includes/footer.php`
-- [ ] Título dinámico visible en la pestaña del navegador (dos páginas distintas)
-- [ ] Menú activo resaltando la sección correspondiente
-- [ ] Contenido de `.env.example`
+- [x] Sitio funcionando en `localhost` (página de inicio)
+![localhost](capturas/localhost.png)
+- [x] Contenido de `includes/header.php`
+![includes/header.php](capturas/header-php.png)
+- [x] Contenido de `includes/nav.php`
+![includes/nav.php](capturas/nav-php.png)
+- [x] Contenido de `includes/footer.php`
+![includes/footer.php](capturas/footer-php.png)
+- [x] Título dinámico visible en la pestaña del navegador (dos páginas distintas)
+![Titulo Dinamico](capturas/titulo-dinamico-uno.png)
+![Titulo Dinamico](capturas/titulo-dinamico-dos.png)
+- [x] Menú activo resaltando la sección correspondiente
+![Menu Activo](capturas/Menu-Activo.png)
+- [x] Contenido de `.env.example`
+![Titulo Dinamico](capturas/env-example.png)
 
 ## Checklist de cumplimiento del TP N° 4
 
 ### Migración
 - [x] Páginas migradas de `.html` a `.php`
-- [ ] Verificado que funciona mediante servidor local (XAMPP/Laragon) — *pendiente de prueba manual*
+- [x] Verificado que funciona mediante servidor local (XAMPP/Laragon)
 
 ### Modularización
 - [x] `includes/header.php`
@@ -200,17 +214,16 @@ docs: actualiza README con instrucciones
 
 ### Documentación
 - [x] README con instalación, ejecución local y tecnologías
-- [x] Enlace de Figma marcado como pendiente (no inventado)
+- [x] Enlace al prototipo de Figma
 - [x] Sección de evidencias lista para completar
 
 ### Integridad
 - [x] CSS enlazado correctamente desde raíz y desde `/paginas`
 - [x] JavaScript (`main.js`) enlazado correctamente desde ambos niveles
-- [x] Imágenes (URLs externas) sin cambios
+- [x] Imágenes y rutas verificadas correctamente
 - [x] Enlaces internos entre páginas actualizados a `.php`
 - [x] Diseño, contenido y estructura visual original conservados
-- [x] Nada de contenido genérico o de relleno: todo el contenido real del
-      sitio (Samuel, textos, aperturas, glosario, etc.) se mantuvo intacto
+- [x] Contenido original del sitio conservado
 
 ## Créditos
 
