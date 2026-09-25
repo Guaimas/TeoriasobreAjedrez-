@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Resalta automáticamente el ítem del sidebar correspondiente
   // a la página actual, comparando el nombre de archivo.
-  var current = window.location.pathname.split('/').pop() || 'index.html';
+  var current = window.location.pathname.split('/').pop() || 'index.php';
 
   document.querySelectorAll('.nav-item[data-page]').forEach(function (link) {
     if (link.getAttribute('data-page') === current) {
