@@ -1,0 +1,28 @@
+# -----------------------------------------------------------------
+# .gitignore — El Arte del Jaque
+# -----------------------------------------------------------------
+
+# Variables de entorno (NUNCA subir a GitHub)
+.env
+
+# Archivos y carpetas del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Dependencias (por si en el futuro se agrega Composer/NPM)
+/vendor/
+/node_modules/
+
+# Archivos temporales
+*.tmp
+*.bak
