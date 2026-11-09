@@ -18,6 +18,9 @@
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/seguridad.php';
+
+enviar_cabeceras_seguridad();
 
 if (!isset($titulo_pagina)) {
     $titulo_pagina = APP_NAME;

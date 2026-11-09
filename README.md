@@ -32,6 +32,7 @@ Enlace al prototipo de Figma:
 el-arte-del-jaque/
 ├── includes/
 │   ├── config.php        Carga de variables de entorno (.env) y constantes
+│   ├── seguridad.php     Escape XSS, limpieza de datos, sesión, CSRF, cabeceras
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
 │   ├── nav.php           Sidebar de navegación + barra superior (SSR: menú activo)
 │   └── footer.php        Footer, script común y cierre de body/html
@@ -41,7 +42,8 @@ el-arte-del-jaque/
 │   └── main.js
 ├── paginas/
 │   ├── aperturas.php
-│   ├── contacto.php
+│   ├── buscar.php        Resultados del buscador (GET)
+│   ├── contacto.php      Formulario de contacto (POST)
 │   ├── ejercicios.php
 │   ├── estrategias.php
 │   ├── finales.php
@@ -103,6 +105,48 @@ require_once __DIR__ . '/../includes/nav.php';
 - **Rutas relativas:** `$ruta_base` y `$ruta_paginas` resuelven las rutas de
   CSS, JS, imágenes e includes según la profundidad del archivo (raíz vs.
   `/paginas`), evitando enlaces rotos.
+
+## Clase 5: Formularios (POST / GET) y seguridad
+
+Rama: `feature/clase5-formularios-seguridad`
+
+### Formulario POST: `paginas/contacto.php`
+
+- El formulario se envía con `method="post"` a la misma página y **PHP valida
+  todos los campos en el servidor** (la validación de `js/main.js` es solo una
+  ayuda visual: se puede saltear desactivando JavaScript).
+- Reglas: nombre obligatorio (máx. 60 caracteres, solo letras, espacios,
+  apóstrofos y guiones), email validado con `filter_var(FILTER_VALIDATE_EMAIL)`,
+  motivo dentro de una **lista blanca**, mensaje de 10 a 500 caracteres y
+  casilla de aceptación obligatoria.
+- Si hay errores, se muestran junto a cada campo y se conservan los valores
+  ingresados (escapados).
+- **Token CSRF** (`random_bytes` + `hash_equals`) guardado en la sesión: se
+  rechazan los envíos que no salen del formulario del sitio, y el token se
+  renueva después de cada envío correcto.
+- **Honeypot**: campo oculto que solo completan los bots de spam.
+- **Patrón PRG** (Post/Redirect/Get): tras un envío correcto se redirige con
+  `303` a `contacto.php?enviado=1`, así recargar la página no reenvía los datos.
+  El mensaje de éxito se muestra una sola vez.
+
+### Formulario GET: buscador (`paginas/buscar.php`)
+
+- La caja "Buscar en el sitio..." del header ahora es un `<form method="get">`
+  que envía la consulta en la URL (`buscar.php?q=enroque`). Se usa GET porque
+  buscar no modifica datos y el resultado se puede recargar o compartir.
+- La consulta se limpia, se valida (2 a 60 caracteres) y se busca sobre un
+  índice fijo de secciones, sin importar mayúsculas ni tildes. Las
+  coincidencias se resaltan con `<mark>`.
+
+### Seguridad: `includes/seguridad.php`
+
+| Función | Para qué sirve |
+| --- | --- |
+| `e()` | Escapa con `htmlspecialchars` toda salida que venga del usuario (evita **XSS**). |
+| `limpiar_texto()` | Acepta solo strings, quita caracteres de control y espacios sobrantes. |
+| `iniciar_sesion()` | Cookie de sesión `HttpOnly` y `SameSite=Lax`, modo estricto. |
+| `csrf_token()` / `csrf_campo()` / `csrf_valido()` | Protección **CSRF**. |
+| `enviar_cabeceras_seguridad()` | `X-Content-Type-Options`, `X-Frame-Options` (anti-clickjacking) y `Referrer-Policy`. |
 
 ## Variables de entorno
 
