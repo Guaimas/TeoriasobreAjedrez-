@@ -18,6 +18,7 @@
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../clase5/seguridad.php';   // e() y limpiar(), usadas también en nav.php
 
 if (!isset($titulo_pagina)) {
     $titulo_pagina = APP_NAME;

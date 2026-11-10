@@ -258,6 +258,8 @@ function initFormularioContacto() {
 
     if (campo === campos.mensaje) {
       if (!valor) { mostrarError(campo, 'El mensaje es obligatorio.'); return false; }
+      var minimo = parseInt(campo.getAttribute('minlength'), 10) || 0;
+      if (valor.length < minimo) { mostrarError(campo, 'El mensaje debe tener al menos ' + minimo + ' caracteres.'); return false; }
       limpiarError(campo);
       return true;
     }
@@ -283,8 +285,6 @@ function initFormularioContacto() {
   });
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
     if (successMsg) successMsg.classList.add('hidden');
 
     var esValido = true;
@@ -295,24 +295,30 @@ function initFormularioContacto() {
     });
 
     if (!esValido) {
+      // Solo se cancela el envío si hay errores en el cliente.
+      e.preventDefault();
       var primerError = form.querySelector('.has-error input, .has-error select, .has-error textarea');
       if (primerError) primerError.focus();
       return;
     }
 
-    // El formulario es válido: aquí continuaría el envío real (fetch, etc.).
-    if (successMsg) successMsg.classList.remove('hidden');
-    form.reset();
-    Object.keys(campos).forEach(function (clave) {
-      if (campos[clave]) limpiarError(campos[clave]);
-    });
+    // Formulario válido: se envía por POST a contacto.php, donde PHP
+    // vuelve a validar todo (la validación del cliente se puede saltear).
   });
 
   form.addEventListener('reset', function () {
     window.setTimeout(function () {
       Object.keys(campos).forEach(function (clave) {
-        if (campos[clave]) limpiarError(campos[clave]);
+        var campo = campos[clave];
+        if (!campo) return;
+        // Si PHP devolvió el formulario con valores cargados (por un error),
+        // "reset" volvería a esos valores: se vacían explícitamente.
+        if (campo.type === 'checkbox') campo.checked = false;
+        else campo.value = '';
+        limpiarError(campo);
       });
+      var errorGeneral = form.querySelector('.form-alert');
+      if (errorGeneral) errorGeneral.remove();
       if (successMsg) successMsg.classList.add('hidden');
     }, 0);
   });

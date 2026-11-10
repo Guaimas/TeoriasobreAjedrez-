@@ -30,6 +30,12 @@ Enlace al prototipo de Figma:
 
 ```text
 el-arte-del-jaque/
+├── clase5/               Clase 5: procesamiento de formularios y seguridad
+│   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
+│   ├── procesar_contacto.php Lógica del formulario POST (contacto)
+│   ├── buscar_glosario.php   Lógica del formulario GET (buscador del glosario)
+│   └── datos/
+│       └── glosario.php      Términos del glosario como array de PHP
 ├── includes/
 │   ├── config.php        Carga de variables de entorno (.env) y constantes
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
@@ -41,12 +47,12 @@ el-arte-del-jaque/
 │   └── main.js
 ├── paginas/
 │   ├── aperturas.php
-│   ├── contacto.php
+│   ├── contacto.php      Formulario de contacto (POST) — Clase 5
 │   ├── ejercicios.php
 │   ├── estrategias.php
 │   ├── finales.php
 │   ├── fundamentos.php
-│   ├── glosario.php
+│   ├── glosario.php      Glosario + buscador (GET) — Clase 5
 │   ├── partidas.php
 │   ├── recursos.php
 │   ├── sobre-el-sitio.php
@@ -67,6 +73,7 @@ el-arte-del-jaque/
 ├── .env.example          Plantilla pública de variables de entorno
 ├── .gitignore
 └── README.md
+```
 
 ## Modularización (SSI) y SSR
 
@@ -103,6 +110,167 @@ require_once __DIR__ . '/../includes/nav.php';
 - **Rutas relativas:** `$ruta_base` y `$ruta_paginas` resuelven las rutas de
   CSS, JS, imágenes e includes según la profundidad del archivo (raíz vs.
   `/paginas`), evitando enlaces rotos.
+
+## Clase 5 — Procesamiento de Formularios y Seguridad Web
+
+Rama: `feature/clase5-formularios-seguridad`
+
+### 1. Descripción general
+
+**Objetivo:** procesar en el servidor, con PHP, información enviada desde el
+navegador mediante los métodos HTTP **POST** y **GET**, aplicando
+sanitización, validación y codificación de salida para prevenir ataques
+**Cross-Site Scripting (XSS)**.
+
+**Funcionalidades incorporadas:**
+
+- **Formulario POST** de contacto, con validación en el servidor, mensajes de
+  error por campo, mensaje de éxito y conservación de los datos ante errores.
+- **Formulario GET** de búsqueda en el glosario de ajedrez, con resultados
+  reales, coincidencias resaltadas y mensajes para búsquedas vacías,
+  incorrectas o sin resultados.
+
+**Organización:** los formularios están en las páginas que ya existían
+(`contacto.php` y `glosario.php`) para mantener el diseño y la navegación. La
+lógica de PHP de la Clase 5 está separada en la carpeta `clase5/`, y cada
+página la incluye con `require_once` antes de imprimir el HTML:
+
+| Archivo | Función |
+| --- | --- |
+| `clase5/seguridad.php` | Funciones `e()` (codificación de salida) y `limpiar()` (sanitización con `trim()`) |
+| `clase5/procesar_contacto.php` | Captura, sanitiza y valida el formulario POST |
+| `clase5/buscar_glosario.php` | Captura, sanitiza y valida el parámetro GET y realiza la búsqueda |
+| `clase5/datos/glosario.php` | Los 38 términos del glosario como array de PHP |
+
+No se usa base de datos ni librerías externas: solo funciones nativas de PHP.
+
+### 2. Formulario POST
+
+- **Ubicación:** página **Contacto** (`paginas/contacto.php`), enlazada desde el
+  footer de todas las páginas.
+- **Finalidad:** que los visitantes envíen consultas, sugerencias o reportes de
+  errores sobre el sitio.
+- **Por qué POST:** el formulario envía datos personales (nombre, correo,
+  mensaje), que no deben quedar visibles en la URL, en el historial ni en los
+  favoritos.
+- **Datos recibidos** (`$_POST`, leídos con `filter_input(INPUT_POST, ...)`):
+
+  | Campo | Validación en PHP |
+  | --- | --- |
+  | `nombre` | Obligatorio, máximo 60 caracteres, solo letras, espacios, apóstrofos y guiones |
+  | `email` | Obligatorio, sin caracteres prohibidos (`FILTER_SANITIZE_EMAIL`) y con formato válido (`FILTER_VALIDATE_EMAIL`) |
+  | `motivo` | Obligatorio y dentro de una lista blanca (`consulta`, `sugerencia`, `error`, `otro`) |
+  | `mensaje` | Obligatorio, entre 10 y 500 caracteres |
+  | `aceptar` | La casilla tiene que estar marcada (`isset()`) |
+
+- **Respuesta:**
+  - Con errores: aviso general en rojo y, debajo de cada campo, el error
+    concreto. Los valores correctos **se conservan** en el formulario.
+  - Sin errores: mensaje de éxito con el nombre y el motivo, y el formulario
+    queda vacío.
+- **Seguridad:** sanitización con `trim()`, validación completa en PHP (no
+  depende de `required`, `type="email"` ni de JavaScript) y todo dato del
+  usuario se imprime con `htmlspecialchars()` (función `e()`), tanto en los
+  mensajes como dentro de los `value="..."` y del `<textarea>`.
+- **Nota:** el mensaje no se envía por correo ni se guarda, porque el TP no lo
+  exige. El punto donde se haría está marcado en `procesar_contacto.php`.
+
+### 3. Formulario GET
+
+- **Ubicación:** página **Glosario** (`paginas/glosario.php`), arriba de la
+  lista de términos. La caja "Buscar en el glosario..." del encabezado (visible
+  en pantallas grandes) usa el mismo parámetro y lleva a esta página desde
+  cualquier sección del sitio.
+- **Finalidad:** encontrar rápidamente un concepto de ajedrez entre los 38
+  términos del glosario.
+- **Por qué GET:** buscar no modifica nada en el servidor. Al quedar en la URL,
+  el resultado se puede recargar, guardar en favoritos o compartir.
+- **Parámetro:** `termino` → por ejemplo `paginas/glosario.php?termino=enroque`.
+- **Funcionamiento:**
+  1. Se lee `termino` con `filter_input(INPUT_GET, ...)` y se limpia con `trim()`.
+  2. Se valida: no vacío, de 2 a 40 caracteres y solo letras, números,
+     espacios, apóstrofos y guiones.
+  3. Se recorre el array del glosario y se muestran los términos cuyo nombre o
+     definición contienen la palabra, sin distinguir mayúsculas ni tildes
+     (`tactica` encuentra "Táctica").
+  4. Las coincidencias se resaltan con `<mark>`, y se muestra la cantidad de
+     resultados con un enlace para volver al glosario completo.
+- **Respuesta:**
+  - Sin búsqueda: el glosario completo, igual que antes (por letra, con acordeón).
+  - Búsqueda vacía o con caracteres no permitidos: aviso en rojo y el glosario completo.
+  - Sin coincidencias: aviso informativo.
+- **Tratamiento de los datos:** el término buscado **queda cargado** en el campo
+  y aparece en los mensajes, siempre codificado con `htmlspecialchars()`. El
+  resaltado se arma codificando cada parte del texto por separado, así el
+  `<mark>` lo agrega el sitio y ningún texto llega al HTML sin pasar por `e()`.
+
+### 4. Seguridad
+
+Se distinguen tres pasos que **no se reemplazan entre sí**:
+
+- **Sanitizar** es limpiar o normalizar el dato que llega (por ejemplo, quitar espacios).
+- **Validar** es decidir si el dato es aceptable; si no lo es, se rechaza con un mensaje.
+- **Codificar la salida** es convertir los caracteres especiales al mostrar el
+  dato, para que el navegador no los interprete como HTML o JavaScript.
+
+| Función | Cómo se usó |
+| --- | --- |
+| `trim()` | En `limpiar()`: quita los espacios del principio y del final. Un campo con solo espacios queda vacío y la validación lo rechaza. |
+| `isset()` | Comprueba si llegó el parámetro `termino` (¿hubo búsqueda?), si la casilla `aceptar` fue enviada y si la petición es POST. |
+| `empty()` | Detecta los campos obligatorios vacíos, después del `trim()`. |
+| `filter_input()` | Lee `$_POST` y `$_GET` de forma controlada: devuelve `null` si el campo no existe y, con `FILTER_REQUIRE_SCALAR`, rechaza arrays (`?termino[]=x`). |
+| `filter_var()` + `FILTER_SANITIZE_EMAIL` | **Sanitización**: si al quitar los caracteres prohibidos el email cambia, se avisa al usuario en lugar de corregirlo en silencio. |
+| `filter_var()` + `FILTER_VALIDATE_EMAIL` | **Validación**: comprueba que el correo tenga formato `usuario@dominio.ext`. |
+| `htmlspecialchars($texto, ENT_QUOTES, 'UTF-8')` | En `e()`: toda salida con datos del usuario. `ENT_QUOTES` codifica también las comillas, así el dato no puede cerrar un atributo `value="..."`. |
+
+**Ejemplo de XSS bloqueado:** si se busca `<script>alert(1)</script>`, la
+validación lo rechaza y el texto vuelve al campo como
+`&lt;script&gt;alert(1)&lt;/script&gt;`: se ve como texto y no se ejecuta.
+
+La validación de `js/main.js` sigue funcionando como ayuda visual, pero las
+comprobaciones definitivas las hace PHP.
+
+### 5. Capturas de pantalla
+
+Capturas tomadas con el sitio corriendo en XAMPP (`localhost`). Las capturas
+de errores del formulario POST se tomaron con **JavaScript desactivado** en el
+navegador, para demostrar que la validación la realiza PHP en el servidor.
+
+- [x] **Formulario POST:** página Contacto vacía.
+
+  ![Formulario POST](capturas/clase5-post-formulario.png)
+
+- [x] **Envío exitoso:** PHP valida los datos, muestra "¡Gracias, …!" con el
+  nombre y el motivo, y vacía el formulario.
+
+  ![Envío exitoso](capturas/clase5-post-exito.png)
+
+- [x] **Error de validación:** formulario enviado vacío. Aparece el aviso
+  general y el error de cada campo obligatorio.
+
+  ![Error de validación](capturas/clase5-post-error.png)
+
+- [x] **Campos conservados después de un error:** el email `ana@correo` es
+  inválido, pero el nombre, el motivo y el mensaje siguen cargados.
+
+  ![Campos conservados](capturas/clase5-post-campos-conservados.png)
+
+- [x] **Formulario GET:** buscador del glosario enviado vacío
+  (`?termino=`). PHP avisa que falta la palabra y muestra el glosario completo.
+
+  ![Formulario GET](capturas/clase5-get-formulario.png)
+
+- [x] **Resultados de búsqueda:** `?termino=peon` encuentra 12 términos (sin
+  importar la tilde de "peón") y resalta las coincidencias.
+
+  ![Resultados de búsqueda](capturas/clase5-get-resultados.png)
+
+- [x] **Entrada con caracteres especiales:** al buscar
+  `<script>alert(1)</script>` **no se ejecuta ninguna alerta**, aunque
+  JavaScript está activado. El texto se muestra tal cual en el campo y PHP
+  rechaza la búsqueda por contener caracteres no permitidos.
+
+  ![Caracteres especiales](capturas/clase5-xss.png)
 
 ## Variables de entorno
 
