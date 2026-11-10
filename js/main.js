@@ -309,8 +309,16 @@ function initFormularioContacto() {
   form.addEventListener('reset', function () {
     window.setTimeout(function () {
       Object.keys(campos).forEach(function (clave) {
-        if (campos[clave]) limpiarError(campos[clave]);
+        var campo = campos[clave];
+        if (!campo) return;
+        // Si PHP devolvió el formulario con valores cargados (por un error),
+        // "reset" volvería a esos valores: se vacían explícitamente.
+        if (campo.type === 'checkbox') campo.checked = false;
+        else campo.value = '';
+        limpiarError(campo);
       });
+      var errorGeneral = form.querySelector('.form-alert');
+      if (errorGeneral) errorGeneral.remove();
       if (successMsg) successMsg.classList.add('hidden');
     }, 0);
   });

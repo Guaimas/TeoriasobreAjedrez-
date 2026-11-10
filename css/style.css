@@ -1067,15 +1067,20 @@ main { padding: 2.4rem; max-width: 1180px; }
   font-size: .86rem;
 }
 
-/* Honeypot anti-spam: fuera de pantalla (no usar display:none,
-   algunos bots lo detectan) */
-.form-honeypot {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+/* Clase 5: aviso informativo (ej: búsqueda sin resultados) */
+.form-info {
+  margin-bottom: 1.4rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-gold);
+  background: rgba(211, 166, 72, .08);
+  color: var(--text-main);
+  font-size: .9rem;
+  max-width: 640px;
 }
+
+.form-info a,
+.search-summary a { color: var(--gold); font-weight: 600; }
 
 /* Texto solo para lectores de pantalla */
 .sr-only {
@@ -1116,9 +1121,10 @@ main { padding: 2.4rem; max-width: 1180px; }
 
 .search-summary { margin-bottom: 1.4rem; color: var(--text-faint); font-size: .9rem; }
 
-.search-results { display: grid; gap: 1rem; max-width: 760px; }
-.search-results .card h3 a { color: inherit; }
-.search-results mark {
+.page-section > .form-alert { max-width: 640px; }
+
+/* Coincidencias resaltadas en los resultados del glosario */
+.definition-card mark {
   background: rgba(211, 166, 72, .25);
   color: inherit;
   border-radius: 3px;

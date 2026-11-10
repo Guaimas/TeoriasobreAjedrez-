@@ -132,10 +132,10 @@ if (!function_exists('nav_activo')) {
                         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
                         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M3 12h2.2M18.8 12H21M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
                     </button>
-                    <!-- Clase 5: buscador con método GET (la consulta viaja en la URL: buscar.php?q=...) -->
-                    <form class="search-box" action="<?= $ruta_paginas ?>buscar.php" method="get" role="search">
+                    <!-- Clase 5: buscador con método GET. Envía la palabra al glosario (glosario.php?termino=...) -->
+                    <form class="search-box" action="<?= $ruta_paginas ?>glosario.php" method="get" role="search">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>
-                        <input type="search" name="q" maxlength="60" placeholder="Buscar en el sitio..." aria-label="Buscar en el sitio" value="<?= e(limpiar_texto($_GET['q'] ?? '')) ?>">
+                        <input type="search" name="termino" maxlength="40" placeholder="Buscar en el glosario..." aria-label="Buscar en el glosario" value="<?= e(limpiar(filter_input(INPUT_GET, 'termino', FILTER_DEFAULT, FILTER_REQUIRE_SCALAR))) ?>">
                     </form>
                 </div>
             </header>
