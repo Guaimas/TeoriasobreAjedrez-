@@ -413,6 +413,9 @@ main { padding: 2.4rem; max-width: 1180px; }
   gap: 1.4rem;
 }
 
+/* Variante de 4 columnas (ej: "Tecnologías utilizadas" en Sobre el sitio) */
+.card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -534,21 +537,7 @@ main { padding: 2.4rem; max-width: 1180px; }
 .content-block .content-media img { border-radius: var(--radius-sm); }
 .content-block h2 { color: var(--gold-bright); font-size: 1.4rem; }
 
-.carousel-block {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 1.6rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  padding: 1.6rem 1.2rem;
-  margin-bottom: 1.8rem;
-}
-
-.carousel-block .content-media img { border-radius: var(--radius-sm); max-height: 260px; object-fit: cover; }
-.carousel-block h2 { color: var(--gold-bright); font-size: 1.3rem; }
-
+/* Flechas circulares (las usa la galería de "Sobre el sitio") */
 .nav-arrow {
   width: 42px;
   height: 42px;
@@ -910,6 +899,7 @@ main { padding: 2.4rem; max-width: 1180px; }
 @media (max-width: 1080px) {
   .topic-grid { grid-template-columns: repeat(3, 1fr); }
   .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.card-grid--4 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -941,8 +931,7 @@ main { padding: 2.4rem; max-width: 1180px; }
 
   .content-block { grid-template-columns: 1fr; }
   .content-block.reverse .content-media { order: 0; }
-  .carousel-block { grid-template-columns: 1fr; text-align: center; }
-  .carousel-block .nav-arrow { justify-self: center; }
+  .card-grid.card-grid--4 { grid-template-columns: 1fr; }
 
   .footer-grid { grid-template-columns: 1fr; }
 }

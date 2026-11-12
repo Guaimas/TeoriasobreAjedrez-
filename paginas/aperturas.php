@@ -83,38 +83,24 @@ require_once __DIR__ . '/../includes/nav.php';
                     <div class="simple-panel">
                         <h2>Apertura Italiana</h2>
                         <p>
-                            La Apertura Italiana es una de las formas más antiguas y clásicas de empezar una partida de
-                            ajedrez. Surge en el siglo XVI en Italia, donde maestros como Gioachino Greco la estudiaron y
-                            difundieron. En esa época, el ajedrez era más agresivo, y esta apertura encajaba perfecto con
-                            ese estilo.
+                            Una de las formas más antiguas y clásicas de empezar una partida. Ya aparece en tratados
+                            italianos del siglo XVI, y a comienzos del siglo XVII Gioachino Greco la popularizó con sus
+                            partidas analizadas. Su idea es muy clara: desarrollar rápido las piezas y presionar el
+                            punto f7 del rival.
                         </p>
-                    </div>
-
-                    <div class="carousel-block">
-                        <button class="nav-arrow" disabled aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-                        <div class="content-media">
-                            <img src="https://images.pexels.com/photos/6114949/pexels-photo-6114949.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Apertura Italiana">
+                        <div class="move-list">
+                            <ol>
+                                <li>e4 e5</li>
+                                <li>Cf3 Cc6</li>
+                                <li>Ac4</li>
+                            </ol>
                         </div>
-                        <div>
-                            <p>
-                                La Apertura Italiana comienza con una idea muy clara: desarrollar rápido las piezas
-                                y presionar el punto f7 del rival.
-                            </p>
-                            <div class="move-list">
-                                <ol>
-                                    <li>e4 e5</li>
-                                    <li>Cf3 Cc6</li>
-                                    <li>Ac4</li>
-                                </ol>
-                            </div>
-                            <p>Con estos tres movimientos ya estás dentro de la Apertura Italiana.</p>
-                            <ul>
-                                <li>e4: ocupás el centro y abrís líneas para tu dama y alfil</li>
-                                <li>Cf3: desarrollás una pieza y atacás el peón e5</li>
-                                <li>Ac4: apuntás directamente a f7</li>
-                            </ul>
-                        </div>
-                        <button class="nav-arrow" disabled aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                        <ul>
+                            <li><strong>e4:</strong> ocupa el centro y abre líneas para la dama y el alfil.</li>
+                            <li><strong>Cf3:</strong> desarrolla una pieza y ataca el peón de e5.</li>
+                            <li><strong>Ac4:</strong> apunta directamente a f7, la casilla más débil de las negras al comienzo, porque solo la defiende el rey.</li>
+                        </ul>
+                        <p><strong>Conceptos que enseña:</strong> desarrollo rápido, control del centro, enroque temprano y cómo presionar un punto débil del rival desde la apertura.</p>
                     </div>
 
                     <div class="simple-panel">

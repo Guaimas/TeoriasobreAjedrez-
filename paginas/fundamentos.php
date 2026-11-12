@@ -96,8 +96,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </p>
                     </div>
 
-                    <div class="carousel-block">
-                        <button class="nav-arrow" disabled aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <div class="content-block">
                         <div class="content-media">
                             <img src="https://images.pexels.com/photos/8438946/pexels-photo-8438946.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Movimiento de piezas">
                         </div>
@@ -113,7 +112,6 @@ require_once __DIR__ . '/../includes/nav.php';
                                 <li>Por ejemplo, una para mover y otra para detener el reloj.</li>
                             </ul>
                         </div>
-                        <button class="nav-arrow" disabled aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
                     </div>
                 </section>
 
@@ -128,8 +126,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </p>
                     </div>
 
-                    <div class="carousel-block">
-                        <button class="nav-arrow" disabled aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <div class="content-block reverse">
                         <div class="content-media">
                             <img src="https://images.pexels.com/photos/136349/pexels-photo-136349.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El peón y su movimiento">
                         </div>
@@ -140,15 +137,14 @@ require_once __DIR__ . '/../includes/nav.php';
                                 Se mueve hacia adelante una sola casilla, pero captura en diagonal.
                             </p>
                             <p>
-                                A diferencia de otras piezas, captura en diagonal, lo que lo convierte en una pieza
-                                estratégica para controlar el centro.
+                                Es la única pieza que nunca puede retroceder, por eso cada avance de peón es una
+                                decisión importante: deja casillas que ya no podrá volver a defender.
                             </p>
                             <p>
                                 En su primer movimiento puede avanzar dos casillas, pero solamente si no hay piezas
                                 bloqueando su camino. Es una pieza esencial para proteger y controlar el ritmo de la partida.
                             </p>
                         </div>
-                        <button class="nav-arrow" disabled aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
                     </div>
                     <div class="topic-grid">
                         <div class="card">

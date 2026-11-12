@@ -393,6 +393,48 @@ docs: actualizar README para TP4
 - [x] Diseño, contenido y estructura visual original conservados
 - [x] Contenido original del sitio conservado
 
+## Registro de cambios
+
+Mejoras realizadas después de la entrega del TP de la Clase 5. Cada fase se
+trabaja en su propia rama y se integra a `main` mediante un Pull Request.
+
+### Fase 1 — Correcciones visuales (rama `fix/fase1-correcciones-visuales`)
+
+**Componente roto ("carrusel")**
+- Los bloques *Movimiento* y *Peón* (Fundamentos), *La Batería* (Estrategias),
+  *El Rey como atacante* (Finales) y *Apertura Italiana* (Aperturas) usaban un
+  carrusel con flechas que no funcionaban: la grilla CSS tenía 3 columnas para 4
+  elementos, por lo que la imagen se veía diminuta o no aparecía. Se
+  reemplazaron por el bloque imagen + texto que ya usaba el resto del sitio.
+- Se eliminaron del CSS las reglas `.carousel-block`, que quedaron sin uso.
+
+**Tarjetas con la mitad vacía**
+- "Táctica vs. Estrategia" (Tácticas) y "Estrategia vs. Táctica" (Estrategias)
+  usaban un bloque de dos columnas sin imagen. Ahora usan el panel de ancho
+  completo (`simple-panel`).
+
+**Textos incorrectos o desactualizados**
+- Ejercicios: se eliminó la mención a una "IA" o "bot" que el sitio no tiene.
+  El bloque ahora explica cómo funcionan los ejercicios, ya no repite el
+  subtítulo y su título lleva tilde.
+- Sobre el sitio: se quitó la referencia al "bot" y se agregó **PHP** a
+  "Tecnologías utilizadas", en una grilla de 4 columnas (`card-grid--4`).
+- Inicio: el destacado de Partidas Históricas decía "Muy pronto…", aunque la
+  página ya existe. Ahora describe su contenido.
+- Aperturas: la Apertura Italiana tiene el mismo formato que las demás
+  aperturas, y se corrigió un dato histórico: Gioachino Greco la popularizó a
+  comienzos del **siglo XVII**, no del XVI.
+- Fundamentos: el texto del *Peón* repetía dos veces "captura en diagonal"; el
+  párrafo repetido ahora explica que el peón nunca puede retroceder.
+
+**Archivos modificados:** `index.php`, `paginas/fundamentos.php`,
+`paginas/tacticas.php`, `paginas/estrategias.php`, `paginas/aperturas.php`,
+`paginas/finales.php`, `paginas/ejercicios.php`, `paginas/sobre-el-sitio.php`,
+`css/style.css` y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. Se revisaron
+capturas en escritorio (1366 px) y celular (390 px) de cada página modificada.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.

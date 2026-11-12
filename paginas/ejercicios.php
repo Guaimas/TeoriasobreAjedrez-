@@ -33,13 +33,18 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="https://images.pexels.com/photos/8438872/pexels-photo-8438872.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tablero de práctica">
                         </div>
                         <div>
-                            <h2>Practica</h2>
+                            <h2>¿Cómo funcionan los ejercicios?</h2>
                             <p>
-                                La teoría solo es el principio; el verdadero maestro se forja en el tablero. En este
-                                apartado podrás enfrentarte a nuestra IA en partidas reales para consolidar lo aprendido
-                                sobre aperturas, medio juego y finales. No te confíes: el sistema analizará tu juego y, con
-                                cada victoria que consigas, el bot subirá su nivel de precisión, obligándote a perfeccionar
-                                tu técnica constantemente.
+                                Los ejercicios están agrupados por tema: fundamentos, tácticas, estrategia y finales,
+                                en el mismo orden en que se presentan en el sitio. Cada uno plantea una situación de
+                                partida con varias opciones.
+                            </p>
+                            <p>
+                                Piensa tu respuesta antes de mirar la solución: el esfuerzo de buscarla es lo que fija
+                                el aprendizaje. Después pulsa <strong>Mostrar solución</strong> para comprobarla y leer
+                                la explicación. Si quieres seguir practicando con posiciones reales, en
+                                <a href="recursos.php" style="color: var(--gold);">Recursos</a> encontrarás plataformas
+                                con miles de ejercicios gratuitos.
                             </p>
                         </div>
                     </div>

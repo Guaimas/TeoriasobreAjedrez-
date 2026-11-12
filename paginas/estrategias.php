@@ -43,8 +43,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </div>
                     </div>
 
-                    <div class="carousel-block">
-                        <button class="nav-arrow" disabled aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <div class="content-block reverse">
                         <div class="content-media">
                             <img src="https://images.pexels.com/photos/13761311/pexels-photo-13761311.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="La batería en ajedrez">
                         </div>
@@ -56,10 +55,9 @@ require_once __DIR__ . '/../includes/nav.php';
                                 drásticamente la presión sobre un punto específico de la defensa enemiga, forzando concesiones.
                             </p>
                         </div>
-                        <button class="nav-arrow" disabled aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
                     </div>
 
-                    <div class="content-block reverse">
+                    <div class="simple-panel">
                         <div>
                             <h2>Estrategia vs. Táctica</h2>
                             <p>

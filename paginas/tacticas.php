@@ -43,7 +43,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </p>
                     </div>
 
-                    <div class="content-block">
+                    <div class="simple-panel">
                         <div>
                             <h2>Táctica vs. Estrategia</h2>
                             <p>

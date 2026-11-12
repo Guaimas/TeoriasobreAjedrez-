@@ -88,9 +88,9 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section">
                     <div class="section-heading">
                         <h2>Tecnologías utilizadas</h2>
-                        <p>Este sitio fue construido únicamente con tecnologías web básicas, sin frameworks.</p>
+                        <p>Este sitio fue construido con tecnologías web estándar, sin frameworks ni librerías externas.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--4">
                         <div class="card">
                             <h3>HTML</h3>
                             <p>Define la estructura y el contenido de cada página: textos, imágenes, enlaces y secciones.</p>
@@ -101,7 +101,11 @@ require_once __DIR__ . '/../includes/nav.php';
                         </div>
                         <div class="card">
                             <h3>JavaScript</h3>
-                            <p>Aporta la interactividad: el menú desplegable en móvil, el resaltado de la página activa y las respuestas de los ejercicios.</p>
+                            <p>Aporta la interactividad: el menú desplegable en móvil, el modo claro y oscuro, el acordeón del glosario y las soluciones de los ejercicios.</p>
+                        </div>
+                        <div class="card">
+                            <h3>PHP</h3>
+                            <p>Arma cada página en el servidor: reutiliza el encabezado, el menú y el pie de página, y procesa de forma segura el formulario de contacto y el buscador del glosario.</p>
                         </div>
                     </div>
                 </section>
@@ -192,11 +196,11 @@ require_once __DIR__ . '/../includes/nav.php';
                     </div>
                     <div class="simple-panel">
                         <p>
-                            Este sitio ha sido diseñado para ser tu guía táctica, pero la verdadera maestría
-                            nace de la constancia. La sección de Práctica es ahora tu campo de entrenamiento;
-                            allí, cada derrota es una lección y cada victoria contra el bot es un escalón más
-                            en tu ascenso competitivo. Recuerda que incluso los Grandes Maestros comenzaron
-                            comprendiendo conceptos básicos como el jaque mate y la oposición.
+                            Este sitio ha sido diseñado para ser tu guía, pero la verdadera maestría nace de
+                            la constancia. La sección de Ejercicios es tu primer campo de entrenamiento: cada
+                            respuesta equivocada es una lección y cada acierto, un paso más en tu progreso.
+                            Recuerda que incluso los Grandes Maestros comenzaron comprendiendo conceptos
+                            básicos como el jaque mate y la oposición.
                         </p>
                         <p>
                             Te invitamos a seguir analizando tus partidas, a desafiar tus propios límites y,

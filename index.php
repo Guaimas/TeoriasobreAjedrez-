@@ -147,8 +147,8 @@ require_once __DIR__ . '/includes/nav.php';
                             <span class="eyebrow">Recurso destacado</span>
                             <h3>Partidas Históricas</h3>
                             <p>
-                                Muy pronto podrás estudiar partidas memorables de grandes maestros
-                                y aprender de sus mejores jugadas.
+                                Cinco partidas que marcaron la historia del ajedrez, de la Partida Inmortal
+                                de 1851 a Kasparov vs. Topalov: su contexto y lo que puedes aprender de cada una.
                             </p>
                             <a href="paginas/partidas.php" class="btn-gold">Ver partidas
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
