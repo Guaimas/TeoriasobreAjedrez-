@@ -97,7 +97,11 @@ if (!function_exists('nav_activo')) {
                 <a href="<?= $ruta_paginas ?>sobre-el-sitio.php" class="nav-item<?= nav_activo('sobre-el-sitio', $pagina_actual) ?>" data-page="sobre-el-sitio.php">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.2"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
                     <span>Sobre el Sitio</span>
-                
+
+                </a>
+                <a href="<?= $ruta_paginas ?>contacto.php" class="nav-item<?= nav_activo('contacto', $pagina_actual) ?>" data-page="contacto.php">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg>
+                    <span>Contacto</span>
                 </a>
             </nav>
 

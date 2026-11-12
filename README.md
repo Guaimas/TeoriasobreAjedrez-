@@ -435,6 +435,51 @@ trabaja en su propia rama y se integra a `main` mediante un Pull Request.
 **Pruebas:** las 12 páginas responden sin errores de PHP. Se revisaron
 capturas en escritorio (1366 px) y celular (390 px) de cada página modificada.
 
+### Fase 2 — Coherencia y navegación (rama `feature/fase2-navegacion`)
+
+**Navegación**
+- **Contacto en el menú lateral:** antes solo se llegaba desde el footer.
+- **Enlaces "← Anterior / Siguiente →"** al final de las 9 secciones de
+  contenido, en el orden del menú (Fundamentos → Tácticas → … → Recursos). Se
+  generan desde un solo archivo, `includes/paginacion.php`, que incluye
+  `footer.php`; para cambiar el orden alcanza con editar su array.
+- **Menú en pantallas bajas:** en notebooks de 768 px de alto, Contacto
+  quedaba fuera de la vista. En pantallas de hasta 860 px de alto se oculta la
+  nota decorativa "Mejora cada día…" y, por debajo de 700 px, los ítems se
+  compactan.
+
+**Coherencia del texto**
+- Todo el sitio usa **"tú"**. Se cambiaron los textos que estaban en "vos":
+  los mensajes de los formularios (en PHP y en JavaScript), el aviso del
+  buscador del glosario y el cartel de bienvenida. En `clase5/` solo cambió el
+  texto de 4 mensajes; la lógica del TP no se modificó.
+
+**Sobre el sitio**
+- Las tarjetas de "¿Qué encontrarás?" ahora son **enlaces** a cada sección,
+  con una descripción breve. Se agregó Contacto, así quedan 10 tarjetas en dos
+  filas completas.
+- Se reemplazó el subtítulo y los dos recuadros finales, que sonaban a la
+  conclusión de un ensayo, por "¿Cómo aprovechar el sitio?" (orden de lectura
+  recomendado) y "Un proyecto en crecimiento".
+
+**Cartel de bienvenida**
+- En escritorio aparece debajo del encabezado, así no tapa el buscador ni el
+  botón de tema. En celular aparece abajo, así no tapa el botón ☰ del menú.
+
+**Aperturas:** las 6 aperturas tienen el mismo formato (el de la Italiana se
+unificó en la Fase 1).
+
+**Archivos nuevos:** `includes/paginacion.php`.
+**Archivos modificados:** `includes/nav.php`, `includes/footer.php`,
+`paginas/sobre-el-sitio.php`, `paginas/contacto.php`, `paginas/glosario.php`,
+`clase5/procesar_contacto.php`, `clase5/buscar_glosario.php`, `js/main.js`,
+`css/style.css` y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. Se verificó que el
+paginador encadene las 9 secciones en orden y no aparezca en Inicio, Sobre el
+sitio ni Contacto; que Contacto se marque como activo en el menú; los mensajes
+de los formularios en "tú"; y capturas en 1366×768, 1280×650 y en celular.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.

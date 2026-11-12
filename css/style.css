@@ -203,6 +203,16 @@ li { margin-bottom: .5rem; }
 
 .sidebar-footer-note svg { color: var(--gold); margin-bottom: .4rem; }
 
+/* Pantallas bajas (ej: notebooks de 768 px de alto): se oculta la nota
+   decorativa para que entren todos los ítems del menú sin scroll */
+@media (max-height: 860px) {
+  .sidebar-footer-note { display: none; }
+}
+
+@media (max-height: 700px) {
+  .nav-item { padding-top: .5rem; padding-bottom: .5rem; }
+}
+
 .sidebar-backdrop {
   display: none;
   position: fixed;
@@ -443,6 +453,41 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 
 .card h3 { font-size: 1.08rem; margin-bottom: .4rem; }
+
+/* Tarjeta que funciona como enlace (ej: "¿Qué encontrarás?" en Sobre el sitio) */
+.card--link { display: block; }
+.card--link p { font-size: .82rem; margin-bottom: 0; color: var(--text-soft); }
+.card--link:hover h3 { color: var(--gold-bright); }
+
+/* Enlaces "Anterior / Siguiente" al final de cada sección (includes/paginacion.php) */
+.section-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  max-width: 1180px;
+  padding: 0 2.4rem 2.4rem;
+}
+
+.section-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.section-pager-link:hover { border-color: var(--border-gold); background: var(--bg-card-hover); }
+.section-pager-link.next { grid-column: 2; text-align: right; }
+.section-pager-label { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); }
+.section-pager-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold-bright); }
+
+@media (max-width: 560px) {
+  .section-pager { grid-template-columns: 1fr; padding: 0 1.4rem 1.6rem; }
+  .section-pager-link.next { grid-column: auto; }
+}
 .card p { font-size: .89rem; margin-bottom: .9rem; }
 
 .card-link {
@@ -949,7 +994,7 @@ main { padding: 2.4rem; max-width: 1180px; }
    ========================= */
 .welcome-toast {
   position: fixed;
-  top: 22px;
+  top: 92px;   /* debajo del encabezado, para no tapar el buscador ni el botón de tema */
   right: 22px;
   z-index: 999;
   display: flex;
@@ -1006,8 +1051,10 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 .welcome-toast-close:hover { color: var(--gold); }
 
+/* En celular el cartel aparece abajo, para no tapar el botón del menú */
 @media (max-width: 560px) {
-  .welcome-toast { left: 16px; right: 16px; top: 16px; max-width: none; }
+  .welcome-toast { left: 16px; right: 16px; top: auto; bottom: 16px; max-width: none; transform: translateY(14px); }
+  .welcome-toast.show { transform: translateY(0); }
 }
 
 /* =========================

@@ -51,7 +51,7 @@ require_once __DIR__ . '/../includes/nav.php';
                     <?php if ($error_busqueda !== ''): ?>
                     <p class="form-alert" role="alert"><?= e($error_busqueda) ?> Se muestra el glosario completo.</p>
                     <?php elseif ($busqueda_valida && empty($resultados)): ?>
-                    <p class="form-info" role="status">No se encontraron términos para «<?= e($termino) ?>». Probá con otra palabra o <a href="glosario.php">mirá el glosario completo</a>.</p>
+                    <p class="form-info" role="status">No se encontraron términos para «<?= e($termino) ?>». Prueba con otra palabra o <a href="glosario.php">mira el glosario completo</a>.</p>
                     <?php elseif ($busqueda_valida): ?>
                     <p class="search-summary" role="status">
                         <?= count($resultados) ?> <?= count($resultados) === 1 ? 'término encontrado' : 'términos encontrados' ?> para «<?= e($termino) ?>» · <a href="glosario.php">Ver glosario completo</a>

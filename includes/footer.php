@@ -12,6 +12,9 @@
 
 if (!isset($ruta_base))    $ruta_base = '';
 if (!isset($ruta_paginas)) $ruta_paginas = 'paginas/';
+
+// Enlaces "Anterior / Siguiente" entre secciones (solo en páginas de contenido)
+require __DIR__ . '/paginacion.php';
 ?>
 <!-- ===== FOOTER ===== -->
             <footer class="site-footer">

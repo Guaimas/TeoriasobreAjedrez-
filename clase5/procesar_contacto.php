@@ -94,12 +94,12 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         $errores['email'] = 'El correo electrónico contiene caracteres no permitidos (espacios, <, >, comillas, etc.).';
     } elseif (filter_var($datos['email'], FILTER_VALIDATE_EMAIL) === false) {
         // FILTER_VALIDATE_EMAIL (validación) comprueba el formato: usuario@dominio.ext
-        $errores['email'] = 'Ingresá un correo electrónico válido (por ejemplo: nombre@correo.com).';
+        $errores['email'] = 'Ingresa un correo electrónico válido (por ejemplo: nombre@correo.com).';
     }
 
     // Motivo: tiene que ser una de las opciones de la lista blanca.
     if (empty($datos['motivo'])) {
-        $errores['motivo'] = 'Seleccioná un motivo de contacto.';
+        $errores['motivo'] = 'Selecciona un motivo de contacto.';
     } elseif (!array_key_exists($datos['motivo'], $motivos_validos)) {
         $errores['motivo'] = 'El motivo seleccionado no es válido.';
     }
@@ -115,7 +115,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     // Aceptación: la casilla tiene que estar marcada.
     if (!$datos['aceptar']) {
-        $errores['aceptar'] = 'Debés aceptar el envío del formulario.';
+        $errores['aceptar'] = 'Debes aceptar el envío del formulario.';
     }
 
     // ---------------------------------------------------------------

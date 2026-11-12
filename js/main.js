@@ -158,7 +158,7 @@ function mostrarBienvenida() {
     '<svg class="welcome-toast-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12M8 20c-.3-2 .2-3 1.6-4 .9-.6 1-1.2.6-2-.5-1 .2-1.6 1-1.3.6.2 1-.2.7-.9-.6-1.4.4-2.6 1.6-2.9-.3-.7.1-1.4.9-1.4 1.7 0 3.6 1.6 3.6 4.4 0 2-1 3.2-2.2 4.1-1 .8-1.4 1.6-1.3 3"/></svg>' +
     '<div class="welcome-toast-body">' +
       '<h3>¡Bienvenido a El Arte del Jaque!</h3>' +
-      '<p>Explorá fundamentos, tácticas y partidas históricas para pensar cada jugada como un gran maestro.</p>' +
+      '<p>Explora fundamentos, tácticas y partidas históricas para pensar cada jugada como un gran maestro.</p>' +
     '</div>' +
     '<button type="button" class="welcome-toast-close" aria-label="Cerrar mensaje de bienvenida">&times;</button>';
 
@@ -245,13 +245,13 @@ function initFormularioContacto() {
 
     if (campo === campos.email) {
       if (!valor) { mostrarError(campo, 'El correo electrónico es obligatorio.'); return false; }
-      if (!validarEmail(valor)) { mostrarError(campo, 'Ingresá un correo electrónico válido.'); return false; }
+      if (!validarEmail(valor)) { mostrarError(campo, 'Ingresa un correo electrónico válido.'); return false; }
       limpiarError(campo);
       return true;
     }
 
     if (campo === campos.motivo) {
-      if (!valor) { mostrarError(campo, 'Seleccioná un motivo de contacto.'); return false; }
+      if (!valor) { mostrarError(campo, 'Selecciona un motivo de contacto.'); return false; }
       limpiarError(campo);
       return true;
     }
@@ -265,7 +265,7 @@ function initFormularioContacto() {
     }
 
     if (campo === campos.aceptar) {
-      if (!campo.checked) { mostrarError(campo, 'Debés aceptar el envío del formulario.'); return false; }
+      if (!campo.checked) { mostrarError(campo, 'Debes aceptar el envío del formulario.'); return false; }
       limpiarError(campo);
       return true;
     }

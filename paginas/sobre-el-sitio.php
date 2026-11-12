@@ -24,7 +24,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <div class="page-title-block">
                     <span class="eyebrow">Sobre el Sitio</span>
                     <h1>El Arte del Jaque</h1>
-                    <p>Un recorrido por las capas que hacen del ajedrez el "Juego de los Reyes".</p>
+                    <p>Qué es este sitio, para quién fue pensado, qué vas a encontrar en él y cómo está construido.</p>
                 </div>
 
                 <section class="page-section">
@@ -73,15 +73,16 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>¿Qué encontrarás?</h2>
                     </div>
                     <div class="topic-grid">
-                        <div class="card"><h3>Fundamentos</h3></div>
-                        <div class="card"><h3>Aperturas</h3></div>
-                        <div class="card"><h3>Estrategias</h3></div>
-                        <div class="card"><h3>Tácticas</h3></div>
-                        <div class="card"><h3>Finales</h3></div>
-                        <div class="card"><h3>Partidas Históricas</h3></div>
-                        <div class="card"><h3>Ejercicios</h3></div>
-                        <div class="card"><h3>Glosario</h3></div>
-                        <div class="card"><h3>Recursos</h3></div>
+                        <a class="card card--link" href="fundamentos.php"><h3>Fundamentos</h3><p>Tablero, piezas y reglas básicas.</p></a>
+                        <a class="card card--link" href="tacticas.php"><h3>Tácticas</h3><p>Golpes que ganan material o la partida.</p></a>
+                        <a class="card card--link" href="estrategias.php"><h3>Estrategias</h3><p>Planes y conceptos del medio juego.</p></a>
+                        <a class="card card--link" href="aperturas.php"><h3>Aperturas</h3><p>Principios y aperturas más conocidas.</p></a>
+                        <a class="card card--link" href="finales.php"><h3>Finales</h3><p>La fase técnica y decisiva.</p></a>
+                        <a class="card card--link" href="partidas.php"><h3>Partidas Históricas</h3><p>Cinco partidas que enseñan.</p></a>
+                        <a class="card card--link" href="ejercicios.php"><h3>Ejercicios</h3><p>Pon a prueba lo aprendido.</p></a>
+                        <a class="card card--link" href="glosario.php"><h3>Glosario</h3><p>Términos con buscador incluido.</p></a>
+                        <a class="card card--link" href="recursos.php"><h3>Recursos</h3><p>Libros y plataformas recomendadas.</p></a>
+                        <a class="card card--link" href="contacto.php"><h3>Contacto</h3><p>Envía consultas o sugerencias.</p></a>
                     </div>
                 </section>
 
@@ -184,29 +185,30 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section class="page-section">
                     <div class="simple-panel">
+                        <h2>¿Cómo aprovechar el sitio?</h2>
                         <p>
-                            A lo largo de este recorrido, hemos explorado las capas que hacen del
-                            ajedrez el 'Juego de los Reyes'. Desde la explosiva energía de las
-                            aperturas, pasando por la profunda complejidad estratégica del medio
-                            juego, hasta llegar a la precisión quirúrgica que exigen los finales,
-                            cada etapa de la partida es un universo de posibilidades. Has aprendido
-                            que el ajedrez no se trata solo de mover piezas, sino de anticipar
-                            intenciones, gestionar recursos y mantener la calma bajo presión.
+                            Si estás empezando, te recomendamos seguir las secciones en el orden del menú:
+                            primero los <a href="fundamentos.php" style="color: var(--gold);">Fundamentos</a>
+                            para conocer el tablero y las reglas; después las tácticas y las estrategias, que
+                            explican cómo se gana material y cómo se arma un plan; y por último las aperturas
+                            y los finales, que se entienden mejor cuando ya conoces lo anterior.
+                        </p>
+                        <p>
+                            Al final de cada sección encontrarás enlaces para pasar a la anterior o a la
+                            siguiente. Cuando aparezca una palabra que no conoces, búscala en el
+                            <a href="glosario.php" style="color: var(--gold);">Glosario</a>, y cuando
+                            termines un tema, comprueba lo aprendido en
+                            <a href="ejercicios.php" style="color: var(--gold);">Ejercicios</a>.
                         </p>
                     </div>
                     <div class="simple-panel">
+                        <h2>Un proyecto en crecimiento</h2>
                         <p>
-                            Este sitio ha sido diseñado para ser tu guía, pero la verdadera maestría nace de
-                            la constancia. La sección de Ejercicios es tu primer campo de entrenamiento: cada
-                            respuesta equivocada es una lección y cada acierto, un paso más en tu progreso.
-                            Recuerda que incluso los Grandes Maestros comenzaron comprendiendo conceptos
-                            básicos como el jaque mate y la oposición.
-                        </p>
-                        <p>
-                            Te invitamos a seguir analizando tus partidas, a desafiar tus propios límites y,
-                            sobre todo, a disfrutar de la belleza intelectual de cada movimiento. El tablero
-                            está listo, las piezas están en su sitio y el próximo gran movimiento es tuyo.
-                            ¡Gracias por permitirnos ser parte de tu formación como ajedrecista!
+                            El Arte del Jaque es un sitio educativo creado por Samuel como proyecto de
+                            aprendizaje de desarrollo web, y se sigue ampliando con nuevos contenidos. Si
+                            encuentras un error, tienes una sugerencia o quieres proponer un tema, puedes
+                            escribirnos desde la página de
+                            <a href="contacto.php" style="color: var(--gold);">Contacto</a>.
                         </p>
                     </div>
                 </section>
