@@ -17,8 +17,13 @@
  * nav_activo() agrega la clase "active" al enlace del menú que
  * corresponde a la página que se está visitando (requisito de SSR
  * de "menú activo" del TP).
+ *
+ * Los enlaces del menú se generan recorriendo datos/secciones.php:
+ * para agregar o reordenar una sección se edita ese archivo.
  * -----------------------------------------------------------------
  */
+
+require_once __DIR__ . '/secciones.php';
 
 if (!isset($ruta_base))      $ruta_base = '';
 if (!isset($ruta_paginas))   $ruta_paginas = 'paginas/';
@@ -44,65 +49,13 @@ if (!function_exists('nav_activo')) {
             </div>
 
             <nav class="sidebar-nav" aria-label="Navegación principal">
-                <a href="<?= $ruta_base ?>index.php" class="nav-item<?= nav_activo('index', $pagina_actual) ?>" data-page="index.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9"/><path d="M9.5 20v-6h5v6"/></svg>
-                    <span>Inicio</span>
-                
+                <?php // El menú se genera desde datos/secciones.php (un enlace por sección) ?>
+                <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
+                <a href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>" class="nav-item<?= nav_activo($slug, $pagina_actual) ?>" data-page="<?= $slug ?>.php">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><?= $seccion['icono'] ?></svg>
+                    <span><?= htmlspecialchars($seccion['titulo']) ?></span>
                 </a>
-                <a href="<?= $ruta_paginas ?>fundamentos.php" class="nav-item<?= nav_activo('fundamentos', $pagina_actual) ?>" data-page="fundamentos.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-3.8-2-6.5-2v13c2.7 0 4.9.7 6.5 2 1.6-1.3 3.8-2 6.5-2v-13c-2.7 0-4.9.7-6.5 2Z"/><path d="M12 6.5v13"/></svg>
-                    <span>Fundamentos</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>tacticas.php" class="nav-item<?= nav_activo('tacticas', $pagina_actual) ?>" data-page="tacticas.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/></svg>
-                    <span>Tácticas</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>estrategias.php" class="nav-item<?= nav_activo('estrategias', $pagina_actual) ?>" data-page="estrategias.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l3 3 5-6 5 6 3-3-1.6 9.5H5.6L4 9Z"/><path d="M5.6 18.5h12.8"/></svg>
-                    <span>Estrategias</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>aperturas.php" class="nav-item<?= nav_activo('aperturas', $pagina_actual) ?>" data-page="aperturas.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5 13 13l-3.5 1.5L11 11l3.5-1.5Z"/></svg>
-                    <span>Aperturas</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>finales.php" class="nav-item<?= nav_activo('finales', $pagina_actual) ?>" data-page="finales.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18"/><path d="M6 4h12l-3 4 3 4H6"/></svg>
-                    <span>Finales</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>partidas.php" class="nav-item<?= nav_activo('partidas', $pagina_actual) ?>" data-page="partidas.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8a8.5 8.5 0 1 1-1 4"/><path d="M3 4v4h4"/><path d="M12 8v4.5l3 2"/></svg>
-                    <span>Partidas Históricas</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>ejercicios.php" class="nav-item<?= nav_activo('ejercicios', $pagina_actual) ?>" data-page="ejercicios.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h3a2 2 0 1 1 0 4H4v3a2 2 0 0 0 2 2h3v-3a2 2 0 1 1 4 0v3h3a2 2 0 0 0 2-2v-3a2 2 0 1 1 0-4V6a2 2 0 0 0-2-2h-3a2 2 0 1 1-4 0H6a2 2 0 0 0-2 2v3Z"/></svg>
-                    <span>Ejercicios</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>glosario.php" class="nav-item<?= nav_activo('glosario', $pagina_actual) ?>" data-page="glosario.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
-                    <span>Glosario</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>recursos.php" class="nav-item<?= nav_activo('recursos', $pagina_actual) ?>" data-page="recursos.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h4l2 2.2H19A1.5 1.5 0 0 1 20.5 9v8A1.5 1.5 0 0 1 19 18.5H5A1.5 1.5 0 0 1 3.5 17V7Z"/></svg>
-                    <span>Recursos</span>
-                
-                </a>
-                <a href="<?= $ruta_paginas ?>sobre-el-sitio.php" class="nav-item<?= nav_activo('sobre-el-sitio', $pagina_actual) ?>" data-page="sobre-el-sitio.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.2"/><circle cx="12" cy="8" r=".9" fill="currentColor" stroke="none"/></svg>
-                    <span>Sobre el Sitio</span>
-
-                </a>
-                <a href="<?= $ruta_paginas ?>contacto.php" class="nav-item<?= nav_activo('contacto', $pagina_actual) ?>" data-page="contacto.php">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg>
-                    <span>Contacto</span>
-                </a>
+                <?php endforeach; ?>
             </nav>
 
             <div class="sidebar-footer-note">

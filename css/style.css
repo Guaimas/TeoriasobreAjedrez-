@@ -1,6 +1,28 @@
 /* =========================================================
    EL ARTE DEL JAQUE — Hoja de estilos general
    Paleta: fondo azul-negro profundo + acentos dorados
+
+   ÍNDICE (buscar el nombre de la sección para ir a ella)
+    1. Variables (:root)          colores, fuentes, medidas
+    2. LAYOUT GENERAL             estructura sidebar + contenido
+    3. SIDEBAR                    menú lateral
+    4. HEADER                     barra superior, reloj, buscador
+    5. MAIN / SECCIONES           contenedor principal
+    6. HERO (index)               portada de inicio
+    7. TARJETAS                   .card, grillas y enlaces
+    8. PAGINAS DE CONTENIDO       bloques imagen + texto, paneles
+    9. FORMULARIO (contacto)      campos y botones
+   10. FOOTER                     pie de página
+   11. COMPLEMENTOS DE CONTENIDO  glosario, ejercicios, partidas...
+   12. MENSAJE DE BIENVENIDA      cartel (toast)
+   13. VALIDACIÓN DEL FORMULARIO  errores y avisos (Clase 5)
+   14. BUSCADOR (GET)             buscador del glosario (Clase 5)
+   15. GALERÍA DE IMÁGENES        galería de "Sobre el sitio"
+   16. MODO OSCURO / MODO CLARO   variables del tema claro
+   17. RESPONSIVE GENERAL         ajustes de layout por ancho
+
+   Convención: los componentes con ajustes propios tienen su
+   @media al lado de sus estilos; el responsive general va al final.
    ========================================================= */
 
 :root {
@@ -939,57 +961,6 @@ main { padding: 2.4rem; max-width: 1180px; }
 .game-card h4:first-of-type { margin-top: 0; }
 
 /* =========================
-   RESPONSIVE
-   ========================= */
-@media (max-width: 1080px) {
-  .topic-grid { grid-template-columns: repeat(3, 1fr); }
-  .card-grid { grid-template-columns: repeat(3, 1fr); }
-  .card-grid.card-grid--4 { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 900px) {
-  .definition-grid { grid-template-columns: 1fr; }
-
-  .sidebar {
-    transform: translateX(-100%);
-    box-shadow: 0 0 40px rgba(0,0,0,.5);
-  }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar-backdrop.open { display: block; }
-
-  .content-wrap { margin-left: 0; }
-
-  .menu-toggle { display: flex; }
-
-  .search-box { display: none; }
-
-  .hero { grid-template-columns: 1fr; }
-  .hero-media { min-height: 220px; order: -1; }
-  .hero-media::before { display: none; }
-  .hero-copy { padding: 2rem 1.6rem; }
-
-  .card-grid { grid-template-columns: 1fr; }
-  .topic-grid { grid-template-columns: repeat(2, 1fr); }
-  .feature-banner { grid-template-columns: 1fr; }
-  .feature-banner-media { order: -1; min-height: 180px; }
-
-  .content-block { grid-template-columns: 1fr; }
-  .content-block.reverse .content-media { order: 0; }
-  .card-grid.card-grid--4 { grid-template-columns: 1fr; }
-
-  .footer-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 560px) {
-  main { padding: 1.4rem; }
-  .site-header { padding: 0 1.2rem; }
-  .topic-grid { grid-template-columns: 1fr; }
-  .form-actions { flex-direction: column; }
-  .form-actions button { width: 100%; }
-}
-
-/* =========================
    MENSAJE DE BIENVENIDA (toast)
    ========================= */
 .welcome-toast {
@@ -1366,4 +1337,60 @@ html.light-mode .lightbox-backdrop { background: rgba(20, 18, 10, .6); }
 html.light-mode .site-clock-time,
 html.light-mode .header-titles .tagline {
   color: #6b4a17;
+}
+
+/* =========================
+   RESPONSIVE GENERAL (layout)
+   Va al final para que sus reglas se apliquen
+   sobre las de las secciones anteriores. Los
+   componentes con ajustes propios (sidebar,
+   header, toast, buscador, galería...) tienen
+   su @media junto a sus estilos.
+   ========================= */
+@media (max-width: 1080px) {
+  .topic-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.card-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px) {
+  .definition-grid { grid-template-columns: 1fr; }
+
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-backdrop.open { display: block; }
+
+  .content-wrap { margin-left: 0; }
+
+  .menu-toggle { display: flex; }
+
+  .search-box { display: none; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero-media { min-height: 220px; order: -1; }
+  .hero-media::before { display: none; }
+  .hero-copy { padding: 2rem 1.6rem; }
+
+  .card-grid { grid-template-columns: 1fr; }
+  .topic-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-banner { grid-template-columns: 1fr; }
+  .feature-banner-media { order: -1; min-height: 180px; }
+
+  .content-block { grid-template-columns: 1fr; }
+  .content-block.reverse .content-media { order: 0; }
+  .card-grid.card-grid--4 { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  main { padding: 1.4rem; }
+  .site-header { padding: 0 1.2rem; }
+  .topic-grid { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column; }
+  .form-actions button { width: 100%; }
 }

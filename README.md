@@ -29,7 +29,10 @@ Enlace al prototipo de Figma:
 ## Estructura del proyecto
 
 ```text
-el-arte-del-jaque/
+TeoriasobreAjedrez-/
+├── datos/
+│   └── secciones.php     Lista única de secciones: genera el menú, el paginador
+│                         y las tarjetas de "Sobre el sitio"
 ├── clase5/               Clase 5: procesamiento de formularios y seguridad
 │   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
 │   ├── procesar_contacto.php Lógica del formulario POST (contacto)
@@ -40,6 +43,8 @@ el-arte-del-jaque/
 │   ├── config.php        Carga de variables de entorno (.env) y constantes
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
 │   ├── nav.php           Sidebar de navegación + barra superior (SSR: menú activo)
+│   ├── secciones.php     Funciones secciones_del_sitio() y url_seccion()
+│   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
 │   └── style.css
@@ -295,15 +300,18 @@ externas, ya que el nivel del TP no lo requiere) y expone las constantes
 ### Con XAMPP
 
 1. Clonar (o descargar) este repositorio.
-2. Copiar la carpeta `el-arte-del-jaque` dentro de `htdocs` de tu instalación
-   de XAMPP (por ejemplo: `C:\xampp\htdocs\el-arte-del-jaque`).
+2. Copiar la carpeta del proyecto (`TeoriasobreAjedrez-`) dentro de `htdocs`
+   de tu instalación de XAMPP: `C:\xampp\htdocs\TeoriasobreAjedrez-`.
 3. Copiar `.env.example` como `.env` (si no existe ya) y ajustar los valores
    si hace falta.
 4. Iniciar el módulo **Apache** desde el panel de control de XAMPP.
 5. Abrir el navegador en:
    ```
-   http://localhost/el-arte-del-jaque/index.php
+   http://localhost/TeoriasobreAjedrez-/index.php
    ```
+
+> Si la carpeta tiene otro nombre dentro de `htdocs`, la dirección cambia en
+> la misma forma: `http://localhost/<nombre-de-la-carpeta>/index.php`.
 
 ### Con Laragon
 
@@ -312,7 +320,7 @@ externas, ya que el nivel del TP no lo requiere) y expone las constantes
 3. Iniciar Laragon (Apache + PHP).
 4. Abrir el navegador en:
    ```
-   http://localhost/el-arte-del-jaque/index.php
+   http://localhost/TeoriasobreAjedrez-/index.php
    ```
    o usar el dominio virtual que genera Laragon automáticamente.
 
@@ -479,6 +487,47 @@ unificó en la Fase 1).
 paginador encadene las 9 secciones en orden y no aparezca en Inicio, Sobre el
 sitio ni Contacto; que Contacto se marque como activo en el menú; los mensajes
 de los formularios en "tú"; y capturas en 1366×768, 1280×650 y en celular.
+
+### Fase 3 — Ordenar el código (rama `refactor/fase3-organizacion`)
+
+Fase de organización interna: **el sitio se ve exactamente igual** que antes.
+
+**Lista única de secciones**
+- Nuevo `datos/secciones.php`: un array con todas las secciones (título,
+  ícono, descripción y si forman parte del recorrido de aprendizaje).
+- A partir de ese array se generan **el menú lateral** (`nav.php` pasó de 12
+  bloques repetidos a un `foreach`), **los enlaces Anterior / Siguiente**
+  (`paginacion.php`) y **las tarjetas "¿Qué encontrarás?"** de Sobre el sitio.
+  Antes la misma información estaba copiada en tres archivos; ahora agregar o
+  reordenar una sección es editar un solo lugar.
+- Nuevo `includes/secciones.php` con dos funciones: `secciones_del_sitio()`
+  (lee el array una sola vez) y `url_seccion()` (arma el enlace correcto desde
+  la raíz o desde `/paginas`).
+
+**CSS (`css/style.css`)**
+- Se agregó un **índice** al principio del archivo con las 17 secciones.
+- El bloque RESPONSIVE estaba en el medio del archivo, con otras secciones
+  agregadas después. Ahora es la última sección ("RESPONSIVE GENERAL"). Antes
+  de moverlo se verificó con un script que ninguna regla posterior compartía
+  selector y propiedad con ese bloque, así que el resultado visual no cambia.
+
+**README:** la estructura de carpetas incluye los archivos nuevos, y las
+instrucciones de XAMPP y Laragon usan el nombre real de la carpeta
+(`TeoriasobreAjedrez-`).
+
+**Pendiente a propósito:** las funciones de componentes reutilizables (bloque
+imagen + texto, tarjeta) se van a crear en las fases 4 a 6, junto con el
+contenido que las usa (fichas de aperturas y ejercicios), para no dejar código
+sin uso.
+
+**Archivos nuevos:** `datos/secciones.php`, `includes/secciones.php`.
+**Archivos modificados:** `includes/nav.php`, `includes/paginacion.php`,
+`paginas/sobre-el-sitio.php`, `css/style.css` y este README.
+
+**Pruebas:** se guardó el HTML que generaban las 12 páginas antes de los
+cambios y se comparó con el de después: **idéntico** en las 12, sin contar
+espacios. El CSS tiene exactamente las mismas reglas, solo cambió el orden y
+los comentarios. Revisión visual en escritorio, tablet (1000 px) y celular.
 
 ## Créditos
 

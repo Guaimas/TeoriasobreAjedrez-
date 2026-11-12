@@ -73,16 +73,11 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>¿Qué encontrarás?</h2>
                     </div>
                     <div class="topic-grid">
-                        <a class="card card--link" href="fundamentos.php"><h3>Fundamentos</h3><p>Tablero, piezas y reglas básicas.</p></a>
-                        <a class="card card--link" href="tacticas.php"><h3>Tácticas</h3><p>Golpes que ganan material o la partida.</p></a>
-                        <a class="card card--link" href="estrategias.php"><h3>Estrategias</h3><p>Planes y conceptos del medio juego.</p></a>
-                        <a class="card card--link" href="aperturas.php"><h3>Aperturas</h3><p>Principios y aperturas más conocidas.</p></a>
-                        <a class="card card--link" href="finales.php"><h3>Finales</h3><p>La fase técnica y decisiva.</p></a>
-                        <a class="card card--link" href="partidas.php"><h3>Partidas Históricas</h3><p>Cinco partidas que enseñan.</p></a>
-                        <a class="card card--link" href="ejercicios.php"><h3>Ejercicios</h3><p>Pon a prueba lo aprendido.</p></a>
-                        <a class="card card--link" href="glosario.php"><h3>Glosario</h3><p>Términos con buscador incluido.</p></a>
-                        <a class="card card--link" href="recursos.php"><h3>Recursos</h3><p>Libros y plataformas recomendadas.</p></a>
-                        <a class="card card--link" href="contacto.php"><h3>Contacto</h3><p>Envía consultas o sugerencias.</p></a>
+                        <?php // Tarjetas generadas desde datos/secciones.php (todas menos Inicio y esta misma página) ?>
+                        <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
+                        <?php if ($slug === 'index' || $slug === 'sobre-el-sitio') continue; ?>
+                        <a class="card card--link" href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>"><h3><?= htmlspecialchars($seccion['titulo']) ?></h3><p><?= htmlspecialchars($seccion['descripcion']) ?></p></a>
+                        <?php endforeach; ?>
                     </div>
                 </section>
 
