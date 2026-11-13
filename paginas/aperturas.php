@@ -14,7 +14,7 @@
  */
 
 $titulo_pagina    = "Aperturas - El Arte del Jaque";
-$meta_descripcion = "Catálogo de aperturas de ajedrez: abiertas, semiabiertas y cerradas, con sus jugadas, ideas, planes y trampas más comunes.";
+$meta_descripcion = "Catálogo de aperturas de ajedrez: abiertas, semiabiertas, cerradas, indias y de flanco, con sus jugadas, ideas, planes y las trampas más comunes.";
 $pagina_actual    = "aperturas";
 $header_titulo    = "Aperturas";
 $header_tagline   = "El comienzo de toda partida";
@@ -27,6 +27,7 @@ require_once __DIR__ . '/../includes/componentes.php';  // ficha_apertura()
 
 $aperturas = require __DIR__ . '/../datos/aperturas.php';
 $tipos     = require __DIR__ . '/../datos/tipos-apertura.php';
+$trampas   = require __DIR__ . '/../datos/trampas.php';
 
 // Cantidad de aperturas de cada tipo (para los filtros y las tarjetas).
 $cantidad_por_tipo = array_fill_keys(array_keys($tipos), 0);
@@ -130,7 +131,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section" id="catalogo">
                     <div class="section-heading">
                         <h2>Catálogo de aperturas</h2>
-                        <p><?= count($aperturas) ?> aperturas clasificadas por tipo. Cada ficha muestra las jugadas iniciales, la idea de cada bando, los planes típicos y los errores más comunes.</p>
+                        <p><?= count($aperturas) ?> aperturas clasificadas por tipo. Cada ficha muestra las jugadas iniciales, la idea de cada bando, los planes típicos y los errores más comunes. Más abajo encontrarás las <a href="#trampas" style="color: var(--gold);">trampas de apertura</a> más conocidas.</p>
                     </div>
 
                     <!-- Filtro por tipo con método GET: cada opción es un enlace aperturas.php?tipo=... -->
@@ -161,6 +162,19 @@ require_once __DIR__ . '/../includes/nav.php';
                         <?php endforeach; ?>
                     </div>
                     <?php endforeach; ?>
+                </section>
+
+                <hr>
+
+                <section class="page-section" id="trampas">
+                    <div class="section-heading">
+                        <h2>Trampas de apertura</h2>
+                        <p>Secuencias cortas en las que un error en las primeras jugadas cuesta material o la partida. Conocerlas sirve para no caer en ellas y para entender por qué los principios de la apertura son importantes.</p>
+                    </div>
+
+                    <div class="trap-grid">
+                        <?php foreach ($trampas as $trampa) tarjeta_trampa($trampa, $aperturas); ?>
+                    </div>
                 </section>
 
             </main>

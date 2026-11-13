@@ -576,6 +576,44 @@ Se probaron un tipo inexistente, uno todavía sin aperturas, un valor con
 espacios, un array (`?tipo[]=`) y un intento de XSS (`<script>`): todos se
 rechazan o se corrigen sin errores. Capturas en escritorio y celular.
 
+### Fase 4B — Catálogo completo y trampas de apertura (rama `feature/fase4b-aperturas`)
+
+**13 aperturas nuevas (de 15 a 28)**
+- **Cerradas:** Eslava, Sistema Londres, Sistema Colle y Catalana.
+- **Indias y otras defensas contra 1.d4:** India de Rey, Nimzoindia, India de
+  Dama, Grünfeld, Benoni Moderna y Holandesa.
+- **De flanco:** Inglesa, Réti y Bird.
+- Cada una tiene la ficha completa de la Fase 4A, con datos históricos que
+  conectan con otras secciones. Por ejemplo, la "Partida del Siglo" de Fischer
+  (1956) empezó con una Grünfeld, y Fischer jugó la Inglesa en el Mundial
+  de 1972.
+- El filtro GET suma los tipos `india` y `flanco`; el catálogo queda con 5
+  grupos: 7 abiertas, 7 semiabiertas, 5 cerradas, 6 indias y 3 de flanco.
+
+**Nueva sección: Trampas de apertura**
+- Nuevo `datos/trampas.php` con 8 trampas clásicas: Mate del Loco, Mate del
+  Pastor, Mate de Légal, Blackburne-Shilling, Trampa de la Petrov, Mate en la
+  Caro-Kann, Trampa del Elefante y Gambito From.
+- Cada tarjeta muestra la secuencia completa, por qué funciona y la lección
+  (cómo evitarla). Si la trampa pertenece a una apertura del catálogo, enlaza
+  a su ficha (`aperturas.php#italiana`).
+- Nueva función `tarjeta_trampa()` en `includes/componentes.php`.
+
+**Revisión de exactitud:** se verificó casilla por casilla cada secuencia de
+mate (Légal, Blackburne-Shilling, Caro-Kann, Gambito From y Pastor) y los
+rangos ECO. Se usa el término "mate de la coz", y no "mate ahogado", para no
+confundirlo con el ahogado (tablas) del glosario.
+
+**Archivos nuevos:** `datos/trampas.php`.
+**Archivos modificados:** `datos/aperturas.php`, `datos/tipos-apertura.php`,
+`includes/componentes.php`, `paginas/aperturas.php`, `css/style.css` y este
+README.
+
+**Pruebas:** la página carga sin errores de PHP y muestra 28 fichas en 5
+grupos y 8 trampas. Cada filtro devuelve la cantidad esperada, los 6 enlaces
+de las trampas apuntan a fichas que existen y un intento de XSS en `?tipo=` se
+rechaza. El resto del sitio sigue respondiendo bien.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.

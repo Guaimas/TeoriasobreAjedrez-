@@ -31,10 +31,10 @@ return [
         'descripcion' => 'Empiezan con el peón de dama. El centro suele quedar bloqueado por peones, y las partidas son más estratégicas y de maniobra que tácticas.',
     ],
     'india' => [
-        'nombre'      => 'Indias',
+        'nombre'      => 'Indias y otras defensas',
         'singular'    => 'India',
-        'jugada'      => '1.d4 Cf6',
-        'descripcion' => 'Las negras responden a 1.d4 con el caballo en lugar del peón y suelen colocar un alfil en fianchetto. Controlan el centro con piezas antes que con peones.',
+        'jugada'      => '1.d4 Cf6, 1.d4 f5…',
+        'descripcion' => 'Las negras responden a 1.d4 sin jugar 1...d5. Lo más común es el caballo (los sistemas "indios"), que suele ir acompañado de un alfil en fianchetto: controlan el centro con piezas antes que con peones. Aquí también se incluye la Holandesa (1...f5).',
     ],
     'flanco' => [
         'nombre'      => 'De flanco',

@@ -96,3 +96,31 @@ if (!function_exists('ficha_apertura')) {
         <?php
     }
 }
+
+if (!function_exists('tarjeta_trampa')) {
+    /**
+     * Imprime una trampa de apertura (datos/trampas.php).
+     *
+     * @param array $t         datos de la trampa
+     * @param array $aperturas catálogo, para enlazar a la ficha de su apertura
+     */
+    function tarjeta_trampa(array $t, array $aperturas)
+    {
+        $tiene_ficha = $t['apertura'] !== null && isset($aperturas[$t['apertura']]);
+        ?>
+        <article class="card trap-card">
+            <h3><?= e($t['nombre']) ?></h3>
+            <p class="trap-origin">
+                <?php if ($tiene_ficha): ?>
+                <a href="aperturas.php#<?= e($t['apertura']) ?>"><?= e($t['origen']) ?></a>
+                <?php else: ?>
+                <?= e($t['origen']) ?>
+                <?php endif; ?>
+            </p>
+            <p class="trap-line"><?= e($t['jugadas']) ?></p>
+            <p><?= e($t['explicacion']) ?></p>
+            <p class="trap-lesson"><strong>Lección:</strong> <?= e($t['leccion']) ?></p>
+        </article>
+        <?php
+    }
+}

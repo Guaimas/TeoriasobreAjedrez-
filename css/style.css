@@ -1399,8 +1399,30 @@ main { padding: 2.4rem; max-width: 1180px; }
 .opening-more summary:hover { color: var(--gold-bright); }
 .opening-more h4 { margin-top: 1.1rem; }
 
+/* Trampas de apertura (tarjeta_trampa()) */
+.trap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+.trap-card h3 { color: var(--gold-bright); margin-bottom: .2rem; }
+.trap-origin { font-size: .8rem; color: var(--text-faint); margin-bottom: .8rem; }
+.trap-origin a { color: var(--gold); }
+.trap-line {
+  font-family: 'Courier New', monospace;
+  font-size: .86rem;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: .7rem .9rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+.trap-lesson { font-size: .88rem; margin-bottom: 0; }
+
 @media (max-width: 700px) {
   .opening-ideas { grid-template-columns: 1fr; }
+  .trap-grid { grid-template-columns: 1fr; }
 }
 
 /* =========================
