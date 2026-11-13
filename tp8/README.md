@@ -159,28 +159,6 @@ generado con `password_hash()`, nunca en texto plano.
 **Limitación conocida:** el login no limita los intentos fallidos (para un
 sitio publicado convendría bloquear temporalmente después de varios errores).
 
-## Pruebas realizadas
-
-Probado con PHP 8.2 y MariaDB 10.4 de XAMPP: `php -l` sin errores en todos
-los archivos PHP del proyecto.
-
-- **Registro:** formulario vacío, datos inválidos, contraseñas que no
-  coinciden, email repetido (también en mayúsculas), sin token CSRF y con un
-  campo `rol=admin` agregado a mano: el usuario se creó con rol `usuario` y la
-  contraseña guardada como hash `$2y$…`.
-- **Login:** contraseña incorrecta y email inexistente dan el mismo mensaje.
-  Al entrar, el id de sesión cambia; el admin va a `admin_panel.php` y el
-  usuario a `dashboard.php`. Con sesión, `login.php` y `registro.php`
-  redirigen al panel.
-- **Control de acceso:** sin sesión, `dashboard.php`, `admin_panel.php` y
-  todo `admin/` mandan a `login.php?error=acceso_denegado`; con un usuario
-  común, `admin_panel.php` y `admin/` mandan a `dashboard.php?error=permiso`;
-  el admin usa el CRUD completo.
-- **Logout:** por GET o sin token no cierra la sesión; por POST borra la
-  cookie y la sesión vieja deja de servir.
-- **Resto del sitio:** las 12 páginas públicas, el formulario de contacto y
-  el buscador siguen funcionando.
-
 ## Guion para la demostración en vivo
 
 1. **Registrarse:** "Registrarse" en el menú → completar el formulario →
