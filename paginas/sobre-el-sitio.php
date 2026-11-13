@@ -73,9 +73,9 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>¿Qué encontrarás?</h2>
                     </div>
                     <div class="topic-grid">
-                        <?php // Tarjetas generadas desde datos/secciones.php: las secciones de contenido (Inicio, esta página, el Plan de Estudio y Contacto se enlazan en otros lugares) ?>
+                        <?php // Tarjetas generadas desde datos/secciones.php (todas menos Inicio y esta misma página) ?>
                         <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
-                        <?php if (in_array($slug, ['index', 'plan-de-estudio', 'sobre-el-sitio', 'contacto'], true)) continue; ?>
+                        <?php if (in_array($slug, ['index', 'sobre-el-sitio'], true)) continue; ?>
                         <a class="card card--link" href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>"><h3><?= htmlspecialchars($seccion['titulo']) ?></h3><p><?= htmlspecialchars($seccion['descripcion']) ?></p></a>
                         <?php endforeach; ?>
                     </div>
@@ -193,8 +193,6 @@ require_once __DIR__ . '/../includes/nav.php';
                     <div class="simple-panel">
                         <h2>¿Cómo aprovechar el sitio?</h2>
                         <p>
-                            Para un recorrido guiado por niveles, mira el
-                            <a href="plan-de-estudio.php" style="color: var(--gold);">Plan de Estudio</a>.
                             Si estás empezando, te recomendamos seguir las secciones en el orden del menú:
                             primero los <a href="fundamentos.php" style="color: var(--gold);">Fundamentos</a>
                             para conocer el tablero y las reglas; después las tácticas y las estrategias, que
