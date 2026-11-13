@@ -15,8 +15,8 @@
    10. FOOTER                     pie de página
    11. COMPLEMENTOS DE CONTENIDO  glosario, ejercicios, partidas...
    12. MENSAJE DE BIENVENIDA      cartel (toast)
-   13. VALIDACIÓN DEL FORMULARIO  errores y avisos (Clase 5)
-   14. BUSCADOR (GET)             buscador del glosario (Clase 5)
+   13. VALIDACIÓN DEL FORMULARIO  errores y avisos (TP5)
+   14. BUSCADOR (GET)             buscador del glosario (TP5)
    15. GALERÍA DE IMÁGENES        galería de "Sobre el sitio"
    16. CATÁLOGO DE APERTURAS      filtros por tipo y fichas
    17. MODO OSCURO / MODO CLARO   variables del tema claro
@@ -1349,7 +1349,7 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 .field-success.hidden { display: none; }
 
-/* Clase 5: aviso general de errores devuelto por el servidor */
+/* TP5: aviso general de errores devuelto por el servidor */
 .form-alert {
   margin-bottom: 1.3rem;
   padding: .8rem 1rem;
@@ -1360,7 +1360,7 @@ main { padding: 2.4rem; max-width: 1180px; }
   font-size: .86rem;
 }
 
-/* Clase 5: aviso informativo (ej: búsqueda sin resultados) */
+/* TP5: aviso informativo (ej: búsqueda sin resultados) */
 .form-info {
   margin-bottom: 1.4rem;
   padding: .8rem 1rem;

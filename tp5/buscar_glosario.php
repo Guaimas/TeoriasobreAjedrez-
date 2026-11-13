@@ -1,6 +1,6 @@
 <?php
 /**
- * clase5/buscar_glosario.php
+ * tp5/buscar_glosario.php
  * -----------------------------------------------------------------
  * Búsqueda en el glosario (método GET).
  *

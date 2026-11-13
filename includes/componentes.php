@@ -11,8 +11,8 @@
  * -----------------------------------------------------------------
  */
 
-// e() = htmlspecialchars($texto, ENT_QUOTES, 'UTF-8'), definida en la Clase 5
-require_once __DIR__ . '/../clase5/seguridad.php';
+// e() = htmlspecialchars($texto, ENT_QUOTES, 'UTF-8'), definida en el TP5
+require_once __DIR__ . '/../tp5/seguridad.php';
 
 if (!function_exists('lista_jugadas')) {
     /**

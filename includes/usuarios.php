@@ -20,7 +20,7 @@
 
 require_once __DIR__ . '/../config/sesion.php';
 require_once __DIR__ . '/../config/conexion.php';     // $pdo (TP7), la misma conexión de siempre
-require_once __DIR__ . '/../clase5/seguridad.php';    // e(), limpiar(), largo()
+require_once __DIR__ . '/../tp5/seguridad.php';    // e(), limpiar(), largo()
 require_once __DIR__ . '/csrf.php';
 
 // Largos máximos tomados de tp6/schema.sql.
