@@ -114,6 +114,36 @@ Se separan en dos tablas:
 > futuro cada nivel tuviera, por ejemplo, una descripción, se llevaría a una
 > tabla `niveles`.
 
+### Segundo registro: los ejercicios que resolvió cada usuario (relación N:M)
+
+El sitio también tiene que guardar qué ejercicios respondió cada usuario y si
+acertó. Anotado sin normalizar, aparece otra lista en una sola celda:
+
+| usuario | email | rol | ejercicios_respondidos |
+|---|---|---|---|
+| Ana García | ana.garcia@correo.com | estudiante | 1 ✔ · 2 ✘ · 2 ✔ |
+| Samuel Guaimas | admin@arte-del-jaque.com | administrador | 3 ✔ |
+
+- **1FN:** la lista se separa en una fila por intento (usuario, ejercicio,
+  resultado, fecha). Ahora los datos del usuario se repiten en cada intento.
+- **2FN:** el nombre, el email y el rol dependen solo del usuario, no del
+  intento. Quedan en la tabla `usuarios` (con su rol en `roles`, como ya se vio).
+- **3FN:** cada intento guarda únicamente `usuario_id`, `ejercicio_id`, si
+  acertó y la fecha.
+
+El resultado es la tabla **intentos**, que relaciona usuarios y ejercicios.
+Es una relación **muchos a muchos (N:M)**: un usuario responde muchos
+ejercicios y un ejercicio es respondido por muchos usuarios.
+
+**intentos**
+
+| id | usuario_id | ejercicio_id | es_correcto |
+|---|---|---|---|
+| 1 | 2 | 1 | 1 |
+| 2 | 2 | 2 | 0 |
+| 3 | 2 | 2 | 1 |
+| 4 | 1 | 3 | 1 |
+
 ## 3. Tablas resultantes
 
 En el `schema.sql`, todas las tablas usan una clave primaria
@@ -127,9 +157,11 @@ En el `schema.sql`, todas las tablas usan una clave primaria
 | **usuarios** | id, rol_id, nombre, apellido, email, password, created_at, updated_at | id | rol_id → roles.id |
 | **ejercicios** | id, tema_id, autor_id, nivel, enunciado, posicion_fen, explicacion, created_at, updated_at | id | tema_id → temas.id · autor_id → usuarios.id |
 | **opciones_ejercicio** | id, ejercicio_id, letra, texto, es_correcta | id | ejercicio_id → ejercicios.id |
+| **intentos** (N:M) | id, usuario_id, ejercicio_id, es_correcto, created_at | id | usuario_id → usuarios.id · ejercicio_id → ejercicios.id |
 
 Restricciones únicas: `roles.nombre`, `temas.nombre`, `usuarios.email` y
-`opciones_ejercicio (ejercicio_id, letra)`.
+`opciones_ejercicio (ejercicio_id, letra)`. En `intentos` no hay restricción
+única porque un usuario puede intentar el mismo ejercicio más de una vez.
 
 ### Diagrama entidad-relación
 
@@ -139,6 +171,8 @@ erDiagram
     usuarios |o--o{ ejercicios : "escribe"
     temas ||--o{ ejercicios : "agrupa"
     ejercicios ||--|{ opciones_ejercicio : "tiene"
+    usuarios ||--o{ intentos : "responde"
+    ejercicios ||--o{ intentos : "es respondido en"
 
     roles {
         int id PK
@@ -177,5 +211,12 @@ erDiagram
         char letra
         varchar texto
         tinyint es_correcta
+    }
+    intentos {
+        int id PK
+        int usuario_id FK
+        int ejercicio_id FK
+        tinyint es_correcto
+        timestamp created_at
     }
 ```

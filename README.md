@@ -297,17 +297,18 @@ PHP usando PDO. Se modelan los **ejercicios** del sitio: hoy están escritos en
 | Archivo | Contenido |
 |---|---|
 | [`tp6/NORMALIZACION.md`](tp6/NORMALIZACION.md) | Tabla sin normalizar, pasos 1FN → 2FN → 3FN, listado de tablas con PK/FK y diagrama entidad-relación |
-| [`tp6/schema.sql`](tp6/schema.sql) | Creación de la base y de las 5 tablas (InnoDB, utf8mb4, FK comentadas, auditoría e índice) |
+| [`tp6/schema.sql`](tp6/schema.sql) | Creación de la base y de las 6 tablas (InnoDB, utf8mb4, FK comentadas, auditoría e índice) |
 | [`tp6/consultas.sql`](tp6/consultas.sql) | Datos de prueba y consultas CRUD (INSERT, SELECT con WHERE/ORDER BY, INNER JOIN, UPDATE y DELETE) |
 
 **Tablas:** `roles` y `temas` (maestras), `usuarios`, `ejercicios` (principal
-de negocio) y `opciones_ejercicio` (detalle: las opciones de cada ejercicio).
+de negocio), `opciones_ejercicio` (detalle: las opciones de cada ejercicio) e
+`intentos` (relación N:M entre usuarios y ejercicios: quién respondió qué y si acertó).
 
 **Cómo probarlo en XAMPP**
 1. En el XAMPP Control Panel, iniciar **Apache** y **MySQL**.
 2. Abrir `http://localhost/phpmyadmin`.
 3. Pestaña **Importar** → elegir `tp6/schema.sql` → **Importar**. Se crea la
-   base `arte_del_jaque` con sus 5 tablas.
+   base `arte_del_jaque` con sus 6 tablas.
 4. Seleccionar la base `arte_del_jaque` → pestaña **SQL** → pegar el contenido
    de `tp6/consultas.sql` → **Continuar**. phpMyAdmin muestra el resultado de
    cada consulta.
@@ -318,7 +319,7 @@ de negocio) y `opciones_ejercicio` (detalle: las opciones de cada ejercicio).
 (XAMPP). Además se verificó que las restricciones funcionan: no se puede
 borrar un tema con ejercicios (`RESTRICT`), al borrar un autor sus ejercicios
 quedan sin autor (`SET NULL`), y al borrar un ejercicio se borran sus opciones
-(`CASCADE`). Los hashes de las contraseñas se validaron con `password_verify()`
+(`CASCADE`, también en los intentos). Los hashes de las contraseñas se validaron con `password_verify()`
 mediante PDO.
 
 ## Variables de entorno

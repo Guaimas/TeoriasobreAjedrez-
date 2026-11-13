@@ -64,13 +64,26 @@ INSERT INTO opciones_ejercicio (ejercicio_id, letra, texto, es_correcta) VALUES
     (3, 'B', 'Dc7',  0),
     (3, 'C', 'Da3+', 0);
 
--- Registro de prueba (se borra al final, en la sección DELETE).
+-- Tabla de relación N:M intentos: qué usuario respondió qué ejercicio.
+-- Ana acierta el ejercicio 1, falla el 2 y después lo acierta;
+-- Samuel acierta el 3.
+INSERT INTO intentos (usuario_id, ejercicio_id, es_correcto) VALUES
+    (2, 1, 1),
+    (2, 2, 0),
+    (2, 2, 1),
+    (1, 3, 1);
+
+-- Registro de prueba (se borra al final, en la sección DELETE),
+-- con sus opciones y un intento, para ver el borrado en cascada.
 INSERT INTO ejercicios (tema_id, autor_id, nivel, enunciado, explicacion) VALUES
     (3, 2, 'Avanzado', 'Ejercicio de prueba para borrar', 'Registro temporal.');
 
 INSERT INTO opciones_ejercicio (ejercicio_id, letra, texto, es_correcta) VALUES
     (4, 'A', 'Opción de prueba 1', 1),
     (4, 'B', 'Opción de prueba 2', 0);
+
+INSERT INTO intentos (usuario_id, ejercicio_id, es_correcto) VALUES
+    (2, 4, 1);
 
 
 -- =================================================================
@@ -97,6 +110,17 @@ INNER JOIN usuarios u           ON u.id = e.autor_id
 INNER JOIN opciones_ejercicio o ON o.ejercicio_id = e.id AND o.es_correcta = 1
 ORDER BY e.id;
 
+-- Intentos de los usuarios: la relación N:M usuarios <-> ejercicios
+-- (INNER JOIN de tres tablas a través de la tabla intentos).
+SELECT CONCAT(u.nombre, ' ', u.apellido)                AS usuario,
+       e.enunciado                                      AS ejercicio,
+       IF(i.es_correcto = 1, 'Acertó', 'Se equivocó')   AS resultado,
+       i.created_at                                     AS fecha
+FROM intentos i
+INNER JOIN usuarios u   ON u.id = i.usuario_id
+INNER JOIN ejercicios e ON e.id = i.ejercicio_id
+ORDER BY usuario, i.id;
+
 
 -- =================================================================
 -- UPDATE: modificar un registro específico
@@ -119,11 +143,12 @@ WHERE id = 3;
 -- =================================================================
 
 -- Se borra el ejercicio de prueba (id 4). No rompe ninguna clave
--- foránea: sus dos opciones se borran automáticamente por el
--- ON DELETE CASCADE de opciones_ejercicio.
+-- foránea: sus dos opciones y su intento se borran automáticamente
+-- por el ON DELETE CASCADE de opciones_ejercicio y de intentos.
 DELETE FROM ejercicios
 WHERE id = 4;
 
--- Comprobación: el ejercicio 4 ya no existe y sus opciones tampoco.
+-- Comprobación: el ejercicio 4 ya no existe, ni sus opciones ni su intento.
 SELECT COUNT(*) AS ejercicios_restantes FROM ejercicios;
 SELECT COUNT(*) AS opciones_del_ejercicio_4 FROM opciones_ejercicio WHERE ejercicio_id = 4;
+SELECT COUNT(*) AS intentos_del_ejercicio_4 FROM intentos WHERE ejercicio_id = 4;

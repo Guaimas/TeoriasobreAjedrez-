@@ -4,7 +4,8 @@
 --
 -- Se ejecuta de una sola vez en phpMyAdmin (XAMPP / Laragon).
 -- Las tablas se crean en orden: primero las maestras (roles, temas),
--- después las que tienen claves foráneas hacia ellas.
+-- después las que tienen claves foráneas hacia ellas, y al final la
+-- tabla de relación N:M (intentos).
 -- =================================================================
 
 CREATE DATABASE IF NOT EXISTS arte_del_jaque
@@ -15,6 +16,7 @@ USE arte_del_jaque;
 
 -- Si el script se vuelve a ejecutar, se borran las tablas en orden
 -- inverso (primero las que tienen FK) para poder crearlas de nuevo.
+DROP TABLE IF EXISTS intentos;
 DROP TABLE IF EXISTS opciones_ejercicio;
 DROP TABLE IF EXISTS ejercicios;
 DROP TABLE IF EXISTS usuarios;
@@ -125,6 +127,36 @@ CREATE TABLE opciones_ejercicio (
     -- ON DELETE CASCADE: las opciones no tienen sentido sin su
     -- ejercicio, así que se borran automáticamente con él.
     CONSTRAINT fk_opciones_ejercicio
+        FOREIGN KEY (ejercicio_id) REFERENCES ejercicios (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- -----------------------------------------------------------------
+-- Tabla de relación N:M: intentos
+-- Une usuarios con ejercicios: un usuario responde muchos ejercicios
+-- y un ejercicio es respondido por muchos usuarios. Cada fila es un
+-- intento: quién respondió, qué ejercicio, si acertó y cuándo.
+-- (Un usuario puede intentar el mismo ejercicio más de una vez.)
+-- -----------------------------------------------------------------
+CREATE TABLE intentos (
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id   INT        NOT NULL,
+    ejercicio_id INT        NOT NULL,
+    es_correcto  TINYINT(1) NOT NULL,   -- 1 = acertó, 0 = se equivocó
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- fecha y hora del intento
+
+    -- ON DELETE CASCADE: si se borra el usuario, se borra su historial
+    -- de intentos (no tiene sentido sin la persona).
+    CONSTRAINT fk_intentos_usuario
+        FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    -- ON DELETE CASCADE: si se borra un ejercicio, sus intentos
+    -- también se borran.
+    CONSTRAINT fk_intentos_ejercicio
         FOREIGN KEY (ejercicio_id) REFERENCES ejercicios (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
