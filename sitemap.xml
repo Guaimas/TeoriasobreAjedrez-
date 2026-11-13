@@ -50,6 +50,12 @@
   </url>
 
   <url>
+    <loc>https://www.el-arte-del-jaque.com/paginas/historia.php</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
     <loc>https://www.el-arte-del-jaque.com/paginas/ejercicios.php</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

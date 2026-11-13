@@ -75,6 +75,12 @@ return [
         'icono'       => '<path d="M3.5 8a8.5 8.5 0 1 1-1 4"/><path d="M3 4v4h4"/><path d="M12 8v4.5l3 2"/>',
         'recorrido'   => true,
     ],
+    'historia' => [
+        'titulo'      => 'Historia',
+        'descripcion' => 'Del chaturanga a hoy, y los campeones del mundo.',
+        'icono'       => '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M9 8h6"/>',
+        'recorrido'   => true,
+    ],
     'ejercicios' => [
         'titulo'      => 'Ejercicios',
         'descripcion' => 'Pon a prueba lo aprendido.',

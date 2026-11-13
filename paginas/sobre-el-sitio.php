@@ -73,9 +73,9 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>¿Qué encontrarás?</h2>
                     </div>
                     <div class="topic-grid">
-                        <?php // Tarjetas generadas desde datos/secciones.php (todas menos Inicio, el Plan de Estudio, que se enlaza más abajo, y esta misma página) ?>
+                        <?php // Tarjetas generadas desde datos/secciones.php: las secciones de contenido (Inicio, esta página, el Plan de Estudio y Contacto se enlazan en otros lugares) ?>
                         <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
-                        <?php if (in_array($slug, ['index', 'plan-de-estudio', 'sobre-el-sitio'], true)) continue; ?>
+                        <?php if (in_array($slug, ['index', 'plan-de-estudio', 'sobre-el-sitio', 'contacto'], true)) continue; ?>
                         <a class="card card--link" href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>"><h3><?= htmlspecialchars($seccion['titulo']) ?></h3><p><?= htmlspecialchars($seccion['descripcion']) ?></p></a>
                         <?php endforeach; ?>
                     </div>

@@ -43,6 +43,7 @@ $niveles = [
             ['Conceptos estratégicos', 'estrategias.php', 'Centro, columnas abiertas, casillas débiles y más.'],
             ['Conceptos de finales', 'finales.php', 'Oposición, regla del cuadrado y peones pasados.'],
             ['Partidas Históricas', 'partidas.php', 'Ver las ideas aplicadas en partidas reales.'],
+            ['Historia y campeones', 'historia.php', 'De dónde viene el ajedrez y quiénes fueron sus campeones.'],
             ['Ejercicios de tácticas', 'ejercicios.php#tacticas', 'Encuentra el golpe en posiciones reales.'],
         ],
     ],
