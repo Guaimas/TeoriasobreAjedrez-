@@ -1822,7 +1822,11 @@ a.btn-outline { display: inline-block; }
 
 .admin-form { max-width: 820px; }
 .admin-form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 1rem; }
-.admin-form label small { color: var(--text-faint); font-weight: 400; }
+.admin-form label small,
+.form-panel label small { color: var(--text-faint); font-weight: 400; }
+.admin-form-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.link-gold { color: var(--gold); }
+.link-gold:hover { color: var(--gold-bright); }
 
 /* Netbook (hasta 1280px) y celulares: la tabla pasa a "tarjetas" (un bloque por ejercicio) */
 @media (max-width: 1280px) {
