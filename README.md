@@ -632,6 +632,18 @@ Cada sección ampliada se guarda en un commit propio dentro de la rama.
 - Seis patrones con su descripción y una nota sobre cómo reconocerlos o
   evitarlos: pasillo, coz, Anastasia, Boden, beso y escalera.
 
+**5.3 Finales**
+- Nueva sección **"Mates básicos paso a paso"** (`finales.php#mates-basicos`):
+  rey y dama contra rey (con la advertencia del ahogado), rey y torre contra
+  rey (método de la caja y la oposición) y dos torres contra rey (mate de la
+  escalera), con instrucciones numeradas.
+- Nueva sección **"Finales teóricos"**: la posición de Lucena (cómo ganar
+  "construyendo un puente") y la de Philidor (cómo defender con la torre en la
+  tercera fila y después jaques desde atrás).
+- Dos conceptos nuevos: **Triangulación** y **Fortaleza** (10 tarjetas en
+  dos filas completas). La tarjeta "Conceptos básicos de mate" enlaza a la
+  explicación paso a paso.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.
