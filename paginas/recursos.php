@@ -73,7 +73,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Jugar</h2>
                         <p>Plataformas para poner en práctica lo aprendido contra otras personas.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Chess.com</h3>
                             <p>Una de las plataformas más grandes del mundo para jugar partidas online, con salas para todos los niveles.</p>
@@ -98,7 +98,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Practicar</h2>
                         <p>Ejercicios y puzzles para entrenar la vista táctica.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Puzzles de Lichess</h3>
                             <p>Miles de ejercicios tácticos gratuitos, adaptados automáticamente a tu nivel de juego.</p>
@@ -123,7 +123,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Estudiar</h2>
                         <p>Lecciones guiadas sobre teoría, aperturas, estrategia y finales.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Lichess Learn</h3>
                             <p>Lecciones interactivas gratuitas, desde el movimiento de las piezas hasta conceptos estratégicos.</p>
@@ -148,7 +148,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Analizar partidas</h2>
                         <p>Herramientas para revisar tus propias partidas y entender tus errores.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Tablero de análisis de Lichess</h3>
                             <p>Permite cargar cualquier partida y analizarla con un motor de ajedrez gratuito, señalando los errores e imprecisiones.</p>

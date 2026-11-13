@@ -64,6 +64,7 @@ TeoriasobreAjedrez-/
 │   ├── fundamentos.php
 │   ├── glosario.php      Glosario + buscador (GET) — Clase 5
 │   ├── partidas.php
+│   ├── plan-de-estudio.php Recorrido por niveles que enlaza a las secciones
 │   ├── recursos.php
 │   ├── sobre-el-sitio.php
 │   └── tacticas.php
@@ -745,6 +746,38 @@ la primera de dos correctas avisa que falta otra; al completar, el ejercicio
 se bloquea y se abre la solución; los demás ejercicios no se ven afectados.
 Las capturas de primer plano detectaron filas de distinta altura en el
 tablero, que se corrigieron.
+
+### Fase 7 — Plan de estudio y ajustes finales (rama `feature/fase7-plan-de-estudio`)
+
+Fase reducida a propósito: solo cambios que siguen lo que el proyecto ya hace
+(páginas con la misma plantilla, datos en arrays y clases CSS existentes).
+
+**Plan de Estudio (nueva página `paginas/plan-de-estudio.php`)**
+- Ordena en tres niveles (principiante, intermedio y avanzado) las secciones
+  que ya existen. **No agrega contenido nuevo**: cada paso enlaza
+  directamente a la parte del sitio donde se explica (por ejemplo
+  `fundamentos.php#notacion` o `aperturas.php?tipo=india#catalogo`).
+- Se agregó al menú lateral con una sola entrada en `datos/secciones.php`, y
+  se enlaza desde "¿Cómo aprovechar el sitio?" en Sobre el sitio.
+
+**Recursos:** las secciones con 2 tarjetas (Jugar, Practicar, Estudiar y
+Analizar partidas) usan la nueva variante `card-grid--2` y ya no dejan un
+hueco por fila. Tiene sus reglas responsive para que la grilla general no la
+pise en pantallas medianas.
+
+**`sitemap.xml`:** se sumó la página nueva (13 URLs, XML válido).
+
+**Descartado de esta fase y por qué:** la página de historia y campeones
+(sería contenido nuevo), las imágenes locales (alojar imágenes en el
+repositorio es algo que el proyecto nunca hizo y suma varios MB), la página
+404 (requiere configurar Apache con `.htaccess`) y el botón "volver arriba"
+(una funcionalidad nueva).
+
+**Pruebas:** las 13 páginas responden sin errores de PHP. Se verificó con un
+script que los 22 enlaces del plan llevan a páginas y anclas que existen.
+El menú (13 ítems) entra completo en una pantalla de 1366×768, el plan no
+muestra el paginador, "Sobre el sitio" conserva sus 10 tarjetas y el sitemap
+es XML válido.
 
 ## Créditos
 

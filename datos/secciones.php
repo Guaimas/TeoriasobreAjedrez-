@@ -33,6 +33,12 @@ return [
         'icono'       => '<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9"/><path d="M9.5 20v-6h5v6"/>',
         'recorrido'   => false,
     ],
+    'plan-de-estudio' => [
+        'titulo'      => 'Plan de Estudio',
+        'descripcion' => 'Qué aprender y en qué orden, por niveles.',
+        'icono'       => '<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',
+        'recorrido'   => false,
+    ],
     'fundamentos' => [
         'titulo'      => 'Fundamentos',
         'descripcion' => 'Tablero, piezas y reglas básicas.',

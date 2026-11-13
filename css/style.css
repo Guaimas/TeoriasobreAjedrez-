@@ -451,6 +451,17 @@ main { padding: 2.4rem; max-width: 1180px; }
 /* Variante de 4 columnas (ej: "Tecnologías utilizadas" en Sobre el sitio) */
 .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
 
+/* Variante de 2 columnas, para secciones con 2 tarjetas (ej: Recursos) */
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Plan de estudio: lista numerada de pasos con enlace + explicación */
+.study-goal { margin-bottom: 1rem; }
+.study-steps { display: grid; gap: .7rem; }
+.study-steps li { padding-left: .3rem; }
+.study-steps a { color: var(--gold-bright); font-weight: 600; }
+.study-steps a:hover { color: var(--gold); text-decoration: underline; }
+.study-steps span { display: block; font-size: .88rem; color: var(--text-soft); }
+
 /* Variante de 4 columnas de la grilla chica (ej: ritmos de juego en Fundamentos) */
 .topic-grid.topic-grid--4 { grid-template-columns: repeat(4, 1fr); }
 
@@ -1601,6 +1612,7 @@ html.light-mode .header-titles .tagline {
   .topic-grid { grid-template-columns: repeat(3, 1fr); }
   .card-grid { grid-template-columns: repeat(3, 1fr); }
   .card-grid.card-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1634,6 +1646,7 @@ html.light-mode .header-titles .tagline {
   .content-block { grid-template-columns: 1fr; }
   .content-block.reverse .content-media { order: 0; }
   .card-grid.card-grid--4 { grid-template-columns: 1fr; }
+  .card-grid.card-grid--2 { grid-template-columns: 1fr; }
 
   .footer-grid { grid-template-columns: 1fr; }
 }
