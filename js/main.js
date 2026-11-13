@@ -91,7 +91,104 @@ document.addEventListener('DOMContentLoaded', function () {
   // ---------------------------------------------------------
   initVolverArriba();
 
+  // ---------------------------------------------------------
+  // CARRUSELES CON FLECHAS (piezas en Fundamentos, Partidas)
+  // ---------------------------------------------------------
+  initCarruseles();
+
 });
+
+/**
+ * Carruseles: muestra un tema a la vez, con flechas ‹ ›, pestañas con el
+ * nombre de cada tema y las flechas del teclado.
+ *
+ * Estructura que espera (ver paginas/fundamentos.php):
+ *   [data-carrusel]
+ *     .carousel-controls (hidden)  -> [data-anterior], .carousel-tabs, [data-siguiente]
+ *     [data-slide data-titulo="..."] (uno por tema)
+ *     .carousel-status (aria-live)
+ *
+ * Sin JavaScript los controles quedan ocultos y se ven todos los temas.
+ */
+function initCarruseles() {
+  document.querySelectorAll('[data-carrusel]').forEach(function (carrusel) {
+    var slides = Array.prototype.slice.call(carrusel.querySelectorAll('[data-slide]'));
+    if (slides.length < 2) return;
+
+    var controles = carrusel.querySelector('.carousel-controls');
+    var pestanas = carrusel.querySelector('.carousel-tabs');
+    var estado = carrusel.querySelector('.carousel-status');
+    var actual = 0;
+
+    // Una pestaña por tema, con su nombre.
+    var botones = slides.map(function (slide, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'carousel-tab';
+      b.textContent = slide.getAttribute('data-titulo');
+      b.addEventListener('click', function () { mostrar(i); });
+      pestanas.appendChild(b);
+      return b;
+    });
+
+    function mostrar(indice, anunciar) {
+      actual = (indice + slides.length) % slides.length;   // da la vuelta al llegar al final
+      slides.forEach(function (s, i) { s.hidden = i !== actual; });
+      botones.forEach(function (b, i) {
+        b.classList.toggle('active', i === actual);
+        b.setAttribute('aria-pressed', i === actual ? 'true' : 'false');
+      });
+      if (anunciar !== false && estado) {
+        estado.textContent = slides[actual].getAttribute('data-titulo') + ' (' + (actual + 1) + ' de ' + slides.length + ')';
+      }
+    }
+
+    carrusel.querySelector('[data-anterior]').addEventListener('click', function () { mostrar(actual - 1); });
+    carrusel.querySelector('[data-siguiente]').addEventListener('click', function () { mostrar(actual + 1); });
+
+    // Flechas del teclado cuando el foco está en los controles del carrusel
+    // (no dentro del contenido, para no interferir con otros botones, ej: ejercicios).
+    carrusel.addEventListener('keydown', function (e) {
+      if (!e.target.closest('.carousel-controls')) return;
+      if (e.key === 'ArrowLeft') { mostrar(actual - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { mostrar(actual + 1); e.preventDefault(); }
+    });
+
+    controles.hidden = false;
+    carrusel.classList.add('is-ready');
+    mostrar(0, false);
+
+    // Permite abrir un tema desde afuera (enlaces con #ancla).
+    carrusel.mostrarTema = function (slide) { mostrar(slides.indexOf(slide)); };
+  });
+
+  // Si un enlace apunta a un tema oculto del carrusel (ej: fundamentos.php#enroque),
+  // se abre ese tema antes de desplazarse hasta él.
+  function revelar(id) {
+    var destino = id && document.getElementById(id);
+    var slide = destino && destino.closest('[data-slide]');
+    var carrusel = slide && slide.closest('[data-carrusel]');
+    if (carrusel && carrusel.mostrarTema && slide.hidden) {
+      carrusel.mostrarTema(slide);
+      return true;
+    }
+    return false;
+  }
+
+  // Al cargar la página con un #ancla en la dirección
+  if (location.hash && revelar(decodeURIComponent(location.hash.slice(1)))) {
+    document.getElementById(decodeURIComponent(location.hash.slice(1))).scrollIntoView();
+  }
+  window.addEventListener('hashchange', function () {
+    revelar(decodeURIComponent(location.hash.slice(1)));
+  });
+  // Enlaces dentro de la misma página (ej: "captura al paso" en la ficha del peón)
+  document.addEventListener('click', function (e) {
+    var enlace = e.target.closest('a[href*="#"]');
+    if (!enlace || enlace.pathname !== location.pathname) return;
+    revelar(decodeURIComponent(enlace.hash.slice(1)));
+  });
+}
 
 /**
  * Crea un botón "volver arriba" que aparece al bajar por la página y

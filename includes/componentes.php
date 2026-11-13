@@ -106,7 +106,7 @@ if (!function_exists('tablero')) {
      * (blanco o negro) se da con CSS. Para lectores de pantalla se genera
      * una descripción en texto con la posición de cada pieza.
      */
-    function tablero($fen)
+    function tablero($fen, array $marcas = [], array $capturas = [])
     {
         $simbolos = ['k' => '♚', 'q' => '♛', 'r' => '♜', 'b' => '♝', 'n' => '♞', 'p' => '♟'];
         $letras   = ['k' => 'R', 'q' => 'D', 'r' => 'T', 'b' => 'A', 'n' => 'C', 'p' => ''];
@@ -141,9 +141,12 @@ if (!function_exists('tablero')) {
         <div class="board" role="img" aria-label="<?= e($descripcion) ?>">
             <?php for ($fila = 8; $fila >= 1; $fila--): ?>
                 <?php for ($col = 0; $col < 8; $col++):
-                    $clara = ($fila + $col) % 2 === 0;
-                    $pieza = $casillas[$fila][$col] ?? null; ?>
-                <span class="sq <?= $clara ? 'sq--light' : 'sq--dark' ?>">
+                    $clara   = ($fila + $col) % 2 === 0;
+                    $pieza   = $casillas[$fila][$col] ?? null;
+                    $nombre  = $columnas[$col] . $fila;   // ej: "e4"
+                    $extra   = in_array($nombre, $marcas, true) ? ' sq--move' : '';
+                    $extra  .= in_array($nombre, $capturas, true) ? ' sq--capture' : ''; ?>
+                <span class="sq <?= $clara ? 'sq--light' : 'sq--dark' ?><?= $extra ?>">
                     <?php if ($col === 0): ?><span class="sq-rank"><?= $fila ?></span><?php endif; ?>
                     <?php if ($fila === 1): ?><span class="sq-file"><?= $columnas[$col] ?></span><?php endif; ?>
                     <?php if ($pieza !== null): ?>
@@ -152,6 +155,91 @@ if (!function_exists('tablero')) {
                 </span>
                 <?php endfor; ?>
             <?php endfor; ?>
+        </div>
+        <?php
+    }
+}
+
+if (!function_exists('casillas_alcanzables')) {
+    /**
+     * Casillas a las que llega una pieza desde $desde en un tablero vacío.
+     * Sirve para dibujar cómo se mueve cada pieza en Fundamentos.
+     *
+     * @param string $letra  N (caballo), B (alfil), R (torre), Q (dama) o K (rey)
+     * @param string $desde  casilla de origen, ej: "d4"
+     * @return array         lista de casillas, ej: ["b3", "b5", ...]
+     */
+    function casillas_alcanzables($letra, $desde)
+    {
+        $x = ord($desde[0]) - ord('a');   // columna 0..7
+        $y = (int) $desde[1] - 1;         // fila 0..7
+
+        $rectas    = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+        $diagonales = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+        $saltos    = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]];
+
+        switch (strtoupper($letra)) {
+            case 'N': $direcciones = $saltos;                          $alcance = 1; break;
+            case 'K': $direcciones = array_merge($rectas, $diagonales); $alcance = 1; break;
+            case 'B': $direcciones = $diagonales;                      $alcance = 7; break;
+            case 'R': $direcciones = $rectas;                          $alcance = 7; break;
+            case 'Q': $direcciones = array_merge($rectas, $diagonales); $alcance = 7; break;
+            default:  return [];
+        }
+
+        $resultado = [];
+        foreach ($direcciones as [$dx, $dy]) {
+            for ($paso = 1; $paso <= $alcance; $paso++) {
+                $nx = $x + $dx * $paso;
+                $ny = $y + $dy * $paso;
+                if ($nx < 0 || $nx > 7 || $ny < 0 || $ny > 7) {
+                    break;   // se salió del tablero
+                }
+                $resultado[] = chr(ord('a') + $nx) . ($ny + 1);
+            }
+        }
+
+        return $resultado;
+    }
+}
+
+if (!function_exists('ficha_pieza')) {
+    /**
+     * Imprime la ficha de una pieza (datos/piezas.php): diagrama con sus
+     * movimientos marcados + explicación. Se usa dentro del carrusel de
+     * Fundamentos.
+     */
+    function ficha_pieza(array $p)
+    {
+        $marcas   = $p['marcas'] ?? casillas_alcanzables($p['letra'], $p['desde']);
+        $capturas = $p['capturas'] ?? [];
+        ?>
+        <div class="piece-card">
+            <figure class="piece-board">
+                <?php tablero($p['posicion'], $marcas, $capturas); ?>
+                <figcaption>
+                    <span class="legend-dot"></span> Casillas a las que puede ir
+                    <?php if ($capturas): ?>
+                    <span class="legend-ring"></span> Capturas
+                    <?php endif; ?>
+                </figcaption>
+            </figure>
+            <div class="piece-info">
+                <div class="piece-title">
+                    <h3><?= e($p['nombre']) ?></h3>
+                    <span class="pill">Valor: <?= e($p['valor']) ?></span>
+                </div>
+                <dl>
+                    <dt>Cómo se mueve</dt>
+                    <dd><?= $p['movimiento'] ?></dd>
+                    <dt>Cómo captura</dt>
+                    <dd><?= $p['captura'] ?></dd>
+                    <dt>Consejo</dt>
+                    <dd><?= $p['consejo'] ?></dd>
+                    <dt>¿Sabías que…?</dt>
+                    <dd><?= $p['dato'] ?></dd>
+                </dl>
+            </div>
         </div>
         <?php
     }

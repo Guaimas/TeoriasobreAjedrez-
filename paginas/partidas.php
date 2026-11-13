@@ -42,7 +42,14 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section class="page-section">
 
-                    <article class="game-card">
+                    <!-- Carrusel: una partida a la vez, con flechas y pestañas (initCarruseles() en main.js) -->
+                    <div class="carousel" data-carrusel aria-roledescription="carrusel" aria-label="Partidas históricas">
+                        <div class="carousel-controls" hidden>
+                            <button type="button" class="nav-arrow" data-anterior aria-label="Partida anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                            <div class="carousel-tabs"></div>
+                            <button type="button" class="nav-arrow" data-siguiente aria-label="Partida siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                        </div>
+                    <article class="game-card carousel-slide" data-slide data-titulo="Inmortal (1851)" aria-label="La Partida Inmortal">
                         <span class="eyebrow">1851</span>
                         <h2>La Partida Inmortal</h2>
                         <p class="game-players">Adolf Anderssen vs. Lionel Kieseritzky</p>
@@ -64,7 +71,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </details>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Ópera (1858)" aria-label="La Partida de la Ópera">
                         <span class="eyebrow">1858</span>
                         <h2>La Partida de la Ópera</h2>
                         <p class="game-players">Paul Morphy vs. Duque de Brunswick y Conde de Isouard</p>
@@ -86,7 +93,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         </details>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Capablanca–Marshall (1918)" aria-label="Capablanca vs. Marshall">
                         <span class="eyebrow">1918</span>
                         <h2>Capablanca vs. Marshall</h2>
                         <p class="game-players">José Raúl Capablanca vs. Frank Marshall</p>
@@ -104,7 +111,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <p>En una <a href="aperturas.php#espanola">Apertura Española</a> (1.e4 e5 2.Cf3 Cc6 3.Ab5 a6 4.Aa4 Cf6 5.O-O Ae7 6.Te1 b5 7.Ab3 O-O 8.c3), Marshall sorprendió con <strong>8...d5!?</strong>, entregando un peón para lanzar un ataque contra el rey blanco. Capablanca aceptó el desafío con 9.exd5 Cxd5 10.Cxe5 y se defendió con precisión hasta ganar.</p>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Fischer–Spassky (1972)" aria-label="Fischer vs. Spassky">
                         <span class="eyebrow">1972</span>
                         <h2>Fischer vs. Spassky</h2>
                         <p class="game-players">Bobby Fischer vs. Boris Spassky</p>
@@ -122,7 +129,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <p>En la sexta partida del match, Fischer, que casi siempre abría con 1.e4, sorprendió con <strong>1.c4</strong> (<a href="aperturas.php#inglesa">Apertura Inglesa</a>), que llevó a un Gambito de Dama Rehusado. Ganó con un juego posicional impecable, y al terminar el propio Spassky se sumó a los aplausos del público.</p>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Kasparov–Topalov (1999)" aria-label="Kasparov vs. Topalov">
                         <span class="eyebrow">1999</span>
                         <h2>Kasparov vs. Topalov</h2>
                         <p class="game-players">Garry Kasparov vs. Veselin Topalov</p>
@@ -139,6 +146,8 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h4>Momento clave</h4>
                         <p>En la jugada 24, Kasparov sacrificó una torre con <strong>24.Txd4!!</strong>. Para justificarlo había calculado una cacería del rey negro que lo arrastró desde su refugio hasta el otro extremo del tablero, con más de 15 jugadas de profundidad.</p>
                     </article>
+                        <p class="carousel-status" aria-live="polite"></p>
+                    </div>
 
                 </section>
 

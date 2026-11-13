@@ -638,7 +638,113 @@ main { padding: 2.4rem; max-width: 1180px; }
 .content-block .content-media img { border-radius: var(--radius-sm); }
 .content-block h2 { color: var(--gold-bright); font-size: 1.4rem; }
 
-/* Flechas circulares (las usa la galería de "Sobre el sitio") */
+/* =========================
+   CARRUSEL CON FLECHAS (initCarruseles() en main.js)
+   ========================= */
+.carousel { margin-bottom: 1.8rem; }
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: 1.2rem;
+}
+.carousel-controls[hidden] { display: none; }
+.carousel-tabs {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+}
+.carousel-tab {
+  padding: .45rem .95rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-soft);
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.carousel-tab:hover { border-color: var(--border-gold); color: var(--text-main); }
+.carousel-tab.active { border-color: var(--gold); background: rgba(211, 166, 72, .1); color: var(--gold-bright); }
+.carousel-tab:focus-visible,
+.carousel .nav-arrow:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+/* Sin JavaScript se ven todas las fichas apiladas, con separación */
+.carousel:not(.is-ready) .carousel-slide + .carousel-slide { margin-top: 1.6rem; }
+.carousel-status {
+  /* Solo para lectores de pantalla: anuncia el tema actual */
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap;
+}
+
+/* Ficha de una pieza (ficha_pieza()) */
+.piece-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: 2rem;
+  align-items: start;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+.piece-board { margin: 0; }
+.piece-board figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .6rem;
+  margin-top: .6rem;
+  font-size: .78rem;
+  color: var(--text-faint);
+}
+.legend-dot, .legend-ring {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.legend-dot { background: rgba(46, 125, 80, .75); }
+.legend-ring { border: 2px solid rgba(200, 60, 50, .85); }
+.piece-title { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-bottom: 1rem; }
+.piece-title h3 { color: var(--gold-bright); font-size: 1.6rem; margin: 0; }
+.piece-info dl { margin: 0; }
+.piece-info dt {
+  font-size: .76rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.piece-info dt:first-child { margin-top: 0; }
+.piece-info dd { margin: .3rem 0 0; color: var(--text-soft); }
+.piece-info a { color: var(--gold); }
+
+/* Casillas marcadas en el diagrama: puntos = movimientos, anillo = captura */
+.sq--move::after {
+  content: "";
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: rgba(46, 125, 80, .75);
+}
+.sq--capture::after {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border: 3px solid rgba(200, 60, 50, .85);
+  border-radius: 50%;
+}
+
+@media (max-width: 760px) {
+  .piece-card { grid-template-columns: 1fr; padding: 1.4rem; }
+  .piece-board { max-width: 320px; }
+}
+
+/* Flechas circulares (galería de "Sobre el sitio" y carruseles) */
 .nav-arrow {
   width: 42px;
   height: 42px;
@@ -744,7 +850,9 @@ main { padding: 2.4rem; max-width: 1180px; }
 
 .form-checkbox .field-error { flex-basis: 100%; margin-top: .2rem; }
 
-.form-actions { display: flex; gap: .8rem; margin-top: 1.4rem; }
+.form-actions { display: flex; align-items: center; gap: .8rem; margin-top: 1.4rem; }
+/* En el formulario, el botón dorado no lleva el margen superior que usa en la portada */
+.form-actions .btn-gold { margin-top: 0; align-self: auto; border: 1px solid transparent; }
 
 .btn-outline {
   background: transparent;
@@ -1274,6 +1382,9 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 
 .search-page-form input:focus { outline: none; border-color: var(--gold); }
+/* El botón queda alineado con el campo de búsqueda (sin el margen de la portada) */
+.search-page-form { align-items: center; }
+.search-page-form .btn-gold { margin-top: 0; align-self: stretch; justify-content: center; }
 
 .search-summary { margin-bottom: 1.4rem; color: var(--text-faint); font-size: .9rem; }
 

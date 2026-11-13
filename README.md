@@ -37,7 +37,7 @@ TeoriasobreAjedrez-/
 │   ├── tipos-apertura.php Tipos de apertura (lista blanca del filtro GET)
 │   ├── trampas.php       Trampas de apertura
 │   ├── ejercicios.php    Ejercicios interactivos, con posiciones FEN
-│   └── historia.php      Línea de tiempo y campeones del mundo
+│   └── piezas.php        Las 6 piezas (carrusel de Fundamentos)
 ├── img/                  Fotografías del sitio (Pexels), guardadas localmente
 ├── clase5/               Clase 5: procesamiento de formularios y seguridad
 │   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
@@ -50,7 +50,8 @@ TeoriasobreAjedrez-/
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
 │   ├── nav.php           Sidebar de navegación + barra superior (SSR: menú activo)
 │   ├── secciones.php     Funciones secciones_del_sitio() y url_seccion()
-│   ├── componentes.php   ficha_apertura(), tarjeta_trampa(), ejercicio() y tablero()
+│   ├── componentes.php   ficha_apertura(), tarjeta_trampa(), ejercicio(), tablero(),
+│   │                     casillas_alcanzables() y ficha_pieza()
 │   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
@@ -65,9 +66,7 @@ TeoriasobreAjedrez-/
 │   ├── finales.php
 │   ├── fundamentos.php
 │   ├── glosario.php      Glosario + buscador (GET) — Clase 5
-│   ├── historia.php      Historia del ajedrez y campeones del mundo
 │   ├── partidas.php
-│   ├── plan-de-estudio.php Recorrido por niveles que enlaza a las secciones
 │   ├── recursos.php
 │   ├── sobre-el-sitio.php
 │   └── tacticas.php
@@ -752,6 +751,9 @@ tablero, que se corrigieron.
 
 ### Fase 7 — Páginas nuevas y ajustes finales (rama `feature/fase7-plan-de-estudio`)
 
+> **Nota:** las páginas Plan de Estudio e Historia, descritas en esta fase,
+> se eliminaron después, en los *Ajustes de diseño* (ver más abajo).
+
 Se hizo toda la fase salvo la página 404, que requeriría configurar Apache
 (`.htaccess`).
 
@@ -806,6 +808,52 @@ existen, y que las 22 imágenes de todas las páginas cargan desde `img/`. El
 botón "volver arriba" se probó con clics simulados en Chrome: oculto al
 principio, visible al bajar y vuelve al inicio. El menú entra completo en
 1366×768 y 1280×650, y el sitemap es XML válido.
+
+### Ajustes de diseño (rama `feature/ajustes-diseno`)
+
+**Páginas eliminadas:** Plan de Estudio e Historia, con sus datos
+(`datos/historia.php`), sus entradas en el menú y en el sitemap, el enlace
+desde Sobre el sitio y sus estilos CSS. El sitio vuelve a tener 12 páginas.
+
+**Carruseles con flechas para cambiar de tema**
+- Nuevo componente reutilizable: `initCarruseles()` en `js/main.js`. Muestra
+  un tema a la vez, con flechas ‹ ›, pestañas con el nombre de cada tema y las
+  flechas del teclado (cuando el foco está en los controles). Anuncia el tema
+  actual a los lectores de pantalla.
+- Sin JavaScript, los controles quedan ocultos y todos los temas se ven uno
+  debajo de otro, así que el contenido nunca se pierde.
+- Si un enlace apunta a un tema oculto (por ejemplo
+  `fundamentos.php#enroque` o `ejercicios.php#finales`), el carrusel abre ese
+  tema automáticamente.
+- Se usa en cuatro lugares:
+  1. **Fundamentos, piezas.** El Peón tenía un bloque grande con foto y las
+     demás piezas eran tarjetas chicas. Ahora las 6 piezas tienen la misma
+     ficha (`datos/piezas.php` + `ficha_pieza()`): un diagrama con las
+     casillas a las que puede ir, cómo se mueve, cómo captura, un consejo y un
+     dato curioso. Las casillas las calcula PHP (`casillas_alcanzables()`).
+  2. **Fundamentos, reglas del juego.** Capturas, captura al paso, jaque y
+     mate, enroque y promoción, antes cinco paneles apilados, ahora tienen
+     cada uno un diagrama explicativo.
+  3. **Partidas Históricas:** una partida a la vez.
+  4. **Ejercicios:** un tema a la vez. La página pasó de unos 11.000 px a
+     3.800 px de alto.
+- `tablero()` acepta casillas marcadas: puntos para los movimientos y anillos
+  para las capturas.
+
+**Correcciones visuales encontradas en la revisión**
+- Botones "Enviar"/"Borrar" (Contacto) y "Buscar" (Glosario) desalineados:
+  `.btn-gold` tenía un margen superior pensado para la portada.
+- Títulos con Mayúsculas Al Estilo Inglés pasados al uso del español
+  (por ejemplo "El rey como atacante" y "Reglas básicas"), en 12 títulos.
+- Se revisaron las 12 páginas en **modo claro**, que no se había revisado
+  antes: el contraste, los tableros y los botones se ven correctamente.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP y las páginas
+eliminadas devuelven 404 sin enlaces que apunten a ellas. Los 4 carruseles se
+probaron con clics simulados en Chrome: flechas, pestañas, vuelta al
+principio, teclado, anclas y celular. Los 72 movimientos marcados en los
+diagramas de las piezas coinciden con las reglas, las imágenes cargan, y el
+buscador y el formulario del TP de la Clase 5 siguen funcionando.
 
 ## Créditos
 

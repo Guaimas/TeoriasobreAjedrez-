@@ -48,7 +48,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-13761311.jpg" alt="La batería en ajedrez">
                         </div>
                         <div>
-                            <h2>La Batería</h2>
+                            <h2>La batería</h2>
                             <p>
                                 Se crea al colocar dos o más piezas que se mueven de forma idéntica (como dos Torres,
                                 o Dama y Alfil) en la misma fila, columna o diagonal. Es como un cañón cargado: aumenta
@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="simple-panel">
                         <div>
-                            <h2>Estrategia vs. Táctica</h2>
+                            <h2>Estrategia vs. táctica</h2>
                             <p>
                                 Conviene tener clara la diferencia entre ambos términos:
                             </p>

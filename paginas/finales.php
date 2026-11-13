@@ -33,7 +33,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-131616.jpg" alt="Finales de ajedrez">
                         </div>
                         <div>
-                            <h2>Finales de Juego</h2>
+                            <h2>Finales de juego</h2>
                             <p>
                                 Cuando el humo de la batalla se disipa y quedan pocas piezas, entramos en la fase
                                 técnica del ajedrez. En el final, el cálculo exacto sustituye a la intuición. Es el momento
@@ -48,7 +48,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-131615.jpg" alt="El rey como pieza atacante">
                         </div>
                         <div>
-                            <h2>El Rey Como Atacante</h2>
+                            <h2>El rey como atacante</h2>
                             <p>
                                 A diferencia del inicio, en el final el Rey es una pieza ofensiva. Su objetivo es
                                 escoltar a sus propios peones hacia la promoción o atacar los peones débiles
@@ -86,7 +86,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-139392.jpg" alt="El jaque mate">
                         </div>
                         <div>
-                            <h2>Jaque Mate</h2>
+                            <h2>Jaque mate</h2>
                             <p>
                                 Es el objetivo máximo del ajedrez. Se produce cuando el Rey está en jaque y no
                                 existe ninguna jugada legal para escapar de la amenaza. En el momento en que se

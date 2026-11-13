@@ -45,7 +45,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="simple-panel">
                         <div>
-                            <h2>Táctica vs. Estrategia</h2>
+                            <h2>Táctica vs. estrategia</h2>
                             <p>
                                 Es fácil confundir ambos términos, pero la diferencia es simple:
                             </p>

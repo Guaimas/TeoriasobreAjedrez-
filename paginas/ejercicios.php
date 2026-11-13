@@ -53,7 +53,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <h2>¿Cómo funcionan los ejercicios?</h2>
                             <p>
                                 Hay <?= $total ?> ejercicios agrupados por tema (fundamentos, tácticas, estrategia y
-                                finales), en el mismo orden en que se presentan en el sitio. Muchos incluyen un
+                                finales). Usa las flechas o las pestañas para cambiar de tema. Muchos incluyen un
                                 diagrama con la posición del tablero.
                             </p>
                             <p>
@@ -67,20 +67,32 @@ require_once __DIR__ . '/../includes/nav.php';
                     </div>
                 </section>
 
-                <?php foreach ($temas as $clave => $tema): ?>
                 <hr>
 
-                <section class="page-section" id="<?= e($clave) ?>">
-                    <div class="section-heading">
-                        <h2><?= e($tema['titulo']) ?></h2>
-                        <p><?= e($tema['descripcion']) ?></p>
+                <!-- Un tema a la vez: flechas y pestañas para cambiar de tema (initCarruseles() en main.js).
+                     Sin JavaScript se ven todos los temas, uno debajo de otro. -->
+                <div class="carousel" data-carrusel aria-roledescription="carrusel" aria-label="Temas de ejercicios">
+                    <div class="carousel-controls" hidden>
+                        <button type="button" class="nav-arrow" data-anterior aria-label="Tema anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                        <div class="carousel-tabs"></div>
+                        <button type="button" class="nav-arrow" data-siguiente aria-label="Tema siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
                     </div>
 
-                    <?php foreach ($tema['ejercicios'] as $i => $ej): ?>
-                        <?php ejercicio($ej, $i + 1, $tema['titulo']); ?>
+                    <?php foreach ($temas as $clave => $tema): ?>
+                    <section class="page-section carousel-slide" id="<?= e($clave) ?>" data-slide data-titulo="<?= e($tema['titulo']) ?> (<?= count($tema['ejercicios']) ?>)" aria-label="<?= e($tema['titulo']) ?>">
+                        <div class="section-heading">
+                            <h2><?= e($tema['titulo']) ?></h2>
+                            <p><?= e($tema['descripcion']) ?></p>
+                        </div>
+
+                        <?php foreach ($tema['ejercicios'] as $i => $ej): ?>
+                            <?php ejercicio($ej, $i + 1, $tema['titulo']); ?>
+                        <?php endforeach; ?>
+                    </section>
                     <?php endforeach; ?>
-                </section>
-                <?php endforeach; ?>
+
+                    <p class="carousel-status" aria-live="polite"></p>
+                </div>
 
             </main>
 

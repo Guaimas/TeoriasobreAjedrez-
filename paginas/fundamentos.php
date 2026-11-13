@@ -15,6 +15,9 @@ $ruta_base        = "../";
 $ruta_paginas     = "";
 $es_home          = false;
 
+require_once __DIR__ . '/../includes/componentes.php';   // ficha_pieza() y tablero()
+$piezas = require __DIR__ . '/../datos/piezas.php';
+
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/nav.php';
 ?>
@@ -33,7 +36,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-35793270.jpg" alt="Historia y origen del ajedrez">
                         </div>
                         <div>
-                            <h2>¿Qué es el Ajedrez?</h2>
+                            <h2>¿Qué es el ajedrez?</h2>
                             <p>
                                 El ajedrez es un juego de mesa milenario que combina estrategia, táctica y
                                 pensamiento lógico. Se juega entre dos personas en un tablero de 64 casillas,
@@ -49,7 +52,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             <img src="../img/pexels-8438875.jpg" alt="Datos adicionales sobre el ajedrez">
                         </div>
                         <div>
-                            <h2>Características del Ajedrez</h2>
+                            <h2>Características del ajedrez</h2>
                             <ul>
                                 <li>Nació en la India hace más de 1.500 años y se ha convertido en un lenguaje universal.</li>
                                 <li>Cada pieza tiene un movimiento único y cada decisión puede cambiar el rumbo de la partida.</li>
@@ -63,7 +66,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section id="tablero" class="page-section">
                     <div class="simple-panel">
-                        <h2>El Tablero</h2>
+                        <h2>El tablero</h2>
                         <p>
                             El ajedrez se juega sobre un tablero de 64 casillas, organizadas en 8 filas
                             (numeradas del 1 al 8) y 8 columnas (nombradas de la "a" a la "h"), alternando
@@ -82,7 +85,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section id="reglas" class="page-section">
                     <div class="simple-panel">
-                        <h2>Reglas Básicas</h2>
+                        <h2>Reglas básicas</h2>
                         <p>
                             Todo juego de mesa tiene reglas específicas que cada jugador debe seguir y, en este caso,
                             el ajedrez no es la excepción. Cuando juegas en una aplicación o plataforma digital, el
@@ -118,74 +121,28 @@ require_once __DIR__ . '/../includes/nav.php';
                 <hr>
 
                 <section id="piezas" class="page-section">
+                    <div class="section-heading">
+                        <h2>Piezas y movimientos</h2>
+                        <p>Cada pieza tiene un movimiento único que define su rol en el tablero. Usa las flechas o las pestañas para recorrerlas: el diagrama muestra a qué casillas puede ir cada una.</p>
+                    </div>
+
+                    <!-- Carrusel de las 6 piezas (datos/piezas.php + ficha_pieza()).
+                         Sin JavaScript se ven todas, una debajo de otra. -->
+                    <div class="carousel" data-carrusel aria-roledescription="carrusel" aria-label="Las piezas del ajedrez">
+                        <div class="carousel-controls" hidden>
+                            <button type="button" class="nav-arrow" data-anterior aria-label="Pieza anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                            <div class="carousel-tabs"></div>
+                            <button type="button" class="nav-arrow" data-siguiente aria-label="Pieza siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                        </div>
+                        <?php foreach ($piezas as $pieza): ?>
+                        <section class="carousel-slide" data-slide data-titulo="<?= e($pieza['nombre']) ?>" aria-label="<?= e($pieza['nombre']) ?>">
+                            <?php ficha_pieza($pieza); ?>
+                        </section>
+                        <?php endforeach; ?>
+                        <p class="carousel-status" aria-live="polite"></p>
+                    </div>
                     <div class="simple-panel">
-                        <h2>Piezas y Movimientos</h2>
-                        <p>
-                            Cada pieza en el ajedrez tiene un movimiento único que define su rol dentro del tablero.
-                            Comprender cómo se desplaza cada una es el primer paso para desarrollar una estrategia sólida.
-                        </p>
-                    </div>
-
-                    <div class="content-block reverse">
-                        <div class="content-media">
-                            <img src="../img/pexels-136349.jpg" alt="El peón y su movimiento">
-                        </div>
-                        <div>
-                            <h2>Peón</h2>
-                            <p>
-                                El peón es la pieza más básica del ajedrez, pero también una de las más importantes.
-                                Se mueve hacia adelante una sola casilla, pero captura en diagonal.
-                            </p>
-                            <p>
-                                Es la única pieza que nunca puede retroceder, por eso cada avance de peón es una
-                                decisión importante: deja casillas que ya no podrá volver a defender.
-                            </p>
-                            <p>
-                                En su primer movimiento puede avanzar dos casillas, pero solamente si no hay piezas
-                                bloqueando su camino. Es una pieza esencial para proteger y controlar el ritmo de la partida.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="topic-grid">
-                        <div class="card">
-                            <div class="card-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-                            </div>
-                            <h3>Torre</h3>
-                            <p>Se mueve en línea recta, en horizontal o vertical, tantas casillas como quiera. Es muy fuerte en columnas y filas abiertas.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h9M8 20c0-4 4-3 4-7 0-2-2-2-2-4a2 2 0 1 1 4 0c0 3-3 4-3 7"/></svg>
-                            </div>
-                            <h3>Caballo</h3>
-                            <p>Se mueve en forma de "L": dos casillas en una dirección y una en perpendicular. Es la única pieza que salta sobre las demás.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l6 6-6 12-6-12 6-6Z"/></svg>
-                            </div>
-                            <h3>Alfil</h3>
-                            <p>Se mueve en diagonal, cualquier cantidad de casillas. Cada jugador tiene uno de casillas claras y otro de oscuras.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l3 3 5-6 5 6 3-3-1.6 9.5H5.6L4 9Z"/></svg>
-                            </div>
-                            <h3>Dama</h3>
-                            <p>La pieza más poderosa: combina el movimiento de la torre y el alfil, en línea recta y en diagonal.</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M9 5h6M6 20h12l-1.5-8h-9L6 20Z"/></svg>
-                            </div>
-                            <h3>Rey</h3>
-                            <p>Se mueve una casilla en cualquier dirección. Es la pieza más importante: si queda en jaque mate, la partida termina.</p>
-                        </div>
-                    </div>
-
-                    <div class="simple-panel" style="margin-top: 1.8rem;">
-                        <h2>Valor Aproximado de las Piezas</h2>
+                        <h2>Valor aproximado de las piezas</h2>
                         <p>Para decidir si un intercambio conviene, se suele asignar un valor orientativo en puntos a cada pieza. El rey no tiene valor numérico porque nunca puede capturarse.</p>
                         <ul>
                             <li><strong>Peón:</strong> 1 punto</li>
@@ -199,82 +156,111 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <hr>
 
-                <section id="capturas" class="page-section">
-                    <div class="simple-panel">
-                        <h2>Capturas</h2>
-                        <p>
-                            Cuando una pieza se mueve a una casilla ocupada por una pieza rival, la captura:
-                            la pieza enemiga sale del tablero y la propia ocupa su lugar. Todas las piezas
-                            capturan de la misma forma en que se mueven, excepto el peón, que se mueve hacia
-                            adelante pero captura en diagonal, una casilla hacia adelante.
-                        </p>
+                <section id="reglas-del-juego" class="page-section">
+                    <div class="section-heading">
+                        <h2>Reglas del juego</h2>
+                        <p>Cómo se captura, cuándo termina la partida y los movimientos especiales. Usa las flechas o las pestañas para pasar de un tema a otro.</p>
                     </div>
 
-                    <div class="simple-panel" id="captura-al-paso">
-                        <h2>Captura al paso</h2>
-                        <p>
-                            Es la regla que más sorprende a quienes empiezan. Si un peón avanza <strong>dos casillas</strong>
-                            desde su posición inicial y queda justo al lado de un peón rival, ese peón rival puede capturarlo
-                            <strong>como si hubiera avanzado una sola casilla</strong>.
-                        </p>
-                        <ul>
-                            <li><strong>Ejemplo:</strong> un peón blanco está en e5. Las negras juegan d7-d5 y su peón queda en d5, al lado del blanco. Las blancas pueden responder <strong>exd6</strong>: el peón blanco pasa a d6 y el peón negro de d5 sale del tablero.</li>
-                            <li>Solo se puede hacer <strong>en la jugada inmediata</strong>. Si no se aprovecha en ese momento, se pierde el derecho.</li>
-                            <li>Solo la hacen los peones, y solo contra un peón que acaba de avanzar dos casillas.</li>
-                        </ul>
-                    </div>
-                </section>
+                    <div class="carousel" data-carrusel aria-roledescription="carrusel" aria-label="Reglas del juego">
+                        <div class="carousel-controls" hidden>
+                            <button type="button" class="nav-arrow" data-anterior aria-label="Tema anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                            <div class="carousel-tabs"></div>
+                            <button type="button" class="nav-arrow" data-siguiente aria-label="Tema siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                        </div>
 
-                <hr>
+                        <section class="carousel-slide" id="capturas" data-slide data-titulo="Capturas" aria-label="Capturas">
+                            <div class="piece-card">
+                                <figure class="piece-board">
+                                    <?php tablero('8/3n4/8/8/3R4/8/8/8', ['d5', 'd6'], ['d7']); ?>
+                                    <figcaption><span class="legend-dot"></span> Casillas libres <span class="legend-ring"></span> Puede capturar</figcaption>
+                                </figure>
+                                <div class="piece-info">
+                                    <div class="piece-title"><h3>Capturas</h3></div>
+                                    <p>Cuando una pieza se mueve a una casilla ocupada por una pieza rival, la captura: la pieza enemiga sale del tablero y la propia ocupa su lugar.</p>
+                                    <ul>
+                                        <li>Todas las piezas capturan igual que se mueven, <strong>excepto el peón</strong>, que se mueve hacia adelante pero captura en diagonal.</li>
+                                        <li>Las piezas que se deslizan (torre, alfil y dama) solo pueden capturar la <strong>primera pieza</strong> que encuentran en su camino: en el diagrama, la torre de d4 puede capturar el caballo de d7.</li>
+                                        <li>Nunca se captura una pieza propia, y el rey nunca se captura: el objetivo es darle jaque mate.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
 
-                <section id="jaque-mate-ahogado" class="page-section">
-                    <div class="simple-panel">
-                        <h2>Jaque, Jaque Mate y Ahogado</h2>
-                        <p>
-                            Estas son las tres formas en que puede terminar una partida en relación directa con el rey:
-                        </p>
-                        <ul>
-                            <li><strong>Jaque:</strong> el rey está siendo atacado y el jugador debe resolverlo de inmediato.</li>
-                            <li><strong>Jaque mate:</strong> el rey está en jaque y no hay ninguna forma de evitarlo. La partida termina.</li>
-                            <li><strong>Ahogado:</strong> el jugador no tiene jugadas legales disponibles, pero su rey no está en jaque. Es tablas.</li>
-                        </ul>
-                        <p>
-                            Estos tres conceptos se explican con más profundidad, junto con ejemplos, en la
-                            sección de <a href="finales.php" style="color: var(--gold);">Finales</a>.
-                        </p>
-                    </div>
-                </section>
+                        <section class="carousel-slide" id="captura-al-paso" data-slide data-titulo="Captura al paso" aria-label="Captura al paso">
+                            <div class="piece-card">
+                                <figure class="piece-board">
+                                    <?php tablero('4k3/8/8/3pP3/8/8/8/4K3', ['d6'], ['d5']); ?>
+                                    <figcaption><span class="legend-dot"></span> Adónde va el peón <span class="legend-ring"></span> Peón capturado</figcaption>
+                                </figure>
+                                <div class="piece-info">
+                                    <div class="piece-title"><h3>Captura al paso</h3></div>
+                                    <p>Es la regla que más sorprende a quienes empiezan. Si un peón avanza <strong>dos casillas</strong> desde su posición inicial y queda justo al lado de un peón rival, ese peón rival puede capturarlo <strong>como si hubiera avanzado una sola casilla</strong>.</p>
+                                    <ul>
+                                        <li><strong>Ejemplo del diagrama:</strong> las negras acaban de jugar d7-d5. El peón blanco de e5 captura <strong>exd6</strong>: pasa a d6 y el peón negro de d5 sale del tablero.</li>
+                                        <li>Solo se puede hacer <strong>en la jugada inmediata</strong>. Si no se aprovecha en ese momento, se pierde el derecho.</li>
+                                        <li>Solo la hacen los peones, y solo contra un peón que acaba de avanzar dos casillas.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
 
-                <hr>
+                        <section class="carousel-slide" id="jaque-mate-ahogado" data-slide data-titulo="Jaque y mate" aria-label="Jaque, jaque mate y ahogado">
+                            <div class="piece-card">
+                                <figure class="piece-board">
+                                    <?php tablero('4R1k1/5ppp/8/8/8/8/8/6K1', [], ['g8']); ?>
+                                    <figcaption><span class="legend-ring"></span> Rey en jaque mate (mate del pasillo)</figcaption>
+                                </figure>
+                                <div class="piece-info">
+                                    <div class="piece-title"><h3>Jaque, jaque mate y ahogado</h3></div>
+                                    <ul>
+                                        <li><strong>Jaque:</strong> el rey está atacado. El jugador tiene que resolverlo de inmediato: mover el rey, tapar el ataque o capturar la pieza que da jaque.</li>
+                                        <li><strong>Jaque mate:</strong> el rey está en jaque y no hay ninguna forma de evitarlo. La partida termina. En el diagrama, la torre de e8 da mate: el rey no puede escapar porque sus propios peones le cierran el paso.</li>
+                                        <li><strong>Ahogado:</strong> el jugador no tiene ninguna jugada legal, pero su rey no está en jaque. La partida termina en tablas.</li>
+                                    </ul>
+                                    <p>Los tres conceptos se explican con más ejemplos en <a href="finales.php">Finales</a>.</p>
+                                </div>
+                            </div>
+                        </section>
 
-                <section id="enroque" class="page-section">
-                    <div class="simple-panel">
-                        <h2>Enroque</h2>
-                        <p>
-                            El enroque es el único movimiento en el que se mueven dos piezas propias a la vez:
-                            el rey se desplaza dos casillas hacia una de sus torres, y esa torre salta al lado
-                            contrario del rey. Sirve para poner al rey a salvo y, de paso, activar la torre.
-                        </p>
-                        <p>Para poder enrocar se deben cumplir estas condiciones:</p>
-                        <ul>
-                            <li>Ni el rey ni la torre involucrada se movieron antes en la partida.</li>
-                            <li>No puede haber ninguna pieza entre el rey y la torre.</li>
-                            <li>El rey no puede estar en jaque, ni pasar, ni terminar en una casilla atacada.</li>
-                        </ul>
-                    </div>
-                </section>
+                        <section class="carousel-slide" id="enroque" data-slide data-titulo="Enroque" aria-label="Enroque">
+                            <div class="piece-card">
+                                <figure class="piece-board">
+                                    <?php tablero('8/8/8/8/8/8/8/R3K2R', ['c1', 'g1']); ?>
+                                    <figcaption><span class="legend-dot"></span> Adónde va el rey al enrocar</figcaption>
+                                </figure>
+                                <div class="piece-info">
+                                    <div class="piece-title"><h3>Enroque</h3></div>
+                                    <p>El único movimiento en el que se mueven dos piezas a la vez: el rey se desplaza <strong>dos casillas</strong> hacia una torre, y esa torre salta al otro lado del rey. Sirve para poner al rey a salvo y activar la torre.</p>
+                                    <ul>
+                                        <li><strong>Enroque corto (O-O):</strong> el rey va a g1 y la torre de h1 pasa a f1.</li>
+                                        <li><strong>Enroque largo (O-O-O):</strong> el rey va a c1 y la torre de a1 pasa a d1.</li>
+                                        <li><strong>Condiciones:</strong> ni el rey ni esa torre se movieron antes, no hay piezas entre ambos y el rey no está en jaque ni pasa o termina en una casilla atacada.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
 
-                <hr>
+                        <section class="carousel-slide" id="promocion" data-slide data-titulo="Promoción" aria-label="Promoción">
+                            <div class="piece-card">
+                                <figure class="piece-board">
+                                    <?php tablero('8/4P3/8/8/8/8/8/8', ['e8']); ?>
+                                    <figcaption><span class="legend-dot"></span> Casilla de coronación</figcaption>
+                                </figure>
+                                <div class="piece-info">
+                                    <div class="piece-title"><h3>Promoción</h3></div>
+                                    <p>Cuando un peón llega a la última fila (la 8 para las blancas, la 1 para las negras), <strong>se corona</strong>: se convierte en la pieza que elija el jugador, menos el rey.</p>
+                                    <ul>
+                                        <li>Casi siempre se elige una <strong>dama</strong>, la pieza más fuerte. Se anota así: <em>e8=D</em>.</li>
+                                        <li>Se puede tener más de una dama en el tablero al mismo tiempo.</li>
+                                        <li>A veces conviene coronar en otra pieza (por ejemplo, un caballo que da jaque): se llama <strong>subpromoción</strong>.</li>
+                                    </ul>
+                                    <p>Llevar un peón a coronar es uno de los grandes objetivos de los <a href="finales.php">finales</a>.</p>
+                                </div>
+                            </div>
+                        </section>
 
-                <section id="promocion" class="page-section">
-                    <div class="simple-panel">
-                        <h2>Promoción</h2>
-                        <p>
-                            Cuando un peón logra llegar a la última fila del tablero (la fila 8 para las
-                            blancas o la fila 1 para las negras), se corona: se convierte en la pieza que el
-                            jugador elija, casi siempre una dama, aunque también puede transformarse en torre,
-                            alfil o caballo. Es uno de los objetivos principales de los finales de partida.
-                        </p>
+                        <p class="carousel-status" aria-live="polite"></p>
                     </div>
                 </section>
 
@@ -282,7 +268,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section id="como-comienza" class="page-section">
                     <div class="simple-panel">
-                        <h2>Cómo Comienza una Partida</h2>
+                        <h2>Cómo comienza una partida</h2>
                         <p>
                             Todas las partidas de ajedrez comienzan con la misma posición inicial: cada jugador
                             tiene 8 peones en su segunda fila y, detrás, de izquierda a derecha, torre, caballo,
