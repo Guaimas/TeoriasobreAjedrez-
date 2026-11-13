@@ -1141,6 +1141,39 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 .welcome-toast-close:hover { color: var(--gold); }
 
+/* =========================
+   BOTÓN "VOLVER ARRIBA" (lo crea initVolverArriba() en main.js)
+   ========================= */
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 90;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  background: var(--bg-card);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, border-color .15s ease;
+}
+.back-to-top svg { width: 20px; height: 20px; }
+.back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.back-to-top:hover { border-color: var(--gold); color: var(--gold-bright); }
+.back-to-top:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top { transition: none; }
+}
+
 /* En celular el cartel aparece abajo, para no tapar el botón del menú */
 @media (max-width: 560px) {
   .welcome-toast { left: 16px; right: 16px; top: auto; bottom: 16px; max-width: none; transform: translateY(14px); }

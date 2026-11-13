@@ -86,7 +86,40 @@ document.addEventListener('DOMContentLoaded', function () {
   // ---------------------------------------------------------
   initModoOscuro();
 
+  // ---------------------------------------------------------
+  // BOTÓN "VOLVER ARRIBA"
+  // ---------------------------------------------------------
+  initVolverArriba();
+
 });
+
+/**
+ * Crea un botón "volver arriba" que aparece al bajar por la página y
+ * la lleva de nuevo al principio. Se crea desde aquí para que esté en
+ * todas las páginas sin tener que modificar cada archivo PHP.
+ */
+function initVolverArriba() {
+  var boton = document.createElement('button');
+  boton.type = 'button';
+  boton.className = 'back-to-top';
+  boton.setAttribute('aria-label', 'Volver arriba');
+  boton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+  document.body.appendChild(boton);
+
+  // Se muestra solo después de bajar más de una pantalla.
+  function actualizar() {
+    boton.classList.toggle('show', window.scrollY > window.innerHeight);
+  }
+
+  window.addEventListener('scroll', actualizar, { passive: true });
+  actualizar();
+
+  boton.addEventListener('click', function () {
+    // Respeta la preferencia del sistema de reducir animaciones.
+    var sinAnimacion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: sinAnimacion ? 'auto' : 'smooth' });
+  });
+}
 
 function initRelojFechaHora() {
   var contenedor = document.getElementById('siteClock');
