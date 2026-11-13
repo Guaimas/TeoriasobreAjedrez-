@@ -43,7 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // a la página actual, comparando el nombre de archivo.
   var current = window.location.pathname.split('/').pop() || 'index.php';
 
-  document.querySelectorAll('.nav-item[data-page]').forEach(function (link) {
+  // Si el servidor ya marcó el ítem activo (PHP, nav_activo()), no se toca:
+  // evita que en admin/index.php se marque "Inicio" por llamarse index.php.
+  if (!document.querySelector('.nav-item.active')) document.querySelectorAll('.nav-item[data-page]').forEach(function (link) {
     if (link.getAttribute('data-page') === current) {
       link.classList.add('active');
     }

@@ -99,4 +99,12 @@ return [
         'icono'       => '<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/>',
         'recorrido'   => false,
     ],
+    // TP7: panel de administración (CRUD de ejercicios con PDO).
+    // Vive en admin/index.php, no en paginas/ (ver url_seccion()).
+    'admin' => [
+        'titulo'      => 'Administración',
+        'descripcion' => 'Crear, editar y eliminar ejercicios.',
+        'icono'       => '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+        'recorrido'   => false,
+    ],
 ];
