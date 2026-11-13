@@ -529,6 +529,53 @@ cambios y se comparó con el de después: **idéntico** en las 12, sin contar
 espacios. El CSS tiene exactamente las mismas reglas, solo cambió el orden y
 los comentarios. Revisión visual en escritorio, tablet (1000 px) y celular.
 
+### Fase 4A — Catálogo de aperturas (rama `feature/fase4a-aperturas`)
+
+**De 6 aperturas fijas a un catálogo de 15**
+- Las aperturas pasaron del HTML a datos (`datos/aperturas.php`), con una
+  **ficha común** para todas: tipo, código ECO, nivel recomendado, jugadas
+  iniciales, resumen e historia, idea de las blancas, idea de las negras,
+  conceptos que enseña y una sección desplegable (`<details>`) con planes
+  típicos, errores comunes y trampas, y jugadores que la usan.
+- Se ampliaron las 6 existentes (Italiana, Española, Siciliana, Francesa,
+  Caro-Kann y Gambito de Dama) y se agregaron 9:
+  - **Abiertas:** Dos Caballos, Escocesa, Gambito de Rey, Petrov y Vienesa.
+  - **Semiabiertas:** Escandinava, Pirc, Alekhine y Moderna.
+- Las trampas incluyen la secuencia completa de jugadas: Blackburne-Shilling,
+  "Hígado frito", Elefante, el mate de Cd6 en la Caro-Kann, el jaque
+  descubierto en la Petrov y la pérdida de dama en la Escocesa.
+- Se corrigió la fecha de Greco (siglo XVII) y se sumaron 3 principios de
+  apertura: *Vigila f7 y f2*, *Caballos antes que alfiles* e *Ideas antes que
+  jugadas*.
+
+**Filtro por tipo (método GET)**
+- `aperturas.php?tipo=abierta|semiabierta|cerrada`, con el mismo tratamiento
+  de seguridad que el buscador del glosario:
+  - captura con `filter_input()` y `FILTER_REQUIRE_SCALAR` (rechaza arrays);
+  - `trim()` con `limpiar()`;
+  - validación contra una **lista blanca** (`datos/tipos-apertura.php`);
+  - salida con `e()`.
+- Un valor inválido muestra un aviso y todas las aperturas.
+- Solo se ofrecen los tipos que ya tienen aperturas cargadas. Indias y de
+  flanco se suman en la Fase 4B.
+
+**Componentes reutilizables (tarea 3.3)**
+- Nuevo `includes/componentes.php` con `ficha_apertura()` y `lista_jugadas()`.
+  Imprimen el HTML a partir de los datos y escapan todo con el `e()` de la
+  Clase 5.
+
+**Archivos nuevos:** `datos/aperturas.php`, `datos/tipos-apertura.php`,
+`includes/componentes.php`.
+**Archivos modificados:** `paginas/aperturas.php`, `datos/secciones.php`
+(descripción de Aperturas), `css/style.css` (nueva sección "Catálogo de
+aperturas") y este README.
+
+**Pruebas:** la página carga sin errores de PHP y muestra 15 fichas en 3
+grupos. El filtro devuelve 7 aperturas abiertas, 7 semiabiertas y 1 cerrada.
+Se probaron un tipo inexistente, uno todavía sin aperturas, un valor con
+espacios, un array (`?tipo[]=`) y un intento de XSS (`<script>`): todos se
+rechazan o se corrigen sin errores. Capturas en escritorio y celular.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.

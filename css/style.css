@@ -18,8 +18,9 @@
    13. VALIDACIÓN DEL FORMULARIO  errores y avisos (Clase 5)
    14. BUSCADOR (GET)             buscador del glosario (Clase 5)
    15. GALERÍA DE IMÁGENES        galería de "Sobre el sitio"
-   16. MODO OSCURO / MODO CLARO   variables del tema claro
-   17. RESPONSIVE GENERAL         ajustes de layout por ancho
+   16. CATÁLOGO DE APERTURAS      filtros por tipo y fichas
+   17. MODO OSCURO / MODO CLARO   variables del tema claro
+   18. RESPONSIVE GENERAL         ajustes de layout por ancho
 
    Convención: los componentes con ajustes propios tienen su
    @media al lado de sus estilos; el responsive general va al final.
@@ -1283,6 +1284,123 @@ main { padding: 2.4rem; max-width: 1180px; }
   .lightbox-content img { max-width: 90vw; max-height: 60vh; }
   .lightbox-prev, .lightbox-next { position: static; }
   .lightbox-close { top: -44px; }
+}
+
+/* =========================
+   CATÁLOGO DE APERTURAS
+   (paginas/aperturas.php + ficha_apertura())
+   ========================= */
+
+/* Filtro por tipo (enlaces GET ?tipo=...) */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-bottom: 1.6rem;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-soft);
+  font-size: .88rem;
+  font-weight: 500;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+
+.filter-chip:hover { border-color: var(--border-gold); color: var(--text-main); }
+
+.filter-chip.active {
+  border-color: var(--gold);
+  background: rgba(211, 166, 72, .1);
+  color: var(--gold-bright);
+}
+
+.filter-count {
+  font-size: .74rem;
+  padding: .05rem .5rem;
+  border-radius: 999px;
+  background: var(--bg-panel);
+  color: var(--text-faint);
+}
+
+/* Grupo de aperturas de un mismo tipo */
+.opening-group { margin-bottom: 2.4rem; }
+.opening-group-head { margin: 2rem 0 1.2rem; }
+.opening-group-head h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .3rem .8rem;
+  font-size: 1.5rem;
+}
+.opening-group-move {
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+.opening-group-head p { color: var(--text-soft); max-width: 780px; }
+
+/* Ficha de una apertura */
+.opening-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem 1rem;
+  margin-bottom: .9rem;
+}
+.opening-card h3 { color: var(--gold-bright); font-size: 1.3rem; margin: 0; }
+.opening-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pill--nivel { border-color: var(--border-subtle); color: var(--text-main); }
+.pill--soft { border-color: var(--border-subtle); color: var(--text-faint); }
+
+.opening-card h4 {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 .4rem;
+}
+
+.opening-ideas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+.opening-ideas > div {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.1rem;
+}
+.opening-ideas p { margin: 0; font-size: .92rem; }
+
+/* Sección desplegable (planes, errores y jugadores) */
+.opening-more {
+  margin-top: 1rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.opening-more summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: .9rem;
+}
+.opening-more summary:hover { color: var(--gold-bright); }
+.opening-more h4 { margin-top: 1.1rem; }
+
+@media (max-width: 700px) {
+  .opening-ideas { grid-template-columns: 1fr; }
 }
 
 /* =========================

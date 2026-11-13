@@ -53,7 +53,7 @@ return [
     ],
     'aperturas' => [
         'titulo'      => 'Aperturas',
-        'descripcion' => 'Principios y aperturas más conocidas.',
+        'descripcion' => 'Principios y catálogo de aperturas por tipo.',
         'icono'       => '<circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5 13 13l-3.5 1.5L11 11l3.5-1.5Z"/>',
         'recorrido'   => true,
     ],
