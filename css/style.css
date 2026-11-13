@@ -449,6 +449,12 @@ main { padding: 2.4rem; max-width: 1180px; }
 /* Variante de 4 columnas (ej: "Tecnologías utilizadas" en Sobre el sitio) */
 .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
 
+/* Variante de 4 columnas de la grilla chica (ej: ritmos de juego en Fundamentos) */
+.topic-grid.topic-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Nota breve debajo de una grilla */
+.section-note { margin-top: 1.2rem; font-size: .9rem; color: var(--text-soft); }
+
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -1537,6 +1543,7 @@ html.light-mode .header-titles .tagline {
 
   .card-grid { grid-template-columns: 1fr; }
   .topic-grid { grid-template-columns: repeat(2, 1fr); }
+  .topic-grid.topic-grid--4 { grid-template-columns: repeat(2, 1fr); }
   .feature-banner { grid-template-columns: 1fr; }
   .feature-banner-media { order: -1; min-height: 180px; }
 
@@ -1551,6 +1558,7 @@ html.light-mode .header-titles .tagline {
   main { padding: 1.4rem; }
   .site-header { padding: 0 1.2rem; }
   .topic-grid { grid-template-columns: 1fr; }
+  .topic-grid.topic-grid--4 { grid-template-columns: 1fr; }
   .form-actions { flex-direction: column; }
   .form-actions button { width: 100%; }
 }

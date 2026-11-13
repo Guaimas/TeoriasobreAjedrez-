@@ -209,6 +209,20 @@ require_once __DIR__ . '/../includes/nav.php';
                             adelante pero captura en diagonal, una casilla hacia adelante.
                         </p>
                     </div>
+
+                    <div class="simple-panel" id="captura-al-paso">
+                        <h2>Captura al paso</h2>
+                        <p>
+                            Es la regla que más sorprende a quienes empiezan. Si un peón avanza <strong>dos casillas</strong>
+                            desde su posición inicial y queda justo al lado de un peón rival, ese peón rival puede capturarlo
+                            <strong>como si hubiera avanzado una sola casilla</strong>.
+                        </p>
+                        <ul>
+                            <li><strong>Ejemplo:</strong> un peón blanco está en e5. Las negras juegan d7-d5 y su peón queda en d5, al lado del blanco. Las blancas pueden responder <strong>exd6</strong>: el peón blanco pasa a d6 y el peón negro de d5 sale del tablero.</li>
+                            <li>Solo se puede hacer <strong>en la jugada inmediata</strong>. Si no se aprovecha en ese momento, se pierde el derecho.</li>
+                            <li>Solo la hacen los peones, y solo contra un peón que acaba de avanzar dos casillas.</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <hr>
@@ -279,6 +293,126 @@ require_once __DIR__ . '/../includes/nav.php';
                             Las blancas siempre mueven primero, y luego los jugadores alternan turnos hasta que
                             la partida termina en jaque mate, ahogado o tablas por otro motivo.
                         </p>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="notacion" class="page-section">
+                    <div class="simple-panel">
+                        <h2>Notación algebraica: cómo se anotan las jugadas</h2>
+                        <p>
+                            Es el "idioma" que se usa en libros, sitios web y torneos para escribir las partidas, y el
+                            que usamos en todo este sitio. Cada casilla se nombra con su columna (letras de la
+                            <strong>a</strong> a la <strong>h</strong>) y su fila (números del <strong>1</strong> al
+                            <strong>8</strong>), como en "e4" o "g7".
+                        </p>
+                        <ul>
+                            <li><strong>Piezas:</strong> R = rey, D = dama, T = torre, A = alfil, C = caballo. Los peones no llevan letra. En inglés se usan K, Q, R, B y N.</li>
+                            <li><strong>Movimiento:</strong> letra de la pieza + casilla de llegada. <em>Cf3</em> = caballo a f3; <em>e4</em> = peón a e4.</li>
+                            <li><strong>Captura:</strong> se agrega una "x". <em>Axc6</em> = el alfil captura en c6; <em>exd5</em> = el peón de la columna e captura en d5.</li>
+                            <li><strong>Jaque y mate:</strong> "+" indica jaque y "#" jaque mate. <em>Dh5+</em>, <em>Dxf7#</em>.</li>
+                            <li><strong>Enroque:</strong> O-O es el enroque corto y O-O-O el largo.</li>
+                            <li><strong>Promoción:</strong> se indica la pieza elegida. <em>e8=D</em> = el peón corona en dama.</li>
+                            <li><strong>Dos piezas iguales pueden ir a la misma casilla:</strong> se agrega la columna o la fila de origen. <em>Cbd2</em> = el caballo de la columna b va a d2.</li>
+                            <li><strong>Comentarios:</strong> "!" marca una buena jugada, "?" un error y "??" un error grave.</li>
+                        </ul>
+                        <p>Por ejemplo, <em>1.e4 e5 2.Cf3 Cc6 3.Ac4</em> se lee: "1, peón a e4, peón a e5; 2, caballo a f3, caballo a c6; 3, alfil a c4". Es la <a href="aperturas.php#italiana" style="color: var(--gold);">Apertura Italiana</a>.</p>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="ritmos" class="page-section">
+                    <div class="section-heading">
+                        <h2>Ritmos de juego y reloj</h2>
+                        <p>Cada jugador tiene un tiempo total para toda la partida, que se mide con un reloj de dos relojes: al terminar la jugada, se pulsa el propio y empieza a correr el del rival. Si a alguien se le acaba el tiempo, en general pierde.</p>
+                    </div>
+
+                    <div class="topic-grid topic-grid--4">
+                        <div class="card">
+                            <h3>Bala</h3>
+                            <p>Menos de 3 minutos por jugador. Muy popular en internet; se juega casi por reflejo.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Blitz (relámpago)</h3>
+                            <p>Hasta 10 minutos por jugador. Exige decidir rápido, pero ya permite algo de cálculo.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Rápidas</h3>
+                            <p>Más de 10 y menos de 60 minutos por jugador. Un buen equilibrio entre pensar y jugar.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Clásicas</h3>
+                            <p>60 minutos o más por jugador. Es el ritmo de los torneos más importantes y del Campeonato del Mundo.</p>
+                        </div>
+                    </div>
+                    <p class="section-note">El <strong>incremento</strong> suma unos segundos al reloj por cada jugada realizada. Se escribe, por ejemplo, <strong>3+2</strong>: 3 minutos para toda la partida y 2 segundos más por jugada.</p>
+                </section>
+
+                <hr>
+
+                <section id="elo" class="page-section">
+                    <div class="content-block">
+                        <div>
+                            <h2>La puntuación ELO</h2>
+                            <p>
+                                Es el sistema que mide la fuerza de juego. Lo creó el profesor de física
+                                <strong>Arpad Elo</strong> y la FIDE (Federación Internacional de Ajedrez) lo adoptó en 1970.
+                                Después de cada partida, el ganador suma puntos y el perdedor los resta; ganarle a alguien
+                                con más puntuación suma más que ganarle a alguien con menos.
+                            </p>
+                            <p>
+                                El récord histórico lo tiene Magnus Carlsen, que llegó a 2882 en 2014.
+                            </p>
+                        </div>
+                        <div>
+                            <h2>Valores de referencia</h2>
+                            <ul>
+                                <li><strong>Menos de 1200:</strong> principiantes.</li>
+                                <li><strong>1200 a 1800:</strong> jugadores de club, de nivel inicial a intermedio.</li>
+                                <li><strong>1800 a 2200:</strong> jugadores fuertes y expertos.</li>
+                                <li><strong>2300 a 2400:</strong> Maestro FIDE y Maestro Internacional.</li>
+                                <li><strong>2500 o más:</strong> nivel de Gran Maestro, el título más alto (además de la puntuación, exige buenos resultados, llamados "normas", en torneos internacionales).</li>
+                            </ul>
+                            <p>Las plataformas online usan sistemas parecidos, pero sus números no son iguales a los de la FIDE.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="reglas-de-torneo" class="page-section">
+                    <div class="section-heading">
+                        <h2>Reglas de torneo que conviene conocer</h2>
+                        <p>En una partida oficial no hay "árbitro automático": estas normas se aplican aunque el rival no las reclame.</p>
+                    </div>
+
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Pieza tocada, pieza movida</h3>
+                            <p>Si tocas a propósito una pieza propia, tienes que moverla (si tiene alguna jugada legal). Si tocas una pieza rival, tienes que capturarla si puedes.</p>
+                        </div>
+                        <div class="card">
+                            <h3>"Compongo"</h3>
+                            <p>Para acomodar una pieza mal centrada en su casilla sin tener que moverla, primero se avisa diciendo "compongo" (en francés, <em>j'adoube</em>).</p>
+                        </div>
+                        <div class="card">
+                            <h3>Jugadas ilegales</h3>
+                            <p>En partidas clásicas y rápidas, la primera jugada ilegal se corrige y el rival recibe dos minutos más. La segunda jugada ilegal pierde la partida.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Ofrecer tablas</h3>
+                            <p>Se ofrecen después de mover y antes de pulsar el reloj. El rival puede aceptar o simplemente seguir jugando, lo que equivale a rechazar.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Una sola mano</h3>
+                            <p>Se mueve, se captura y se pulsa el reloj con la misma mano, como explicamos en <a href="#reglas" style="color: var(--gold);">Reglas Básicas</a>.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Teléfono celular</h3>
+                            <p>En la mayoría de los torneos está prohibido tenerlo encendido en la sala de juego. Si suena, el jugador puede perder la partida.</p>
+                        </div>
                     </div>
                 </section>
 
