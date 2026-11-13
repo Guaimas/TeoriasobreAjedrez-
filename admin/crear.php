@@ -14,8 +14,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
-// LOGIN: sin sesión de administrador, esta página manda a login.php.
-requerir_admin();
+// TP8 — GUARDIÁN: solo el rol admin. Sin sesión -> ../login.php?error=acceso_denegado;
+// usuario común -> ../dashboard.php?error=permiso.
+requerir_rol('admin');
 
 $titulo_pagina    = "Nuevo ejercicio - El Arte del Jaque";
 $meta_descripcion = "Formulario para cargar un ejercicio nuevo en la base de datos.";
@@ -27,7 +28,7 @@ $ruta_paginas     = "../paginas/";
 $es_home          = false;
 
 // El autor sugerido es el administrador que inició sesión.
-$datos   = ['tema_id' => '', 'autor_id' => usuario_admin()['id'], 'nivel' => '', 'enunciado' => '', 'posicion_fen' => '', 'explicacion' => ''];
+$datos   = ['tema_id' => '', 'autor_id' => $_SESSION['usuario_id'], 'nivel' => '', 'enunciado' => '', 'posicion_fen' => '', 'explicacion' => ''];
 $errores = [];
 $temas   = [];
 $autores = [];
