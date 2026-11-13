@@ -210,6 +210,34 @@ li { margin-bottom: .5rem; }
   color: var(--text-main);
 }
 
+/* TP8: menú de cuenta (iniciar sesión / registrarse o Hola + Mi panel + Cerrar sesión) */
+.nav-account {
+  margin-top: .8rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.nav-account-hola {
+  padding: 0 .85rem .45rem;
+  font-size: .8rem;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-account-hola strong { color: var(--text-main); font-weight: 600; }
+.nav-logout { margin: 0; }
+/* El botón de cerrar sesión se ve igual que los enlaces del menú */
+button.nav-item {
+  width: 100%;
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  font-family: var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+
 .nav-item.active {
   background: linear-gradient(90deg, rgba(211,166,72,.16), rgba(211,166,72,.03));
   color: var(--gold-bright);

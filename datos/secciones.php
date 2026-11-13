@@ -99,8 +99,8 @@ return [
         'icono'       => '<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/>',
         'recorrido'   => false,
     ],
-    // TP7: panel de administración (CRUD de ejercicios con PDO).
-    // Vive en admin/index.php, no en paginas/ (ver url_seccion()).
+    // TP7/TP8: panel de administración (solo se muestra al rol admin).
+    // Vive en admin_panel.php, no en paginas/ (ver url_seccion()).
     'admin' => [
         'titulo'      => 'Administración',
         'descripcion' => 'Crear, editar y eliminar ejercicios.',

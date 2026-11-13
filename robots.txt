@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+# TP8: páginas privadas (requieren sesión), no se indexan
+Disallow: /admin/
+Disallow: /admin_panel.php
+Disallow: /dashboard.php
 
 Sitemap: https://www.el-arte-del-jaque.com/sitemap.xml

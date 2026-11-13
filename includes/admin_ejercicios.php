@@ -14,7 +14,7 @@
 
 require_once __DIR__ . '/../config/conexion.php';
 require_once __DIR__ . '/../clase5/seguridad.php';   // e(), limpiar(), largo()
-require_once __DIR__ . '/admin_sesion.php';            // sesión del administrador y token CSRF
+require_once __DIR__ . '/auth_guard.php';             // TP8: requerir_rol(), sesión segura y token CSRF
 
 // Valores permitidos y largos máximos, tomados de tp6/schema.sql.
 const NIVELES_VALIDOS = ['Principiante', 'Intermedio', 'Avanzado'];
@@ -178,23 +178,6 @@ function parametros_ejercicio(array $datos): array
         ':posicion_fen' => $datos['posicion_fen'] === '' ? null : $datos['posicion_fen'],
         ':explicacion'  => $datos['explicacion'],
     ];
-}
-
-/**
- * Busca un usuario por email para el login, con el nombre de su rol.
- * CONSULTA PREPARADA: el email escrito en el formulario va en :email.
- */
-function buscar_usuario_por_email(PDO $pdo, string $email): ?array
-{
-    $stmt = $pdo->prepare("SELECT u.id, u.password, CONCAT(u.nombre, ' ', u.apellido) AS nombre_completo,
-                                  r.nombre AS rol
-                           FROM usuarios u
-                           INNER JOIN roles r ON r.id = u.rol_id
-                           WHERE u.email = :email");
-    $stmt->execute([':email' => $email]);
-    $fila = $stmt->fetch();
-
-    return $fila === false ? null : $fila;
 }
 
 /** Redirige al listado con un estado (patrón PRG) y termina el script. */

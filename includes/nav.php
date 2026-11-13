@@ -24,6 +24,7 @@
  */
 
 require_once __DIR__ . '/secciones.php';
+require_once __DIR__ . '/csrf.php';   // TP8: token del botón "Cerrar sesión"
 
 if (!isset($ruta_base))      $ruta_base = '';
 if (!isset($ruta_paginas))   $ruta_paginas = 'paginas/';
@@ -31,6 +32,11 @@ if (!isset($pagina_actual))  $pagina_actual = '';
 if (!isset($header_titulo))  $header_titulo = APP_NAME;
 if (!isset($header_tagline)) $header_tagline = '';
 if (!isset($es_home))        $es_home = false;
+
+// TP8: estado de la sesión (config/sesion.php ya la inició desde header.php).
+// El menú cambia según haya o no un usuario conectado y según su rol.
+$nav_conectado = isset($_SESSION['usuario_id']);
+$nav_es_admin  = $nav_conectado && ($_SESSION['rol'] ?? '') === 'admin';
 
 if (!function_exists('nav_activo')) {
     function nav_activo($slug, $paginaActual)
@@ -51,11 +57,42 @@ if (!function_exists('nav_activo')) {
             <nav class="sidebar-nav" aria-label="Navegación principal">
                 <?php // El menú se genera desde datos/secciones.php (un enlace por sección) ?>
                 <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
+                <?php // TP8: "Administración" solo aparece para el rol admin. ?>
+                <?php if ($slug === 'admin' && !$nav_es_admin) continue; ?>
                 <a href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>" class="nav-item<?= nav_activo($slug, $pagina_actual) ?>" data-page="<?= $slug ?>.php">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><?= $seccion['icono'] ?></svg>
                     <span><?= htmlspecialchars($seccion['titulo']) ?></span>
                 </a>
                 <?php endforeach; ?>
+
+                <?php // TP8: menú de cuenta. Cambia según el estado de la sesión. ?>
+                <div class="nav-account">
+                    <?php if ($nav_conectado): ?>
+                    <?php // El nombre sale de la sesión, pero se escapa igual que cualquier dato. ?>
+                    <p class="nav-account-hola">Hola, <strong><?= e($_SESSION['usuario_nombre'] ?? '') ?></strong></p>
+                    <a href="<?= $ruta_base ?>dashboard.php" class="nav-item<?= nav_activo('dashboard', $pagina_actual) ?>" data-page="dashboard.php">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/></svg>
+                        <span>Mi panel</span>
+                    </a>
+                    <?php // Cerrar sesión va por POST con token CSRF (logout.php). ?>
+                    <form action="<?= $ruta_base ?>logout.php" method="post" class="nav-logout">
+                        <?= csrf_campo() ?>
+                        <button type="submit" class="nav-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h9"/></svg>
+                            <span>Cerrar sesión</span>
+                        </button>
+                    </form>
+                    <?php else: ?>
+                    <a href="<?= $ruta_base ?>login.php" class="nav-item<?= nav_activo('login', $pagina_actual) ?>" data-page="login.php">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4"/><path d="M14 16l4-4-4-4"/><path d="M18 12H9"/></svg>
+                        <span>Iniciar sesión</span>
+                    </a>
+                    <a href="<?= $ruta_base ?>registro.php" class="nav-item<?= nav_activo('registro', $pagina_actual) ?>" data-page="registro.php">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8.5" r="3.6"/><path d="M3 20c.8-3.6 3.6-5.6 7-5.6 1.4 0 2.6.3 3.7.9"/><path d="M18 14v6M15 17h6"/></svg>
+                        <span>Registrarse</span>
+                    </a>
+                    <?php endif; ?>
+                </div>
             </nav>
 
             <div class="sidebar-footer-note">

@@ -15,8 +15,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
-// LOGIN: sin sesión de administrador, esta página manda a login.php.
-requerir_admin();
+// TP8 — GUARDIÁN: solo el rol admin. Sin sesión -> ../login.php?error=acceso_denegado;
+// usuario común -> ../dashboard.php?error=permiso.
+requerir_rol('admin');
 
 $titulo_pagina    = "Editar ejercicio - El Arte del Jaque";
 $meta_descripcion = "Formulario para modificar un ejercicio de la base de datos.";

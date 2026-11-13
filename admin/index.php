@@ -12,8 +12,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
-// LOGIN: sin sesión de administrador, esta página manda a login.php.
-requerir_admin();
+// TP8 — GUARDIÁN: solo el rol admin. Sin sesión -> ../login.php?error=acceso_denegado;
+// usuario común -> ../dashboard.php?error=permiso.
+requerir_rol('admin');
 
 $titulo_pagina    = "Administración de ejercicios - El Arte del Jaque";
 $meta_descripcion = "Panel para crear, editar y eliminar los ejercicios guardados en la base de datos.";
@@ -27,7 +28,6 @@ $es_home          = false;
 // Mensajes posibles después de crear, editar o eliminar (patrón PRG).
 // Solo se acepta un valor de esta lista: nunca se imprime ?status= tal cual.
 $mensajes = [
-    'login'    => ['field-success', 'Sesión iniciada. ¡Bienvenido al panel!'],
     'created'  => ['field-success', 'El ejercicio se creó correctamente.'],
     'updated'  => ['field-success', 'El ejercicio se actualizó correctamente.'],
     'deleted'  => ['field-success', 'El ejercicio se eliminó correctamente.'],
@@ -78,8 +78,8 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <?php // Usuario con sesión iniciada y botón para cerrarla (POST + token CSRF). ?>
                     <div class="admin-session">
-                        <span>Sesión iniciada como <strong><?= e(usuario_admin()['nombre']) ?></strong></span>
-                        <form action="logout.php" method="post">
+                        <span>Sesión iniciada como <strong><?= e($_SESSION['usuario_nombre']) ?></strong></span>
+                        <form action="../logout.php" method="post">
                             <?= csrf_campo() ?>
                             <button type="submit" class="btn-outline btn-sm">Cerrar sesión</button>
                         </form>
