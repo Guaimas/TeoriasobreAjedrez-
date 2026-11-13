@@ -37,7 +37,7 @@ require_once __DIR__ . '/includes/nav.php';
                             </p>
                         </div>
                         <div class="hero-media">
-                            <img src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                            <img src="img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                         </div>
                     </div>
                 </section>
@@ -155,7 +155,7 @@ require_once __DIR__ . '/includes/nav.php';
                             </a>
                         </div>
                         <div class="feature-banner-media">
-                            <img src="https://images.pexels.com/photos/59197/pexels-photo-59197.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Batalla entre piezas de ajedrez">
+                            <img src="img/pexels-59197.jpg" alt="Batalla entre piezas de ajedrez">
                         </div>
                     </div>
                 </section>

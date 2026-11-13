@@ -734,6 +734,9 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 
 .simple-panel h2 { color: var(--gold-bright); font-size: 1.3rem; }
+.image-credits { margin-top: 2rem; }
+.image-credits a { color: var(--gold); }
+.image-credits code { font-size: .85em; color: var(--text-main); }
 
 .move-list {
   background: var(--bg-panel);

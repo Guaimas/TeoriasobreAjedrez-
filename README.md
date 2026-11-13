@@ -36,7 +36,9 @@ TeoriasobreAjedrez-/
 │   ├── aperturas.php     Catálogo de 28 aperturas (fichas)
 │   ├── tipos-apertura.php Tipos de apertura (lista blanca del filtro GET)
 │   ├── trampas.php       Trampas de apertura
-│   └── ejercicios.php    Ejercicios interactivos, con posiciones FEN
+│   ├── ejercicios.php    Ejercicios interactivos, con posiciones FEN
+│   └── historia.php      Línea de tiempo y campeones del mundo
+├── img/                  Fotografías del sitio (Pexels), guardadas localmente
 ├── clase5/               Clase 5: procesamiento de formularios y seguridad
 │   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
 │   ├── procesar_contacto.php Lógica del formulario POST (contacto)
@@ -63,6 +65,7 @@ TeoriasobreAjedrez-/
 │   ├── finales.php
 │   ├── fundamentos.php
 │   ├── glosario.php      Glosario + buscador (GET) — Clase 5
+│   ├── historia.php      Historia del ajedrez y campeones del mundo
 │   ├── partidas.php
 │   ├── plan-de-estudio.php Recorrido por niveles que enlaza a las secciones
 │   ├── recursos.php
@@ -747,10 +750,10 @@ se bloquea y se abre la solución; los demás ejercicios no se ven afectados.
 Las capturas de primer plano detectaron filas de distinta altura en el
 tablero, que se corrigieron.
 
-### Fase 7 — Plan de estudio y ajustes finales (rama `feature/fase7-plan-de-estudio`)
+### Fase 7 — Páginas nuevas y ajustes finales (rama `feature/fase7-plan-de-estudio`)
 
-Fase reducida a propósito: solo cambios que siguen lo que el proyecto ya hace
-(páginas con la misma plantilla, datos en arrays y clases CSS existentes).
+Se hizo toda la fase salvo la página 404, que requeriría configurar Apache
+(`.htaccess`).
 
 **Plan de Estudio (nueva página `paginas/plan-de-estudio.php`)**
 - Ordena en tres niveles (principiante, intermedio y avanzado) las secciones
@@ -765,19 +768,44 @@ Analizar partidas) usan la nueva variante `card-grid--2` y ya no dejan un
 hueco por fila. Tiene sus reglas responsive para que la grilla general no la
 pise en pantallas medianas.
 
-**`sitemap.xml`:** se sumó la página nueva (13 URLs, XML válido).
+**Historia y campeones del mundo (nueva página `paginas/historia.php`)**
+- Línea de tiempo con 13 hitos, del chaturanga (siglo VI) al auge del ajedrez
+  online (2020), y tabla con los 18 campeones del mundo, de Steinitz (1886) a
+  Gukesh (desde 2024). Los datos están en `datos/historia.php`.
+- Notas sobre el título dividido entre 1993 y 2006 (con los campeones de la
+  FIDE de ese período) y los títulos que cambiaron de manos sin jugar. La
+  página aclara que los datos están actualizados a mediados de 2026.
+- Está en el menú y en el recorrido Anterior/Siguiente (entre Partidas y
+  Ejercicios), y se enlaza desde el Plan de Estudio.
 
-**Descartado de esta fase y por qué:** la página de historia y campeones
-(sería contenido nuevo), las imágenes locales (alojar imágenes en el
-repositorio es algo que el proyecto nunca hizo y suma varios MB), la página
-404 (requiere configurar Apache con `.htaccess`) y el botón "volver arriba"
-(una funcionalidad nueva).
+**Imágenes locales (`img/`)**
+- Las 15 fotografías de Pexels, que antes se cargaban desde su servidor, se
+  guardan en `img/` (1,2 MB en total). Se reemplazaron las 23 referencias en
+  6 archivos: el sitio ya no depende de un servidor externo para las imágenes.
+- La única imagen en PNG (1,3 MB) se descargó en formato JPG (81 KB).
+- Cada descarga se verificó: que fuera una imagen válida y que el archivo
+  estuviera completo (marca final `FFD9`). Dos descargas habían quedado cortadas
+  y se veían a la mitad; se detectaron en las capturas y se volvieron a
+  descargar.
+- Nuevo recuadro **"Créditos de las imágenes"** en Sobre el sitio, con el
+  origen (Pexels) y su licencia.
 
-**Pruebas:** las 13 páginas responden sin errores de PHP. Se verificó con un
-script que los 22 enlaces del plan llevan a páginas y anclas que existen.
-El menú (13 ítems) entra completo en una pantalla de 1366×768, el plan no
-muestra el paginador, "Sobre el sitio" conserva sus 10 tarjetas y el sitemap
-es XML válido.
+**Botón "volver arriba"**
+- `initVolverArriba()` en `js/main.js` lo crea en todas las páginas sin tocar
+  los archivos PHP. Aparece al bajar más de una pantalla y respeta la
+  preferencia del sistema de reducir animaciones.
+
+**Menú con 14 ítems:** en pantallas de hasta 860 px de alto los ítems se
+compactan, para que el menú entre completo en notebooks de 768 px.
+
+**`sitemap.xml`:** se sumaron las dos páginas nuevas (14 URLs, XML válido).
+
+**Pruebas:** las 14 páginas responden sin errores de PHP. Se verificó con un
+script que los 23 enlaces del Plan de Estudio llevan a páginas y anclas que
+existen, y que las 22 imágenes de todas las páginas cargan desde `img/`. El
+botón "volver arriba" se probó con clics simulados en Chrome: oculto al
+principio, visible al bajar y vuelve al inicio. El menú entra completo en
+1366×768 y 1280×650, y el sitemap es XML válido.
 
 ## Créditos
 

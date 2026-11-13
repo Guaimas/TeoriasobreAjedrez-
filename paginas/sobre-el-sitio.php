@@ -121,7 +121,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             </button>
 
                             <button type="button" class="gallery-zoom-btn" id="galleryZoomBtn" aria-label="Ampliar imagen">
-                                <img id="galleryMainImg" src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                                <img id="galleryMainImg" src="../img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                             </button>
 
                             <button type="button" class="nav-arrow gallery-next" aria-label="Imagen siguiente">
@@ -133,30 +133,41 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <div class="gallery-thumbs" id="galleryThumbs">
                             <button type="button" class="gallery-thumb active" data-index="0">
-                                <img src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                                <img src="../img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="1">
-                                <img src="https://images.pexels.com/photos/59197/pexels-photo-59197.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Batalla entre piezas de ajedrez">
+                                <img src="../img/pexels-59197.jpg" alt="Batalla entre piezas de ajedrez">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="2">
-                                <img src="https://images.pexels.com/photos/8438872/pexels-photo-8438872.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tablero de práctica">
+                                <img src="../img/pexels-8438872.jpg" alt="Tablero de práctica">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="3">
-                                <img src="https://images.pexels.com/photos/6114949/pexels-photo-6114949.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Apertura Italiana">
+                                <img src="../img/pexels-6114949.jpg" alt="Apertura Italiana">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="4">
-                                <img src="https://images.pexels.com/photos/37707936/pexels-photo-37707936.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque">
+                                <img src="../img/pexels-37707936.jpg" alt="El jaque">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="5">
-                                <img src="https://images.pexels.com/photos/139392/checkmate-chess-resignation-conflict-139392.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque mate">
+                                <img src="../img/pexels-139392.jpg" alt="El jaque mate">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="6">
-                                <img src="https://images.pexels.com/photos/8438946/pexels-photo-8438946.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Movimiento de piezas">
+                                <img src="../img/pexels-8438946.jpg" alt="Movimiento de piezas">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="7">
-                                <img src="https://images.pexels.com/photos/27098300/pexels-photo-27098300.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El medio juego en ajedrez">
+                                <img src="../img/pexels-27098300.jpg" alt="El medio juego en ajedrez">
                             </button>
                         </div>
+                    </div>
+
+                    <div class="simple-panel image-credits">
+                        <h2>Créditos de las imágenes</h2>
+                        <p>
+                            Todas las fotografías del sitio provienen de <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>
+                            y se usan bajo su <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">licencia</a>,
+                            que permite usarlas de forma gratuita. Están guardadas en la carpeta <code>img/</code> del sitio, así
+                            que se ven aunque Pexels no esté disponible. Cada archivo conserva el número de la foto en Pexels
+                            (por ejemplo, <code>pexels-131615.jpg</code>) para poder identificar su origen.
+                        </p>
                     </div>
                 </section>
 

@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section">
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/131616/pexels-photo-131616.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Finales de ajedrez">
+                            <img src="../img/pexels-131616.jpg" alt="Finales de ajedrez">
                         </div>
                         <div>
                             <h2>Finales de Juego</h2>
@@ -45,7 +45,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/131615/pexels-photo-131615.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El rey como pieza atacante">
+                            <img src="../img/pexels-131615.jpg" alt="El rey como pieza atacante">
                         </div>
                         <div>
                             <h2>El Rey Como Atacante</h2>
@@ -68,7 +68,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/37707936/pexels-photo-37707936.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque">
+                            <img src="../img/pexels-37707936.jpg" alt="El jaque">
                         </div>
                         <div>
                             <h2>Jaque</h2>
@@ -83,7 +83,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/139392/checkmate-chess-resignation-conflict-139392.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque mate">
+                            <img src="../img/pexels-139392.jpg" alt="El jaque mate">
                         </div>
                         <div>
                             <h2>Jaque Mate</h2>
@@ -98,7 +98,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/1762815/pexels-photo-1762815.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El empate o tablas">
+                            <img src="../img/pexels-1762815.jpg" alt="El empate o tablas">
                         </div>
                         <div>
                             <h2>Empate</h2>

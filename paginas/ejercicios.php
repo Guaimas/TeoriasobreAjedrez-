@@ -47,7 +47,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section">
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/8438872/pexels-photo-8438872.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tablero de práctica">
+                            <img src="../img/pexels-8438872.jpg" alt="Tablero de práctica">
                         </div>
                         <div>
                             <h2>¿Cómo funcionan los ejercicios?</h2>

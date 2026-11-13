@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section id="que-es" class="page-section">
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/35793270/pexels-photo-35793270.png?auto=compress&cs=tinysrgb&w=1200" alt="Historia y origen del ajedrez">
+                            <img src="../img/pexels-35793270.jpg" alt="Historia y origen del ajedrez">
                         </div>
                         <div>
                             <h2>¿Qué es el Ajedrez?</h2>
@@ -46,7 +46,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/8438875/pexels-photo-8438875.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Datos adicionales sobre el ajedrez">
+                            <img src="../img/pexels-8438875.jpg" alt="Datos adicionales sobre el ajedrez">
                         </div>
                         <div>
                             <h2>Características del Ajedrez</h2>
@@ -98,7 +98,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/8438946/pexels-photo-8438946.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Movimiento de piezas">
+                            <img src="../img/pexels-8438946.jpg" alt="Movimiento de piezas">
                         </div>
                         <div>
                             <h2>Movimiento</h2>
@@ -128,7 +128,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/136349/pexels-photo-136349.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El peón y su movimiento">
+                            <img src="../img/pexels-136349.jpg" alt="El peón y su movimiento">
                         </div>
                         <div>
                             <h2>Peón</h2>

@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section">
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/27098300/pexels-photo-27098300.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El medio juego en ajedrez">
+                            <img src="../img/pexels-27098300.jpg" alt="El medio juego en ajedrez">
                         </div>
                         <div>
                             <h2>Estrategia</h2>
@@ -45,7 +45,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                     <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/13761311/pexels-photo-13761311.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="La batería en ajedrez">
+                            <img src="../img/pexels-13761311.jpg" alt="La batería en ajedrez">
                         </div>
                         <div>
                             <h2>La Batería</h2>
