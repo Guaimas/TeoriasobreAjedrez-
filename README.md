@@ -644,6 +644,60 @@ Cada sección ampliada se guarda en un commit propio dentro de la rama.
   dos filas completas). La tarjeta "Conceptos básicos de mate" enlaza a la
   explicación paso a paso.
 
+**5.4 Estrategias**
+- Tres conceptos nuevos: **Puesto avanzado**, **Profilaxis** y **Cuándo
+  cambiar piezas** (15 tarjetas en tres filas completas).
+- Nueva sección **"Estructuras de peones"**: peón aislado, peones doblados,
+  peón retrasado, peones colgantes, cadena de peones y mayoría de peones, cada
+  una con su ventaja y su desventaja.
+- Nueva sección **"Piezas buenas y piezas malas"**: alfil bueno y alfil malo, y
+  caballo contra alfil.
+
+**5.5 Fundamentos**
+- **Captura al paso** explicada con un ejemplo (faltaba en el sitio).
+- Secciones nuevas: **Notación algebraica** (cómo se anotan las jugadas en
+  todo el sitio), **Ritmos de juego y reloj** (bala, blitz, rápidas, clásicas e
+  incremento), **La puntuación ELO** (con valores de referencia) y **Reglas de
+  torneo** (pieza tocada, "compongo", jugadas ilegales, ofrecer tablas, una
+  sola mano y teléfono celular), según las Leyes del Ajedrez de la FIDE.
+
+**5.6 Partidas Históricas**
+- Cada partida tiene un **"Momento clave"** con las jugadas decisivas, por
+  ejemplo 18.Ad6!! en la Inmortal y 24.Txd4!! en Kasparov vs. Topalov.
+- La Inmortal y la de la Ópera incluyen la **partida completa** en un
+  desplegable. Las partidas enlazan a su apertura y a la explicación de la
+  notación.
+
+**5.7 Glosario**
+- De **38 a 63 términos**: Blitz, Bloqueo, Calidad, ELO, Fianchetto,
+  Fortaleza, Gran Maestro, Hipermoderno, Iniciativa, Jaque perpetuo, Jugada
+  intermedia, Mate del pasillo, Peón aislado, Peones doblados, Pieza mayor,
+  Pieza menor, Profilaxis, Puesto avanzado, Rayos X, Regla de los 50
+  movimientos, Repetición de jugadas, Ruptura, Tempo, Triangulación y Variante.
+- Se agregaron a `clase5/datos/glosario.php` con un script que conserva el
+  orden alfabético. Es solo contenido: el buscador GET del TP los incluye sin
+  ningún cambio en su lógica.
+
+**5.8 Recursos**
+- Dos libros nuevos: *Fundamentos del Ajedrez* (Capablanca) y *Mis 60
+  Partidas Memorables* (Fischer). Son 6 en total, en dos filas completas.
+- Nueva sección **"Entrenar gratis"**: estudios, práctica y entrenador de
+  coordenadas de Lichess. Se verificó que los 11 enlaces externos de la página
+  respondan correctamente.
+
+**Archivos modificados en la Fase 5:** `paginas/tacticas.php`,
+`paginas/finales.php`, `paginas/estrategias.php`, `paginas/fundamentos.php`,
+`paginas/partidas.php`, `paginas/recursos.php`, `paginas/glosario.php` (meta
+descripción), `clase5/datos/glosario.php` (términos nuevos), `css/style.css`
+y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. El buscador del
+glosario encuentra los términos nuevos y sigue rechazando el XSS, el
+formulario de contacto valida igual que antes y el filtro de aperturas
+funciona. Todos los enlaces internos con ancla (`#mates-basicos`,
+`#notacion`, `#trampas`, `#reglas`) llevan a secciones que existen. Capturas
+de Tácticas, Finales, Fundamentos y Partidas.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.
