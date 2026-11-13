@@ -1,6 +1,6 @@
 <?php
 /**
- * clase5/datos/glosario.php
+ * tp5/datos/glosario.php
  * -----------------------------------------------------------------
  * Términos del glosario de ajedrez como array de PHP.
  *

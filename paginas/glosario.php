@@ -5,10 +5,10 @@
  * Usa las plantillas comunes de includes/ (header, nav, footer)
  * y define las variables de SSR requeridas por el TP.
  *
- * Clase 5 — Formulario GET:
+ * TP5 — Formulario GET:
  *   El buscador envía la palabra en la URL (glosario.php?termino=...).
- *   La lógica está en clase5/buscar_glosario.php y los términos en
- *   clase5/datos/glosario.php. Sin búsqueda, el glosario se ve igual
+ *   La lógica está en tp5/buscar_glosario.php y los términos en
+ *   tp5/datos/glosario.php. Sin búsqueda, el glosario se ve igual
  *   que antes (todas las letras con su acordeón).
  */
 
@@ -21,7 +21,7 @@ $ruta_base        = "../";
 $ruta_paginas     = "";
 $es_home          = false;
 
-require_once __DIR__ . '/../clase5/buscar_glosario.php';
+require_once __DIR__ . '/../tp5/buscar_glosario.php';
 
 // Solo se resaltan coincidencias si la búsqueda fue válida.
 $busqueda_valida = $hay_busqueda && $error_busqueda === '';
@@ -41,7 +41,7 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section class="page-section">
 
-                    <!-- Clase 5: buscador con método GET -->
+                    <!-- TP5: buscador con método GET -->
                     <form class="search-page-form" action="glosario.php" method="get" role="search">
                         <label for="termino" class="sr-only">Buscar un término del glosario</label>
                         <input type="search" id="termino" name="termino" maxlength="<?= $TERMINO_MAX ?>" placeholder="Buscar un término: enroque, clavada, peón..." value="<?= e($termino) ?>">

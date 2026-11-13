@@ -1,6 +1,6 @@
 <?php
 /**
- * clase5/procesar_contacto.php
+ * tp5/procesar_contacto.php
  * -----------------------------------------------------------------
  * Procesamiento del formulario de contacto (método POST).
  *

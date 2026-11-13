@@ -15,7 +15,7 @@
  */
 
 require_once __DIR__ . '/../config/sesion.php';
-require_once __DIR__ . '/../clase5/seguridad.php';   // e()
+require_once __DIR__ . '/../tp5/seguridad.php';   // e()
 
 if (!function_exists('csrf_token')) {
     /** Devuelve el token CSRF de la sesión (lo crea la primera vez). */

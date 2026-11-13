@@ -1,8 +1,8 @@
 <?php
 /**
- * clase5/seguridad.php
+ * tp5/seguridad.php
  * -----------------------------------------------------------------
- * Funciones de seguridad para los formularios de la Clase 5.
+ * Funciones de seguridad para los formularios del TP5.
  *
  * Hay dos ideas distintas que NO hay que confundir:
  *

@@ -13,7 +13,7 @@
  */
 
 require_once __DIR__ . '/../config/conexion.php';
-require_once __DIR__ . '/../clase5/seguridad.php';   // e(), limpiar(), largo()
+require_once __DIR__ . '/../tp5/seguridad.php';   // e(), limpiar(), largo()
 require_once __DIR__ . '/auth_guard.php';             // TP8: requerir_rol(), sesión segura y token CSRF
 
 // Valores permitidos y largos máximos, tomados de tp6/schema.sql.

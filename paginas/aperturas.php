@@ -22,7 +22,7 @@ $ruta_base        = "../";
 $ruta_paginas     = "";
 $es_home          = false;
 
-require_once __DIR__ . '/../clase5/seguridad.php';     // e() y limpiar()
+require_once __DIR__ . '/../tp5/seguridad.php';     // e() y limpiar()
 require_once __DIR__ . '/../includes/componentes.php';  // ficha_apertura()
 
 $aperturas = require __DIR__ . '/../datos/aperturas.php';

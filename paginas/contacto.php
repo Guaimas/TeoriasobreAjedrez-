@@ -5,9 +5,9 @@
  * Usa las plantillas comunes de includes/ (header, nav, footer)
  * y define las variables de SSR requeridas por el TP.
  *
- * Clase 5 — Formulario POST:
+ * TP5 — Formulario POST:
  *   El procesamiento (captura, sanitización y validación) está en
- *   clase5/procesar_contacto.php. Esta página solo muestra el
+ *   tp5/procesar_contacto.php. Esta página solo muestra el
  *   formulario, los errores y el mensaje de éxito. Todo dato que
  *   escribió el usuario se imprime con e() (htmlspecialchars).
  */
@@ -21,7 +21,7 @@ $ruta_base        = "../";
 $ruta_paginas     = "";
 $es_home          = false;
 
-require_once __DIR__ . '/../clase5/procesar_contacto.php';
+require_once __DIR__ . '/../tp5/procesar_contacto.php';
 
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/nav.php';
