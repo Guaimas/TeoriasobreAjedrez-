@@ -49,16 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Muestra u oculta la solución de un ejercicio (página de Ejercicios).
-  document.querySelectorAll('.exercise-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var answer = btn.closest('.exercise-card').querySelector('.exercise-answer');
-      if (!answer) return;
-      var isHidden = answer.classList.contains('hidden');
-      answer.classList.toggle('hidden');
-      btn.textContent = isHidden ? 'Ocultar solución' : 'Mostrar solución';
-    });
-  });
+  // ---------------------------------------------------------
+  // EJERCICIOS INTERACTIVOS (página de Ejercicios)
+  // ---------------------------------------------------------
+  initEjercicios();
 
   // ---------------------------------------------------------
   // MENSAJE DE BIENVENIDA
@@ -117,6 +111,54 @@ function initRelojFechaHora() {
 
   actualizarReloj();
   setInterval(actualizarReloj, 1000);
+}
+
+/**
+ * Ejercicios: al hacer clic en una opción se marca como correcta (verde)
+ * o incorrecta (rojo) según su atributo data-correcta. Cuando se
+ * encuentran todas las respuestas correctas, se bloquea el ejercicio y se
+ * abre la explicación.
+ */
+function initEjercicios() {
+  var tarjetas = document.querySelectorAll('[data-ejercicio]');
+  if (!tarjetas.length) return;
+
+  tarjetas.forEach(function (tarjeta) {
+    var opciones = tarjeta.querySelectorAll('.exercise-option');
+    var feedback = tarjeta.querySelector('.exercise-feedback');
+    var solucion = tarjeta.querySelector('.exercise-solution');
+    var totalCorrectas = tarjeta.querySelectorAll('.exercise-option[data-correcta="1"]').length;
+    var encontradas = 0;
+
+    opciones.forEach(function (opcion) {
+      opcion.addEventListener('click', function () {
+        // Una opción ya marcada no cuenta dos veces.
+        if (opcion.classList.contains('is-correct') || opcion.classList.contains('is-wrong')) return;
+
+        if (opcion.getAttribute('data-correcta') === '1') {
+          opcion.classList.add('is-correct');
+          encontradas++;
+
+          if (encontradas === totalCorrectas) {
+            feedback.textContent = totalCorrectas > 1
+              ? '¡Muy bien! Encontraste todas las respuestas correctas.'
+              : '¡Correcto!';
+            feedback.className = 'exercise-feedback is-correct';
+            // Ejercicio resuelto: se bloquean las opciones y se muestra la explicación.
+            opciones.forEach(function (o) { o.disabled = true; });
+            if (solucion) solucion.open = true;
+          } else {
+            feedback.textContent = 'Correcto. Todavía falta otra respuesta correcta.';
+            feedback.className = 'exercise-feedback is-correct';
+          }
+        } else {
+          opcion.classList.add('is-wrong');
+          feedback.textContent = 'Esa no es. Inténtalo de nuevo o abre la solución.';
+          feedback.className = 'exercise-feedback is-wrong';
+        }
+      });
+    });
+  });
 }
 
 function initAcordeon() {

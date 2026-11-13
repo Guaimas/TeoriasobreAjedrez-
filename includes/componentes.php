@@ -97,6 +97,121 @@ if (!function_exists('ficha_apertura')) {
     }
 }
 
+if (!function_exists('tablero')) {
+    /**
+     * Dibuja un diagrama de tablero con HTML/CSS a partir de la parte de
+     * piezas de una notación FEN (ej: "r3k3/8/8/3N4/8/8/8/4K3").
+     *
+     * Las piezas se muestran con los símbolos Unicode de ajedrez; el color
+     * (blanco o negro) se da con CSS. Para lectores de pantalla se genera
+     * una descripción en texto con la posición de cada pieza.
+     */
+    function tablero($fen)
+    {
+        $simbolos = ['k' => '♚', 'q' => '♛', 'r' => '♜', 'b' => '♝', 'n' => '♞', 'p' => '♟'];
+        $letras   = ['k' => 'R', 'q' => 'D', 'r' => 'T', 'b' => 'A', 'n' => 'C', 'p' => ''];
+        $columnas = 'abcdefgh';
+
+        // 1) Pasar el FEN a un array [fila][columna] => pieza
+        $casillas = [];
+        foreach (explode('/', $fen) as $i => $fila_fen) {
+            $fila = 8 - $i;
+            $col  = 0;
+            foreach (str_split($fila_fen) as $c) {
+                if (ctype_digit($c)) {
+                    $col += (int) $c;
+                } else {
+                    $casillas[$fila][$col] = $c;
+                    $col++;
+                }
+            }
+        }
+
+        // 2) Descripción accesible: "Blancas: Ce4. Negras: Ta8, Re8."
+        $lista = ['blancas' => [], 'negras' => []];
+        foreach ($casillas as $fila => $cols) {
+            foreach ($cols as $col => $p) {
+                $bando = ctype_upper($p) ? 'blancas' : 'negras';
+                $lista[$bando][] = $letras[strtolower($p)] . $columnas[$col] . $fila;
+            }
+        }
+        $descripcion = 'Diagrama. Blancas: ' . (implode(', ', $lista['blancas']) ?: 'ninguna pieza')
+                     . '. Negras: ' . (implode(', ', $lista['negras']) ?: 'ninguna pieza') . '.';
+        ?>
+        <div class="board" role="img" aria-label="<?= e($descripcion) ?>">
+            <?php for ($fila = 8; $fila >= 1; $fila--): ?>
+                <?php for ($col = 0; $col < 8; $col++):
+                    $clara = ($fila + $col) % 2 === 0;
+                    $pieza = $casillas[$fila][$col] ?? null; ?>
+                <span class="sq <?= $clara ? 'sq--light' : 'sq--dark' ?>">
+                    <?php if ($col === 0): ?><span class="sq-rank"><?= $fila ?></span><?php endif; ?>
+                    <?php if ($fila === 1): ?><span class="sq-file"><?= $columnas[$col] ?></span><?php endif; ?>
+                    <?php if ($pieza !== null): ?>
+                    <span class="piece <?= ctype_upper($pieza) ? 'piece--white' : 'piece--black' ?>" aria-hidden="true"><?= $simbolos[strtolower($pieza)] ?>&#xFE0E;</span>
+                    <?php endif; ?>
+                </span>
+                <?php endfor; ?>
+            <?php endfor; ?>
+        </div>
+        <?php
+    }
+}
+
+if (!function_exists('ejercicio')) {
+    /**
+     * Imprime un ejercicio interactivo (datos/ejercicios.php).
+     *
+     * Las opciones son botones con data-correcta="1" o "0": js/main.js las
+     * marca en verde o rojo al hacer clic. La explicación está en un
+     * <details>, así que también funciona sin JavaScript.
+     */
+    function ejercicio(array $ej, $numero, $tema)
+    {
+        $letras     = 'ABCDEFGH';
+        $correctas  = count(array_filter($ej['opciones'], function ($o) { return $o[1]; }));
+        $tiene_tablero = !empty($ej['posicion']);
+        ?>
+        <article class="exercise-card" data-ejercicio>
+            <div class="exercise-head">
+                <span class="pill"><?= e($tema) ?></span>
+                <span class="pill pill--nivel"><?= e($ej['nivel']) ?></span>
+            </div>
+            <h3>Ejercicio <?= (int) $numero ?></h3>
+
+            <div class="exercise-body<?= $tiene_tablero ? ' exercise-body--board' : '' ?>">
+                <?php if ($tiene_tablero): ?>
+                <figure class="exercise-board">
+                    <?php tablero($ej['posicion']); ?>
+                    <figcaption>Juegan las <?= e($ej['turno'] ?? 'blancas') ?></figcaption>
+                </figure>
+                <?php endif; ?>
+
+                <div class="exercise-main">
+                    <p class="exercise-prompt"><?= e($ej['enunciado']) ?></p>
+                    <?php if ($correctas > 1): ?>
+                    <p class="exercise-hint">Hay <?= $correctas ?> respuestas correctas.</p>
+                    <?php endif; ?>
+
+                    <div class="exercise-options" role="group" aria-label="Opciones">
+                        <?php foreach ($ej['opciones'] as $i => $opcion): ?>
+                        <button type="button" class="exercise-option" data-correcta="<?= $opcion[1] ? '1' : '0' ?>">
+                            <strong><?= $letras[$i] ?>.</strong> <?= e($opcion[0]) ?>
+                        </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <p class="exercise-feedback" aria-live="polite"></p>
+
+                    <details class="exercise-solution">
+                        <summary>Ver la solución</summary>
+                        <p><?= e($ej['explicacion']) ?></p>
+                    </details>
+                </div>
+            </div>
+        </article>
+        <?php
+    }
+}
+
 if (!function_exists('tarjeta_trampa')) {
     /**
      * Imprime una trampa de apertura (datos/trampas.php).

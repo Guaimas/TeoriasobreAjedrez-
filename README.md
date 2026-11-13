@@ -30,9 +30,13 @@ Enlace al prototipo de Figma:
 
 ```text
 TeoriasobreAjedrez-/
-├── datos/
-│   └── secciones.php     Lista única de secciones: genera el menú, el paginador
-│                         y las tarjetas de "Sobre el sitio"
+├── datos/                Contenido del sitio como arrays de PHP
+│   ├── secciones.php     Lista única de secciones: genera el menú, el paginador
+│   │                     y las tarjetas de "Sobre el sitio"
+│   ├── aperturas.php     Catálogo de 28 aperturas (fichas)
+│   ├── tipos-apertura.php Tipos de apertura (lista blanca del filtro GET)
+│   ├── trampas.php       Trampas de apertura
+│   └── ejercicios.php    Ejercicios interactivos, con posiciones FEN
 ├── clase5/               Clase 5: procesamiento de formularios y seguridad
 │   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
 │   ├── procesar_contacto.php Lógica del formulario POST (contacto)
@@ -44,6 +48,7 @@ TeoriasobreAjedrez-/
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
 │   ├── nav.php           Sidebar de navegación + barra superior (SSR: menú activo)
 │   ├── secciones.php     Funciones secciones_del_sitio() y url_seccion()
+│   ├── componentes.php   ficha_apertura(), tarjeta_trampa(), ejercicio() y tablero()
 │   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
@@ -697,6 +702,49 @@ formulario de contacto valida igual que antes y el filtro de aperturas
 funciona. Todos los enlaces internos con ancla (`#mates-basicos`,
 `#notacion`, `#trampas`, `#reglas`) llevan a secciones que existen. Capturas
 de Tácticas, Finales, Fundamentos y Partidas.
+
+### Fase 6 — Ejercicios interactivos (rama `feature/fase6-ejercicios`)
+
+**De 8 a 20 ejercicios, con datos separados**
+- Los ejercicios pasaron a `datos/ejercicios.php`: 5 por tema
+  (fundamentos, tácticas, estrategia y finales), cada uno con su nivel.
+- Se corrigieron los ejercicios anteriores: los dos que tenían más de una
+  respuesta correcta ahora lo avisan ("Hay 2 respuestas correctas"), el que
+  preguntaba al revés ("¿qué deberías evitar?") se reemplazó, y el primero de
+  tácticas, que era demasiado obvio, se cambió por una horquilla real.
+
+**Interactivos**
+- Las opciones son botones: al hacer clic se marcan en **verde** (correcta)
+  o en **rojo** (incorrecta), con un mensaje. Al encontrar todas las correctas,
+  el ejercicio se bloquea y se abre la explicación (`initEjercicios()` en
+  `js/main.js`).
+- La explicación está en un `<details>`, así que también se puede leer con
+  JavaScript desactivado.
+- Se agregaron los colores `--success` y `--success-bg`, con su versión para
+  el modo claro.
+
+**Diagramas de tablero**
+- Nueva función `tablero()` en `includes/componentes.php`: dibuja el tablero
+  con HTML/CSS a partir de una posición en formato FEN, con coordenadas y
+  piezas Unicode. Para lectores de pantalla genera una descripción en texto
+  ("Blancas: Ce4. Negras: …").
+- 10 ejercicios tienen diagrama: horquilla, mate del pasillo, Mate del Pastor,
+  jaque descubierto de la Petrov, mate de la coz en dos jugadas, captura al
+  paso, ahogado, mate con dama y regla del cuadrado.
+
+**Verificación de las posiciones:** un script de prueba calcula las casillas
+atacadas y confirmó cada mate y cada ahogado de los enunciados. Encontró un
+error que se corrigió antes de publicar: en un ejercicio de finales, la
+jugada que debía ser ahogado no lo era, porque el rey blanco tapaba la
+columna.
+
+**Pruebas:** la página genera 20 ejercicios, 10 diagramas y 22 respuestas
+correctas, sin errores de PHP. Con Chrome controlado por su protocolo de
+depuración se simularon clics reales: una opción incorrecta se marca en rojo;
+la primera de dos correctas avisa que falta otra; al completar, el ejercicio
+se bloquea y se abre la solución; los demás ejercicios no se ven afectados.
+Las capturas de primer plano detectaron filas de distinta altura en el
+tablero, que se corrigieron.
 
 ## Créditos
 

@@ -41,6 +41,8 @@
 
   --danger: #e0574a;
   --danger-bg: rgba(224, 87, 74, .1);
+  --success: #5cc48a;
+  --success-bg: rgba(92, 196, 138, .12);
 
   --text-main: #f3f1ea;
   --text-soft: #b7bfcc;
@@ -922,37 +924,115 @@ main { padding: 2.4rem; max-width: 1180px; }
   margin-bottom: 1.1rem;
 }
 
-.exercise-options {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1.2rem;
+.exercise-head { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+
+/* Con diagrama: tablero a la izquierda y pregunta a la derecha */
+.exercise-body--board {
   display: grid;
-  gap: .55rem;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+.exercise-board { margin: 0; }
+.exercise-board figcaption {
+  margin-top: .5rem;
+  font-size: .8rem;
+  color: var(--text-faint);
+  text-align: center;
 }
 
-.exercise-options li {
+.exercise-hint { font-size: .82rem; color: var(--gold); margin: -.6rem 0 .8rem; }
+
+.exercise-options {
+  display: grid;
+  gap: .55rem;
+  margin: 0 0 .8rem;
+}
+
+/* Cada opción es un botón (js/main.js lo marca como correcto o incorrecto) */
+.exercise-option {
+  text-align: left;
   background: var(--bg-panel);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   padding: .65rem .95rem;
-  font-size: .87rem;
+  font: inherit;
+  font-size: .88rem;
   color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
 }
+.exercise-option strong { color: var(--gold-bright); }
+.exercise-option:hover:not(:disabled) { border-color: var(--border-gold); color: var(--text-main); }
+.exercise-option:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.exercise-option:disabled { cursor: default; }
+.exercise-option.is-correct { border-color: var(--success); background: var(--success-bg); color: var(--text-main); }
+.exercise-option.is-correct strong { color: var(--success); }
+.exercise-option.is-wrong { border-color: var(--danger); background: var(--danger-bg); }
+.exercise-option.is-wrong strong { color: var(--danger); }
 
-.exercise-options li strong { color: var(--gold-bright); }
+.exercise-feedback { min-height: 1.2em; font-size: .86rem; font-weight: 600; margin-bottom: .6rem; }
+.exercise-feedback.is-correct { color: var(--success); }
+.exercise-feedback.is-wrong { color: var(--danger); }
 
-.exercise-answer {
-  margin-top: 1.1rem;
-  padding-top: 1.1rem;
+.exercise-solution summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: .88rem;
+}
+.exercise-solution p {
+  margin-top: .7rem;
+  padding-top: .8rem;
   border-top: 1px dashed var(--border-subtle);
+  font-size: .9rem;
 }
 
-.exercise-answer.hidden { display: none; }
-
-.exercise-answer .solution-move {
-  color: var(--gold-bright);
+/* Diagrama de tablero (tablero() en includes/componentes.php).
+   Colores fijos, iguales en modo oscuro y claro, como un tablero real. */
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);   /* 8 filas iguales, tengan o no piezas */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border: 2px solid #5a4630;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sq {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;   /* la pieza nunca agranda la casilla */
+}
+.sq--light { background: #ecd9b4; }
+.sq--dark  { background: #b2875d; }
+.sq-rank, .sq-file {
+  position: absolute;
+  font-size: .58rem;
   font-weight: 700;
-  font-family: 'Courier New', monospace;
+  line-height: 1;
+  color: #5a4630;
+  font-family: var(--font-body);
+}
+.sq-rank { top: 2px; left: 3px; }
+.sq-file { bottom: 2px; right: 3px; }
+.piece {
+  font-family: 'Segoe UI Symbol', 'DejaVu Sans', 'Noto Sans Symbols 2', 'Arial Unicode MS', serif;
+  font-size: clamp(1.2rem, 4.2vw, 2rem);
+  line-height: 1;
+  user-select: none;
+}
+.piece--white { color: #fbf7ee; text-shadow: 0 0 1px #000, 0 0 1px #000, 0 1px 2px rgba(0, 0, 0, .55); }
+.piece--black { color: #1c1814; text-shadow: 0 0 1px rgba(255, 255, 255, .35); }
+
+@media (max-width: 700px) {
+  .exercise-body--board { grid-template-columns: 1fr; }
+  .exercise-board { max-width: 320px; }
 }
 
 /* Partidas históricas */
@@ -1494,6 +1574,9 @@ html.light-mode {
   --text-main: #1f2430;
   --text-soft: #4a5162;
   --text-faint: #767f92;
+
+  --success: #237a4b;
+  --success-bg: rgba(35, 122, 75, .1);
 }
 
 html.light-mode .lightbox-backdrop { background: rgba(20, 18, 10, .6); }
