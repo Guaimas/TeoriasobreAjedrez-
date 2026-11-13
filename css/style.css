@@ -986,6 +986,7 @@ main { padding: 2.4rem; max-width: 1180px; }
 }
 
 .game-card h4:first-of-type { margin-top: 0; }
+.game-card a { color: var(--gold); }
 
 /* =========================
    MENSAJE DE BIENVENIDA (toast)
