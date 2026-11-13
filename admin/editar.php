@@ -15,6 +15,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
+// LOGIN: sin sesión de administrador, esta página manda a login.php.
+requerir_admin();
+
 $titulo_pagina    = "Editar ejercicio - El Arte del Jaque";
 $meta_descripcion = "Formulario para modificar un ejercicio de la base de datos.";
 $pagina_actual    = "admin";
@@ -47,6 +50,11 @@ if ($pdo !== null) {
         $datos = $ejercicio;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // CSRF: si el token no coincide, el formulario no salió de este panel.
+            if (!csrf_valido()) {
+                volver_al_listado('csrf');
+            }
+
             [$datos, $errores] = validar_ejercicio($pdo);
 
             if (empty($errores)) {

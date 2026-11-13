@@ -12,6 +12,11 @@
  *   - js/main.js (initEjercicios) marca cada opción como correcta o
  *     incorrecta al hacer clic. La solución está en un <details>, así
  *     que también se puede ver sin JavaScript.
+ *
+ * TP7: los ejercicios se leen de la base de datos (tablas temas,
+ *   ejercicios y opciones_ejercicio), así lo que se carga en el panel
+ *   admin/ aparece aquí. Si MySQL no está disponible, se usa
+ *   datos/ejercicios.php como respaldo y la página sigue funcionando.
  */
 
 $titulo_pagina    = "Ejercicios - El Arte del Jaque";
@@ -25,7 +30,9 @@ $es_home          = false;
 
 require_once __DIR__ . '/../includes/componentes.php';  // ejercicio() y tablero()
 
-$temas = require __DIR__ . '/../datos/ejercicios.php';
+require_once __DIR__ . '/../includes/ejercicios_bd.php';      // TP7: ejercicios_desde_bd()
+
+$temas = ejercicios_desde_bd($pdo) ?? require __DIR__ . '/../datos/ejercicios.php';
 
 $total = 0;
 foreach ($temas as $tema) {

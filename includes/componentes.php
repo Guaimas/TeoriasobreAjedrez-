@@ -280,6 +280,10 @@ if (!function_exists('ejercicio')) {
                     <p class="exercise-hint">Hay <?= $correctas ?> respuestas correctas.</p>
                     <?php endif; ?>
 
+                    <?php if (empty($ej['opciones'])): ?>
+                    <?php // TP7: un ejercicio cargado en el panel puede no tener opciones. ?>
+                    <p class="exercise-hint">Pregunta abierta: piensa tu respuesta y después mira la solución.</p>
+                    <?php else: ?>
                     <div class="exercise-options" role="group" aria-label="Opciones">
                         <?php foreach ($ej['opciones'] as $i => $opcion): ?>
                         <button type="button" class="exercise-option" data-correcta="<?= $opcion[1] ? '1' : '0' ?>">
@@ -288,6 +292,7 @@ if (!function_exists('ejercicio')) {
                         <?php endforeach; ?>
                     </div>
                     <p class="exercise-feedback" aria-live="polite"></p>
+                    <?php endif; ?>
 
                     <details class="exercise-solution">
                         <summary>Ver la solución</summary>

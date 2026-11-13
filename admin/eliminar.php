@@ -16,8 +16,16 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
+// LOGIN: sin sesión de administrador, esta página manda a login.php.
+requerir_admin();
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     volver_al_listado('error');
+}
+
+// CSRF: el formulario de borrado tiene que traer el token de la sesión.
+if (!csrf_valido()) {
+    volver_al_listado('csrf');
 }
 
 if ($pdo === null) {

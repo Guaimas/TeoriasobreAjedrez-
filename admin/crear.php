@@ -14,6 +14,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
+// LOGIN: sin sesión de administrador, esta página manda a login.php.
+requerir_admin();
+
 $titulo_pagina    = "Nuevo ejercicio - El Arte del Jaque";
 $meta_descripcion = "Formulario para cargar un ejercicio nuevo en la base de datos.";
 $pagina_actual    = "admin";
@@ -23,7 +26,8 @@ $ruta_base        = "../";
 $ruta_paginas     = "../paginas/";
 $es_home          = false;
 
-$datos   = ['tema_id' => '', 'autor_id' => '', 'nivel' => '', 'enunciado' => '', 'posicion_fen' => '', 'explicacion' => ''];
+// El autor sugerido es el administrador que inició sesión.
+$datos   = ['tema_id' => '', 'autor_id' => usuario_admin()['id'], 'nivel' => '', 'enunciado' => '', 'posicion_fen' => '', 'explicacion' => ''];
 $errores = [];
 $temas   = [];
 $autores = [];
@@ -32,6 +36,11 @@ $error_db = $error_conexion;
 if ($pdo !== null) {
     try {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // CSRF: si el token no coincide, el formulario no salió de este panel.
+            if (!csrf_valido()) {
+                volver_al_listado('csrf');
+            }
+
             [$datos, $errores] = validar_ejercicio($pdo);
 
             if (empty($errores)) {

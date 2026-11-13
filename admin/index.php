@@ -12,6 +12,9 @@
 
 require_once __DIR__ . '/../includes/admin_ejercicios.php';
 
+// LOGIN: sin sesión de administrador, esta página manda a login.php.
+requerir_admin();
+
 $titulo_pagina    = "Administración de ejercicios - El Arte del Jaque";
 $meta_descripcion = "Panel para crear, editar y eliminar los ejercicios guardados en la base de datos.";
 $pagina_actual    = "admin";
@@ -24,11 +27,13 @@ $es_home          = false;
 // Mensajes posibles después de crear, editar o eliminar (patrón PRG).
 // Solo se acepta un valor de esta lista: nunca se imprime ?status= tal cual.
 $mensajes = [
+    'login'    => ['field-success', 'Sesión iniciada. ¡Bienvenido al panel!'],
     'created'  => ['field-success', 'El ejercicio se creó correctamente.'],
     'updated'  => ['field-success', 'El ejercicio se actualizó correctamente.'],
     'deleted'  => ['field-success', 'El ejercicio se eliminó correctamente.'],
     'notfound' => ['form-alert',    'El ejercicio pedido no existe o el id no es válido.'],
     'fk'       => ['form-alert',    'No se puede eliminar el ejercicio porque tiene registros relacionados.'],
+    'csrf'     => ['form-alert',    'La página expiró o el formulario no es válido. Vuelve a intentarlo.'],
     'error'    => ['form-alert',    'Ocurrió un error al trabajar con la base de datos. Intenta de nuevo.'],
 ];
 $status = filter_input(INPUT_GET, 'status', FILTER_DEFAULT, FILTER_REQUIRE_SCALAR);
@@ -70,6 +75,15 @@ require_once __DIR__ . '/../includes/nav.php';
                 </div>
 
                 <section class="page-section">
+
+                    <?php // Usuario con sesión iniciada y botón para cerrarla (POST + token CSRF). ?>
+                    <div class="admin-session">
+                        <span>Sesión iniciada como <strong><?= e(usuario_admin()['nombre']) ?></strong></span>
+                        <form action="logout.php" method="post">
+                            <?= csrf_campo() ?>
+                            <button type="submit" class="btn-outline btn-sm">Cerrar sesión</button>
+                        </form>
+                    </div>
 
                     <?php if ($alerta !== null): ?>
                     <p class="<?= e($alerta[0]) ?> admin-alert" role="status"><?= e($alerta[1]) ?></p>
@@ -117,6 +131,7 @@ require_once __DIR__ . '/../includes/nav.php';
                                             <a href="editar.php?id=<?= e($ej['id']) ?>" class="btn-outline btn-sm">Editar</a>
                                             <?php // Eliminar va por POST (nunca por un enlace GET) y pide confirmación. ?>
                                             <form action="eliminar.php" method="post" onsubmit="return confirm('¿Seguro que quieres eliminar el ejercicio #<?= e($ej['id']) ?>? También se borran sus opciones e intentos.');">
+                                                <?= csrf_campo() ?>
                                                 <input type="hidden" name="id" value="<?= e($ej['id']) ?>">
                                                 <button type="submit" class="btn-danger btn-sm">Eliminar</button>
                                             </form>

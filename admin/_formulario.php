@@ -26,6 +26,9 @@
                         <p class="form-alert" role="alert">No se pudo guardar el ejercicio. Revisa los campos marcados en rojo.</p>
                         <?php endif; ?>
 
+                        <?php // Token CSRF oculto: prueba que el formulario salió de este panel. ?>
+                        <?= csrf_campo() ?>
+
                         <div class="admin-form-grid">
                             <div class="form-group<?= admin_clase_error('tema_id', $errores) ?>">
                                 <label for="tema_id">Tema *</label>

@@ -1760,6 +1760,20 @@ html.light-mode .header-titles .tagline {
 .admin-toolbar .btn-gold { margin-top: 0; align-self: auto; text-decoration: none; }
 .admin-count { color: var(--text-soft); font-size: .88rem; margin: 0; }
 
+/* Barra con el usuario que inició sesión y el botón para cerrarla */
+.admin-session {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-bottom: 1rem;
+  font-size: .84rem;
+  color: var(--text-soft);
+}
+.admin-session strong { color: var(--text-main); }
+.admin-session form { margin: 0; }
+
 .admin-table-wrap {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);

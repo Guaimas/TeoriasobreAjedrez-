@@ -54,6 +54,8 @@ TeoriasobreAjedrez-/
 │   │                     casillas_alcanzables() y ficha_pieza()
 │   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   ├── admin_ejercicios.php TP7: consultas y validación del CRUD
+│   ├── admin_sesion.php  TP7: sesión del administrador y token CSRF
+│   ├── ejercicios_bd.php TP7: ejercicios de la página pública leídos de MySQL
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
 │   └── style.css
@@ -87,10 +89,10 @@ TeoriasobreAjedrez-/
 ├── .env.example          Plantilla pública de variables de entorno
 ├── .gitignore
 ├── tp6/                  TP6: NORMALIZACION.md, schema.sql y consultas.sql
-├── tp7/                  TP7: datos_prueba.sql (5 ejercicios más)
+├── tp7/                  TP7: datos_prueba.sql (los 20 ejercicios del sitio)
 ├── config/
 │   └── conexion.php      TP7: conexión PDO a MySQL
-├── admin/                TP7: CRUD de ejercicios (listar, crear, editar, eliminar)
+├── admin/                TP7: login + CRUD de ejercicios (listar, crear, editar, eliminar)
 └── README.md
 ```
 
@@ -332,8 +334,10 @@ mediante PDO.
 Rama: `feature/tp7-crud-pdo` · Panel en [`admin/`](admin/)
 
 El sitio ahora se conecta a la base `arte_del_jaque` del TP6 con **PDO**. Hay
-un panel de **Administración** (nuevo ítem del menú) para gestionar la tabla
-principal, `ejercicios`: listar, crear, editar y eliminar.
+un panel de **Administración** (nuevo ítem del menú), protegido con inicio de
+sesión, para gestionar la tabla principal, `ejercicios`: listar, crear, editar
+y eliminar. La página pública **Ejercicios** ahora lee esos mismos ejercicios
+de la base, así que lo que se carga en el panel se ve en el sitio.
 
 **Por qué `ejercicios`:** es la tabla principal de negocio del TP6, la que da
 contenido a la página Ejercicios. Tiene una clave foránea a la tabla maestra
@@ -352,7 +356,10 @@ y en el listado se muestra el **nombre** del tema con `INNER JOIN`. El autor
 | [`admin/editar.php`](admin/editar.php) | **Update:** formulario con los datos actuales; valida y actualiza |
 | [`admin/eliminar.php`](admin/eliminar.php) | **Delete:** solo por POST, con confirmación en el navegador |
 | [`admin/_formulario.php`](admin/_formulario.php) | Formulario compartido por crear y editar |
-| [`tp7/datos_prueba.sql`](tp7/datos_prueba.sql) | 5 ejercicios más (8 en total), uno de ellos sin autor |
+| [`admin/login.php`](admin/login.php) / [`admin/logout.php`](admin/logout.php) | Iniciar y cerrar sesión (solo usuarios con rol `administrador`) |
+| [`includes/admin_sesion.php`](includes/admin_sesion.php) | Sesión (`requerir_admin()`) y token CSRF (`csrf_campo()`, `csrf_valido()`) |
+| [`includes/ejercicios_bd.php`](includes/ejercicios_bd.php) | `ejercicios_desde_bd()`: arma los ejercicios de la página pública desde las tablas `temas`, `ejercicios` y `opciones_ejercicio` |
+| [`tp7/datos_prueba.sql`](tp7/datos_prueba.sql) | Los 20 ejercicios reales del sitio con sus 64 opciones (reemplaza los ejercicios de prueba del TP6) |
 
 También se modificaron, sin romper lo existente: `datos/secciones.php` e
 `includes/secciones.php` (ítem "Administración" en el menú, que apunta a
@@ -360,7 +367,12 @@ También se modificaron, sin romper lo existente: `datos/secciones.php` e
 tarjetas de secciones), `js/main.js` (el resaltado automático del menú
 marcaba "Inicio" en `admin/index.php`; ahora respeta el ítem que marca PHP) y
 `css/style.css` (sección 18, *Administración*: tabla, botones y formulario; en
-pantallas de hasta 1280 px la tabla se muestra como tarjetas).
+pantallas de hasta 1280 px la tabla se muestra como tarjetas),
+`paginas/ejercicios.php` (lee los ejercicios de la base; si MySQL no está
+disponible usa `datos/ejercicios.php` como respaldo, así la página nunca se
+rompe) e `includes/componentes.php` (un ejercicio sin opciones, como los que
+se cargan desde el panel, se muestra como pregunta abierta con su solución).
+El turno ("Juegan las negras") no está en la tabla: se deduce del enunciado.
 
 Después de crear, editar o eliminar, la página **redirige** al listado con
 `?status=created|updated|deleted|error|notfound` (patrón PRG:
@@ -374,9 +386,11 @@ Post/Redirect/Get), y el listado muestra el aviso con los estilos del sitio
 3. Abrir `http://localhost/phpmyadmin` → **Importar**, en este orden:
    1. `tp6/schema.sql` (crea la base y las tablas)
    2. `tp6/consultas.sql` (roles, temas, usuarios y 3 ejercicios)
-   3. `tp7/datos_prueba.sql` (5 ejercicios más)
+   3. `tp7/datos_prueba.sql` (los 20 ejercicios del sitio)
 4. Abrir `http://localhost/TeoriasobreAjedrez-/admin/` (o el nombre de la
-   carpeta que se usó en `htdocs`).
+   carpeta que se usó en `htdocs`) e iniciar sesión con el usuario
+   administrador cargado en `tp6/consultas.sql` (`admin@arte-del-jaque.com`).
+   La usuaria estudiante no tiene permiso para entrar.
 
 La conexión usa `root` sin contraseña, como trae XAMPP. Si tu MySQL tiene
 otra, se cambia en `config/conexion.php`.
@@ -408,16 +422,27 @@ otra, se cambia en `config/conexion.php`.
 - **id validado:** `editar.php` y `eliminar.php` validan el id con
   `filter_input(..., FILTER_VALIDATE_INT)` y comprueban que exista. Si no,
   vuelven al listado con un aviso.
+- **Inicio de sesión:** todas las páginas de `admin/` llaman a
+  `requerir_admin()`; sin sesión, mandan a `login.php`. El login busca el
+  email con una consulta preparada y compara la contraseña con
+  `password_verify()` contra el hash guardado (nunca en texto plano). Solo
+  entra el rol `administrador`. El mensaje es el mismo si el email no existe o
+  si la contraseña está mal, para no revelar qué emails están registrados. Al
+  entrar se renueva el id de sesión (`session_regenerate_id()`) y la cookie es
+  `HttpOnly` y `SameSite=Lax`. Cerrar sesión también va por POST.
+- **Token CSRF:** cada formulario (login, crear, editar, eliminar, cerrar
+  sesión) lleva un campo oculto con un token aleatorio guardado en la sesión
+  (`random_bytes`). Si el token enviado no coincide (`hash_equals()`), el
+  pedido se rechaza. Así otro sitio no puede usar la sesión abierta del
+  administrador para borrar o modificar ejercicios.
 - **Eliminar solo por POST:** el botón es un formulario con `confirm()`. Un
   enlace (GET) a `eliminar.php` no borra nada. Si una clave foránea impidiera
   el borrado (SQLSTATE 23000), se muestra un mensaje amigable. En este
   esquema las opciones y los intentos del ejercicio se borran en cascada.
 
-**Limitación conocida:** el panel no tiene inicio de sesión, así que
-cualquiera que entre a `admin/` puede modificar los datos. Es suficiente para
-el TP en local; para publicarlo haría falta un login (la tabla `usuarios` ya
-tiene roles y contraseñas con hash) y un token CSRF en los formularios. La
-página pública de Ejercicios sigue leyendo `datos/ejercicios.php`.
+**Limitaciones conocidas:** el panel edita los datos del ejercicio pero no
+sus opciones de respuesta (los ejercicios nuevos se muestran como pregunta
+abierta), y el login no limita los intentos fallidos.
 
 **Pruebas realizadas** (MariaDB 10.4 y PHP 8.2 de XAMPP): `php -l` sin errores
 en todos los archivos; alta, edición y baja verificadas también en la base;
@@ -425,7 +450,13 @@ formulario vacío y con datos inválidos (tema inexistente, nivel fuera del
 `ENUM`, FEN mal formada, textos cortos); `<script>` y `'); DROP TABLE …`
 guardados y mostrados como texto; ids `abc`, `-1`, `999` y `1 OR 1=1`
 redirigen con aviso; `eliminar.php` por GET no borra; con MySQL apagado se ve
-el mensaje controlado. Diseño revisado a 1366 px, 1024 px (netbook) y celular.
+el mensaje controlado. Diseño revisado a 1366 px y 1024 px (netbook).
+Login: sin sesión todas las páginas de `admin/` mandan al login; contraseña
+incorrecta, email inexistente y usuaria estudiante no entran; crear, editar,
+eliminar y cerrar sesión sin token o con un token falso se rechazan. Página
+pública: los 20 ejercicios leídos de la base dan las mismas 4 pestañas, 64
+opciones y turnos que el archivo PHP, y un ejercicio creado en el panel
+aparece como pregunta abierta.
 
 ## Variables de entorno
 
