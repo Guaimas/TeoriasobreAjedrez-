@@ -20,7 +20,8 @@
    15. GALERÍA DE IMÁGENES        galería de "Sobre el sitio"
    16. CATÁLOGO DE APERTURAS      filtros por tipo y fichas
    17. MODO OSCURO / MODO CLARO   variables del tema claro
-   18. RESPONSIVE GENERAL         ajustes de layout por ancho
+   18. ADMINISTRACIÓN (TP7)       tabla y formulario del CRUD
+   19. RESPONSIVE GENERAL         ajustes de layout por ancho
 
    Convención: los componentes con ajustes propios tienen su
    @media al lado de sus estilos; el responsive general va al final.
@@ -1739,6 +1740,96 @@ html.light-mode .lightbox-backdrop { background: rgba(20, 18, 10, .6); }
 html.light-mode .site-clock-time,
 html.light-mode .header-titles .tagline {
   color: #6b4a17;
+}
+
+/* =========================
+   ADMINISTRACIÓN (TP7)
+   Panel admin/: listado de ejercicios en tabla,
+   botones de acción y formulario de alta/edición.
+   ========================= */
+.admin-alert { max-width: none; margin-top: 0; margin-bottom: 1.3rem; }
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-bottom: 1.1rem;
+}
+.admin-toolbar .btn-gold { margin-top: 0; align-self: auto; text-decoration: none; }
+.admin-count { color: var(--text-soft); font-size: .88rem; margin: 0; }
+
+.admin-table-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.admin-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.admin-table th,
+.admin-table td {
+  padding: .75rem .9rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.admin-table th {
+  color: var(--gold);
+  font-size: .74rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg-panel);
+}
+.admin-table tbody tr:last-child td { border-bottom: none; }
+.admin-table tbody tr:hover { background: var(--bg-card-hover); }
+.admin-table td { color: var(--text-soft); }
+.admin-col-texto { color: var(--text-main) !important; min-width: 220px; }
+
+.admin-actions { display: flex; gap: .45rem; align-items: center; }
+.admin-actions form { margin: 0; }
+
+.btn-sm { padding: .4rem .85rem; font-size: .78rem; text-decoration: none; display: inline-block; }
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-danger:hover { background: var(--danger-bg); }
+/* Los <a> con estilo de botón usan la misma altura de línea que los <button> */
+a.btn-outline, a.btn-gold, .btn-sm { text-decoration: none; line-height: normal; }
+a.btn-outline { display: inline-block; }
+
+.admin-form { max-width: 820px; }
+.admin-form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 1rem; }
+.admin-form label small { color: var(--text-faint); font-weight: 400; }
+
+/* Netbook (hasta 1280px) y celulares: la tabla pasa a "tarjetas" (un bloque por ejercicio) */
+@media (max-width: 1280px) {
+  .admin-form-grid { grid-template-columns: 1fr; }
+  .admin-table thead { display: none; }
+  .admin-table,
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td { display: block; width: 100%; }
+  .admin-table tr { padding: .6rem 0; border-bottom: 1px solid var(--border-subtle); }
+  .admin-table tbody tr:last-child { border-bottom: none; }
+  .admin-table td { border-bottom: none; padding: .3rem 1rem; display: flex; gap: .8rem; }
+  .admin-table td::before {
+    content: attr(data-label);
+    flex: 0 0 90px;
+    color: var(--gold);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .admin-col-texto { min-width: 0; }
 }
 
 /* =========================

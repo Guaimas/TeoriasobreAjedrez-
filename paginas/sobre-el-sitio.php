@@ -75,7 +75,7 @@ require_once __DIR__ . '/../includes/nav.php';
                     <div class="topic-grid">
                         <?php // Tarjetas generadas desde datos/secciones.php (todas menos Inicio y esta misma página) ?>
                         <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
-                        <?php if (in_array($slug, ['index', 'sobre-el-sitio'], true)) continue; ?>
+                        <?php if (in_array($slug, ['index', 'sobre-el-sitio', 'admin'], true)) continue; ?>
                         <a class="card card--link" href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>"><h3><?= htmlspecialchars($seccion['titulo']) ?></h3><p><?= htmlspecialchars($seccion['descripcion']) ?></p></a>
                         <?php endforeach; ?>
                     </div>

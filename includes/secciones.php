@@ -38,6 +38,11 @@ if (!function_exists('url_seccion')) {
             return $ruta_base . 'index.php';
         }
 
+        // TP7: el panel de administración está en la carpeta admin/.
+        if ($slug === 'admin') {
+            return $ruta_base . 'admin/index.php';
+        }
+
         return $ruta_paginas . $slug . '.php';
     }
 }

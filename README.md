@@ -53,6 +53,7 @@ TeoriasobreAjedrez-/
 │   ├── componentes.php   ficha_apertura(), tarjeta_trampa(), ejercicio(), tablero(),
 │   │                     casillas_alcanzables() y ficha_pieza()
 │   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
+│   ├── admin_ejercicios.php TP7: consultas y validación del CRUD
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
 │   └── style.css
@@ -86,6 +87,10 @@ TeoriasobreAjedrez-/
 ├── .env.example          Plantilla pública de variables de entorno
 ├── .gitignore
 ├── tp6/                  TP6: NORMALIZACION.md, schema.sql y consultas.sql
+├── tp7/                  TP7: datos_prueba.sql (5 ejercicios más)
+├── config/
+│   └── conexion.php      TP7: conexión PDO a MySQL
+├── admin/                TP7: CRUD de ejercicios (listar, crear, editar, eliminar)
 └── README.md
 ```
 
@@ -321,6 +326,106 @@ borrar un tema con ejercicios (`RESTRICT`), al borrar un autor sus ejercicios
 quedan sin autor (`SET NULL`), y al borrar un ejercicio se borran sus opciones
 (`CASCADE`, también en los intentos). Los hashes de las contraseñas se validaron con `password_verify()`
 mediante PDO.
+
+## TP7 — CRUD con PHP y PDO
+
+Rama: `feature/tp7-crud-pdo` · Panel en [`admin/`](admin/)
+
+El sitio ahora se conecta a la base `arte_del_jaque` del TP6 con **PDO**. Hay
+un panel de **Administración** (nuevo ítem del menú) para gestionar la tabla
+principal, `ejercicios`: listar, crear, editar y eliminar.
+
+**Por qué `ejercicios`:** es la tabla principal de negocio del TP6, la que da
+contenido a la página Ejercicios. Tiene una clave foránea a la tabla maestra
+`temas`, que en el formulario se elige con un `<select>` cargado desde la base,
+y en el listado se muestra el **nombre** del tema con `INNER JOIN`. El autor
+(FK opcional a `usuarios`) se trae con `LEFT JOIN`.
+
+### Archivos
+
+| Archivo | Qué hace |
+|---|---|
+| [`config/conexion.php`](config/conexion.php) | Crea la conexión PDO (DSN utf8mb4, excepciones, `FETCH_ASSOC`, consultas preparadas reales). Si falla, guarda el detalle en el log y muestra un mensaje controlado |
+| [`includes/admin_ejercicios.php`](includes/admin_ejercicios.php) | Consultas (temas, autores, buscar por id), validación del formulario del lado del servidor y ayudas para mostrar errores |
+| [`admin/index.php`](admin/index.php) | **Read:** tabla de ejercicios con tema, nivel, autor, cantidad de opciones y fecha (`dd/mm/aaaa hh:mm`). El enunciado largo se recorta |
+| [`admin/crear.php`](admin/crear.php) | **Create:** formulario vacío; valida e inserta |
+| [`admin/editar.php`](admin/editar.php) | **Update:** formulario con los datos actuales; valida y actualiza |
+| [`admin/eliminar.php`](admin/eliminar.php) | **Delete:** solo por POST, con confirmación en el navegador |
+| [`admin/_formulario.php`](admin/_formulario.php) | Formulario compartido por crear y editar |
+| [`tp7/datos_prueba.sql`](tp7/datos_prueba.sql) | 5 ejercicios más (8 en total), uno de ellos sin autor |
+
+También se modificaron, sin romper lo existente: `datos/secciones.php` e
+`includes/secciones.php` (ítem "Administración" en el menú, que apunta a
+`admin/index.php`), `paginas/sobre-el-sitio.php` (el panel no aparece entre las
+tarjetas de secciones), `js/main.js` (el resaltado automático del menú
+marcaba "Inicio" en `admin/index.php`; ahora respeta el ítem que marca PHP) y
+`css/style.css` (sección 18, *Administración*: tabla, botones y formulario; en
+pantallas de hasta 1280 px la tabla se muestra como tarjetas).
+
+Después de crear, editar o eliminar, la página **redirige** al listado con
+`?status=created|updated|deleted|error|notfound` (patrón PRG:
+Post/Redirect/Get), y el listado muestra el aviso con los estilos del sitio
+(el sitio no usa Bootstrap). Recargar la página no repite la operación.
+
+### Instalación en XAMPP
+
+1. Copiar la carpeta del proyecto dentro de `C:\xampp\htdocs\`.
+2. En el XAMPP Control Panel, iniciar **Apache** y **MySQL**.
+3. Abrir `http://localhost/phpmyadmin` → **Importar**, en este orden:
+   1. `tp6/schema.sql` (crea la base y las tablas)
+   2. `tp6/consultas.sql` (roles, temas, usuarios y 3 ejercicios)
+   3. `tp7/datos_prueba.sql` (5 ejercicios más)
+4. Abrir `http://localhost/TeoriasobreAjedrez-/admin/` (o el nombre de la
+   carpeta que se usó en `htdocs`).
+
+La conexión usa `root` sin contraseña, como trae XAMPP. Si tu MySQL tiene
+otra, se cambia en `config/conexion.php`.
+
+### Seguridad
+
+- **PDO con excepciones:** `PDO::ERRMODE_EXCEPTION` hace que cualquier error
+  de SQL lance una `PDOException`. Todas las operaciones están dentro de
+  `try/catch`: el detalle técnico va al log con `error_log()` y el usuario ve
+  solo un mensaje claro. Si MySQL está apagado, el panel lo avisa sin mostrar
+  errores de PHP.
+- **Consultas preparadas (contra inyección SQL):** todas las consultas que
+  reciben datos usan `prepare()` con marcadores (`:id`, `:enunciado`…) y
+  `execute()` con los valores. Con `ATTR_EMULATE_PREPARES = false`, el SQL y
+  los datos viajan **por separado** a MySQL, así que un texto como
+  `'); DROP TABLE ejercicios; --` se guarda como texto y nunca se ejecuta. En
+  ningún lugar se concatenan datos del usuario dentro del SQL.
+- **XSS (`htmlspecialchars`):** todo lo que se imprime pasa por `e()`, que
+  llama a `htmlspecialchars()` con `ENT_QUOTES` y UTF-8: textos de la tabla,
+  `value` de los inputs, opciones de los `<select>`, los id de los enlaces y
+  hasta el mensaje de estado. El `?status=` de la URL no se imprime: solo se
+  acepta uno de una lista fija.
+- **Validación del lado del servidor:** tema y autor tienen que ser enteros y
+  existir en su tabla; el nivel tiene que ser uno de los valores del `ENUM`;
+  el enunciado (10 a 255 caracteres) y la explicación (10 a 2000) son
+  obligatorios; la posición FEN es opcional, de hasta 100 caracteres y con 8
+  filas válidas. Si algo falla, el formulario se vuelve a mostrar con los
+  errores y con lo que se había escrito.
+- **id validado:** `editar.php` y `eliminar.php` validan el id con
+  `filter_input(..., FILTER_VALIDATE_INT)` y comprueban que exista. Si no,
+  vuelven al listado con un aviso.
+- **Eliminar solo por POST:** el botón es un formulario con `confirm()`. Un
+  enlace (GET) a `eliminar.php` no borra nada. Si una clave foránea impidiera
+  el borrado (SQLSTATE 23000), se muestra un mensaje amigable. En este
+  esquema las opciones y los intentos del ejercicio se borran en cascada.
+
+**Limitación conocida:** el panel no tiene inicio de sesión, así que
+cualquiera que entre a `admin/` puede modificar los datos. Es suficiente para
+el TP en local; para publicarlo haría falta un login (la tabla `usuarios` ya
+tiene roles y contraseñas con hash) y un token CSRF en los formularios. La
+página pública de Ejercicios sigue leyendo `datos/ejercicios.php`.
+
+**Pruebas realizadas** (MariaDB 10.4 y PHP 8.2 de XAMPP): `php -l` sin errores
+en todos los archivos; alta, edición y baja verificadas también en la base;
+formulario vacío y con datos inválidos (tema inexistente, nivel fuera del
+`ENUM`, FEN mal formada, textos cortos); `<script>` y `'); DROP TABLE …`
+guardados y mostrados como texto; ids `abc`, `-1`, `999` y `1 OR 1=1`
+redirigen con aviso; `eliminar.php` por GET no borra; con MySQL apagado se ve
+el mensaje controlado. Diseño revisado a 1366 px, 1024 px (netbook) y celular.
 
 ## Variables de entorno
 
