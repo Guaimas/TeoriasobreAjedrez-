@@ -145,7 +145,7 @@ página la incluye con `require_once` antes de imprimir el HTML:
 | `clase5/seguridad.php` | Funciones `e()` (codificación de salida) y `limpiar()` (sanitización con `trim()`) |
 | `clase5/procesar_contacto.php` | Captura, sanitiza y valida el formulario POST |
 | `clase5/buscar_glosario.php` | Captura, sanitiza y valida el parámetro GET y realiza la búsqueda |
-| `clase5/datos/glosario.php` | Los 38 términos del glosario como array de PHP |
+| `clase5/datos/glosario.php` | Los términos del glosario como array de PHP (38 en la entrega; 63 desde la Fase 5) |
 
 No se usa base de datos ni librerías externas: solo funciones nativas de PHP.
 
@@ -186,8 +186,8 @@ No se usa base de datos ni librerías externas: solo funciones nativas de PHP.
   lista de términos. La caja "Buscar en el glosario..." del encabezado (visible
   en pantallas grandes) usa el mismo parámetro y lleva a esta página desde
   cualquier sección del sitio.
-- **Finalidad:** encontrar rápidamente un concepto de ajedrez entre los 38
-  términos del glosario.
+- **Finalidad:** encontrar rápidamente un concepto de ajedrez entre los términos
+  del glosario (38 en la entrega del TP; 63 desde la Fase 5).
 - **Por qué GET:** buscar no modifica nada en el servidor. Al quedar en la URL,
   el resultado se puede recargar, guardar en favoritos o compartir.
 - **Parámetro:** `termino` → por ejemplo `paginas/glosario.php?termino=enroque`.

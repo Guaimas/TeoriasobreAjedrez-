@@ -13,7 +13,7 @@
  */
 
 $titulo_pagina    = "Glosario - El Arte del Jaque";
-$meta_descripcion = "Glosario con más de 30 términos de ajedrez explicados de forma sencilla, ordenados alfabéticamente.";
+$meta_descripcion = "Glosario con más de 60 términos de ajedrez explicados de forma sencilla, ordenados alfabéticamente.";
 $pagina_actual    = "glosario";
 $header_titulo    = "Glosario";
 $header_tagline   = "El vocabulario del ajedrez";
