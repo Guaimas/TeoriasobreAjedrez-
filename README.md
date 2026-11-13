@@ -54,7 +54,9 @@ TeoriasobreAjedrez-/
 │   │                     casillas_alcanzables() y ficha_pieza()
 │   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   ├── admin_ejercicios.php TP7: consultas y validación del CRUD
-│   ├── admin_sesion.php  TP7: sesión del administrador y token CSRF
+│   ├── auth_guard.php    TP8: requerir_login() y requerir_rol()
+│   ├── usuarios.php      TP8: consultas de usuarios y rol de la sesión
+│   ├── csrf.php          TP8: token CSRF
 │   ├── ejercicios_bd.php TP7: ejercicios de la página pública leídos de MySQL
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
@@ -90,9 +92,16 @@ TeoriasobreAjedrez-/
 ├── .gitignore
 ├── tp6/                  TP6: NORMALIZACION.md, schema.sql y consultas.sql
 ├── tp7/                  TP7: datos_prueba.sql (los 20 ejercicios del sitio)
+├── tp8/                  TP8: usuarios_prueba.sql y README.md (documentación del TP8)
 ├── config/
-│   └── conexion.php      TP7: conexión PDO a MySQL
-├── admin/                TP7: login + CRUD de ejercicios (listar, crear, editar, eliminar)
+│   ├── conexion.php      TP7: conexión PDO a MySQL
+│   └── sesion.php        TP8: configuración segura de la sesión
+├── admin/                TP7: CRUD de ejercicios (solo rol admin desde el TP8)
+├── registro.php          TP8: alta de usuarios
+├── login.php             TP8: inicio de sesión
+├── logout.php            TP8: cierre de sesión (POST)
+├── dashboard.php         TP8: panel de cualquier usuario con sesión
+├── admin_panel.php       TP8: panel del administrador
 └── README.md
 ```
 
@@ -356,8 +365,7 @@ y en el listado se muestra el **nombre** del tema con `INNER JOIN`. El autor
 | [`admin/editar.php`](admin/editar.php) | **Update:** formulario con los datos actuales; valida y actualiza |
 | [`admin/eliminar.php`](admin/eliminar.php) | **Delete:** solo por POST, con confirmación en el navegador |
 | [`admin/_formulario.php`](admin/_formulario.php) | Formulario compartido por crear y editar |
-| [`admin/login.php`](admin/login.php) / [`admin/logout.php`](admin/logout.php) | Iniciar y cerrar sesión (solo usuarios con rol `administrador`) |
-| [`includes/admin_sesion.php`](includes/admin_sesion.php) | Sesión (`requerir_admin()`) y token CSRF (`csrf_campo()`, `csrf_valido()`) |
+| `admin/login.php`, `admin/logout.php`, `includes/admin_sesion.php` | Login propio del panel. **En el TP8 se reemplazaron** por el login de todo el sitio (`login.php`, `logout.php`, `includes/auth_guard.php`); ver [`tp8/README.md`](tp8/README.md) |
 | [`includes/ejercicios_bd.php`](includes/ejercicios_bd.php) | `ejercicios_desde_bd()`: arma los ejercicios de la página pública desde las tablas `temas`, `ejercicios` y `opciones_ejercicio` |
 | [`tp7/datos_prueba.sql`](tp7/datos_prueba.sql) | Los 20 ejercicios reales del sitio con sus 64 opciones (reemplaza los ejercicios de prueba del TP6) |
 
@@ -388,9 +396,9 @@ Post/Redirect/Get), y el listado muestra el aviso con los estilos del sitio
    2. `tp6/consultas.sql` (roles, temas, usuarios y 3 ejercicios)
    3. `tp7/datos_prueba.sql` (los 20 ejercicios del sitio)
 4. Abrir `http://localhost/TeoriasobreAjedrez-/admin/` (o el nombre de la
-   carpeta que se usó en `htdocs`) e iniciar sesión con el usuario
-   administrador cargado en `tp6/consultas.sql` (`admin@arte-del-jaque.com`).
-   La usuaria estudiante no tiene permiso para entrar.
+   carpeta que se usó en `htdocs`) e iniciar sesión con un administrador.
+   Desde el TP8 el acceso es por `login.php`; los usuarios de prueba están en
+   [`tp8/README.md`](tp8/README.md).
 
 La conexión usa `root` sin contraseña, como trae XAMPP. Si tu MySQL tiene
 otra, se cambia en `config/conexion.php`.
@@ -422,8 +430,9 @@ otra, se cambia en `config/conexion.php`.
 - **id validado:** `editar.php` y `eliminar.php` validan el id con
   `filter_input(..., FILTER_VALIDATE_INT)` y comprueban que exista. Si no,
   vuelven al listado con un aviso.
-- **Inicio de sesión:** todas las páginas de `admin/` llaman a
-  `requerir_admin()`; sin sesión, mandan a `login.php`. El login busca el
+- **Inicio de sesión** (desde el TP8, `requerir_rol('admin')` de
+  `includes/auth_guard.php`): todas las páginas de `admin/` exigen el rol
+  admin; sin sesión, mandan a `login.php`. El login busca el
   email con una consulta preparada y compara la contraseña con
   `password_verify()` contra el hash guardado (nunca en texto plano). Solo
   entra el rol `administrador`. El mensaje es el mismo si el email no existe o
@@ -457,6 +466,26 @@ eliminar y cerrar sesión sin token o con un token falso se rechazan. Página
 pública: los 20 ejercicios leídos de la base dan las mismas 4 pestañas, 64
 opciones y turnos que el archivo PHP, y un ejercicio creado en el panel
 aparece como pregunta abierta.
+
+## TP8 — Registro, login y control de acceso por roles
+
+Rama: `feature/tp8-autenticacion` · Documentación completa en
+[`tp8/README.md`](tp8/README.md)
+
+Cuentas de usuario para todo el sitio: **registro** (`registro.php`),
+**login** (`login.php`), **logout** (`logout.php`), **sesión segura**
+(`config/sesion.php`) y **guardián de rutas** (`includes/auth_guard.php`).
+El menú lateral cambia según la sesión ("Iniciar sesión" / "Registrarse" o
+"Hola, <nombre>", "Mi panel" y "Cerrar sesión"), y "Administración" solo
+aparece para el rol admin.
+
+| Página | Quién entra |
+|---|---|
+| `dashboard.php` | cualquier usuario con sesión |
+| `admin_panel.php` y todo `admin/` (CRUD del TP7) | solo el rol admin |
+
+Usuarios de prueba (`tp8/usuarios_prueba.sql`): `admin@demo.com` /
+`Admin1234` (admin) y `usuario@demo.com` / `Usuario1234` (usuario).
 
 ## Variables de entorno
 
