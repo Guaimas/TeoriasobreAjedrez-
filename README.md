@@ -614,6 +614,24 @@ grupos y 8 trampas. Cada filtro devuelve la cantidad esperada, los 6 enlaces
 de las trampas apuntan a fichas que existen y un intento de XSS en `?tipo=` se
 rechaza. El resto del sitio sigue respondiendo bien.
 
+### Fase 5 — Ampliar el contenido (rama `feature/fase5-contenido`)
+
+Cada sección ampliada se guarda en un commit propio dentro de la rama.
+
+**5.1 Tácticas: ejemplos concretos**
+- Cada una de las 11 tácticas tiene un desplegable **"Ver ejemplo"** con una
+  situación concreta (casillas y jugadas). Ejemplo: la horquilla Cc7+ contra
+  el rey de e8 y la torre de a8. Las geometrías se verificaron una por una
+  (diagonales libres, saltos de caballo, filas abiertas).
+- Nueva táctica número 12: **Jugada intermedia**, con el ejemplo de la Trampa
+  del Elefante (7...Ab4+). Ahora son 12 tarjetas en 4 filas completas.
+- Los ejemplos enlazan a otras secciones: el jaque descubierto, a la trampa de
+  la Petrov; el sacrificio, a la Partida Inmortal.
+
+**5.2 Patrones de mate (nueva sección en Tácticas)**
+- Seis patrones con su descripción y una nota sobre cómo reconocerlos o
+  evitarlos: pasillo, coz, Anastasia, Boden, beso y escalera.
+
 ## Créditos
 
 Sitio educativo creado por **Samuel**.

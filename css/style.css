@@ -477,6 +477,26 @@ main { padding: 2.4rem; max-width: 1180px; }
 
 .card h3 { font-size: 1.08rem; margin-bottom: .4rem; }
 
+/* Ejemplo desplegable dentro de una tarjeta (Tácticas) */
+.card-example { margin-top: .4rem; }
+.card-example summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: .85rem;
+  font-weight: 600;
+}
+.card-example summary:hover { color: var(--gold-bright); }
+.card-example p { margin-top: .6rem; font-size: .86rem; }
+.card-example a,
+.card-note a { color: var(--gold); }
+
+/* Nota al pie de una tarjeta (ej: "Cómo reconocerlo" en Patrones de mate) */
+.card-note {
+  font-size: .84rem;
+  padding-top: .7rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
 /* Tarjeta que funciona como enlace (ej: "¿Qué encontrarás?" en Sobre el sitio) */
 .card--link { display: block; }
 .card--link p { font-size: .82rem; margin-bottom: 0; color: var(--text-soft); }
