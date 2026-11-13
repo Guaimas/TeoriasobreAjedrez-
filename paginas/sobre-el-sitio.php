@@ -24,7 +24,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <div class="page-title-block">
                     <span class="eyebrow">Sobre el Sitio</span>
                     <h1>El Arte del Jaque</h1>
-                    <p>Un recorrido por las capas que hacen del ajedrez el "Juego de los Reyes".</p>
+                    <p>Qué es este sitio, para quién fue pensado, qué vas a encontrar en él y cómo está construido.</p>
                 </div>
 
                 <section class="page-section">
@@ -73,24 +73,20 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>¿Qué encontrarás?</h2>
                     </div>
                     <div class="topic-grid">
-                        <div class="card"><h3>Fundamentos</h3></div>
-                        <div class="card"><h3>Aperturas</h3></div>
-                        <div class="card"><h3>Estrategias</h3></div>
-                        <div class="card"><h3>Tácticas</h3></div>
-                        <div class="card"><h3>Finales</h3></div>
-                        <div class="card"><h3>Partidas Históricas</h3></div>
-                        <div class="card"><h3>Ejercicios</h3></div>
-                        <div class="card"><h3>Glosario</h3></div>
-                        <div class="card"><h3>Recursos</h3></div>
+                        <?php // Tarjetas generadas desde datos/secciones.php (todas menos Inicio y esta misma página) ?>
+                        <?php foreach (secciones_del_sitio() as $slug => $seccion): ?>
+                        <?php if (in_array($slug, ['index', 'sobre-el-sitio'], true)) continue; ?>
+                        <a class="card card--link" href="<?= url_seccion($slug, $ruta_base, $ruta_paginas) ?>"><h3><?= htmlspecialchars($seccion['titulo']) ?></h3><p><?= htmlspecialchars($seccion['descripcion']) ?></p></a>
+                        <?php endforeach; ?>
                     </div>
                 </section>
 
                 <section class="page-section">
                     <div class="section-heading">
                         <h2>Tecnologías utilizadas</h2>
-                        <p>Este sitio fue construido únicamente con tecnologías web básicas, sin frameworks.</p>
+                        <p>Este sitio fue construido con tecnologías web estándar, sin frameworks ni librerías externas.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--4">
                         <div class="card">
                             <h3>HTML</h3>
                             <p>Define la estructura y el contenido de cada página: textos, imágenes, enlaces y secciones.</p>
@@ -101,7 +97,11 @@ require_once __DIR__ . '/../includes/nav.php';
                         </div>
                         <div class="card">
                             <h3>JavaScript</h3>
-                            <p>Aporta la interactividad: el menú desplegable en móvil, el resaltado de la página activa y las respuestas de los ejercicios.</p>
+                            <p>Aporta la interactividad: el menú desplegable en móvil, el modo claro y oscuro, el acordeón del glosario y las soluciones de los ejercicios.</p>
+                        </div>
+                        <div class="card">
+                            <h3>PHP</h3>
+                            <p>Arma cada página en el servidor: reutiliza el encabezado, el menú y el pie de página, y procesa de forma segura el formulario de contacto y el buscador del glosario.</p>
                         </div>
                     </div>
                 </section>
@@ -121,7 +121,7 @@ require_once __DIR__ . '/../includes/nav.php';
                             </button>
 
                             <button type="button" class="gallery-zoom-btn" id="galleryZoomBtn" aria-label="Ampliar imagen">
-                                <img id="galleryMainImg" src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                                <img id="galleryMainImg" src="../img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                             </button>
 
                             <button type="button" class="nav-arrow gallery-next" aria-label="Imagen siguiente">
@@ -133,30 +133,41 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <div class="gallery-thumbs" id="galleryThumbs">
                             <button type="button" class="gallery-thumb active" data-index="0">
-                                <img src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                                <img src="../img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="1">
-                                <img src="https://images.pexels.com/photos/59197/pexels-photo-59197.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Batalla entre piezas de ajedrez">
+                                <img src="../img/pexels-59197.jpg" alt="Batalla entre piezas de ajedrez">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="2">
-                                <img src="https://images.pexels.com/photos/8438872/pexels-photo-8438872.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tablero de práctica">
+                                <img src="../img/pexels-8438872.jpg" alt="Tablero de práctica">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="3">
-                                <img src="https://images.pexels.com/photos/6114949/pexels-photo-6114949.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Apertura Italiana">
+                                <img src="../img/pexels-6114949.jpg" alt="Apertura Italiana">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="4">
-                                <img src="https://images.pexels.com/photos/37707936/pexels-photo-37707936.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque">
+                                <img src="../img/pexels-37707936.jpg" alt="El jaque">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="5">
-                                <img src="https://images.pexels.com/photos/139392/checkmate-chess-resignation-conflict-139392.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El jaque mate">
+                                <img src="../img/pexels-139392.jpg" alt="El jaque mate">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="6">
-                                <img src="https://images.pexels.com/photos/8438946/pexels-photo-8438946.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Movimiento de piezas">
+                                <img src="../img/pexels-8438946.jpg" alt="Movimiento de piezas">
                             </button>
                             <button type="button" class="gallery-thumb" data-index="7">
-                                <img src="https://images.pexels.com/photos/27098300/pexels-photo-27098300.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El medio juego en ajedrez">
+                                <img src="../img/pexels-27098300.jpg" alt="El medio juego en ajedrez">
                             </button>
                         </div>
+                    </div>
+
+                    <div class="simple-panel image-credits">
+                        <h2>Créditos de las imágenes</h2>
+                        <p>
+                            Todas las fotografías del sitio provienen de <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>
+                            y se usan bajo su <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">licencia</a>,
+                            que permite usarlas de forma gratuita. Están guardadas en la carpeta <code>img/</code> del sitio, así
+                            que se ven aunque Pexels no esté disponible. Cada archivo conserva el número de la foto en Pexels
+                            (por ejemplo, <code>pexels-131615.jpg</code>) para poder identificar su origen.
+                        </p>
                     </div>
                 </section>
 
@@ -180,29 +191,30 @@ require_once __DIR__ . '/../includes/nav.php';
 
                 <section class="page-section">
                     <div class="simple-panel">
+                        <h2>¿Cómo aprovechar el sitio?</h2>
                         <p>
-                            A lo largo de este recorrido, hemos explorado las capas que hacen del
-                            ajedrez el 'Juego de los Reyes'. Desde la explosiva energía de las
-                            aperturas, pasando por la profunda complejidad estratégica del medio
-                            juego, hasta llegar a la precisión quirúrgica que exigen los finales,
-                            cada etapa de la partida es un universo de posibilidades. Has aprendido
-                            que el ajedrez no se trata solo de mover piezas, sino de anticipar
-                            intenciones, gestionar recursos y mantener la calma bajo presión.
+                            Si estás empezando, te recomendamos seguir las secciones en el orden del menú:
+                            primero los <a href="fundamentos.php" style="color: var(--gold);">Fundamentos</a>
+                            para conocer el tablero y las reglas; después las tácticas y las estrategias, que
+                            explican cómo se gana material y cómo se arma un plan; y por último las aperturas
+                            y los finales, que se entienden mejor cuando ya conoces lo anterior.
+                        </p>
+                        <p>
+                            Al final de cada sección encontrarás enlaces para pasar a la anterior o a la
+                            siguiente. Cuando aparezca una palabra que no conoces, búscala en el
+                            <a href="glosario.php" style="color: var(--gold);">Glosario</a>, y cuando
+                            termines un tema, comprueba lo aprendido en
+                            <a href="ejercicios.php" style="color: var(--gold);">Ejercicios</a>.
                         </p>
                     </div>
                     <div class="simple-panel">
+                        <h2>Un proyecto en crecimiento</h2>
                         <p>
-                            Este sitio ha sido diseñado para ser tu guía táctica, pero la verdadera maestría
-                            nace de la constancia. La sección de Práctica es ahora tu campo de entrenamiento;
-                            allí, cada derrota es una lección y cada victoria contra el bot es un escalón más
-                            en tu ascenso competitivo. Recuerda que incluso los Grandes Maestros comenzaron
-                            comprendiendo conceptos básicos como el jaque mate y la oposición.
-                        </p>
-                        <p>
-                            Te invitamos a seguir analizando tus partidas, a desafiar tus propios límites y,
-                            sobre todo, a disfrutar de la belleza intelectual de cada movimiento. El tablero
-                            está listo, las piezas están en su sitio y el próximo gran movimiento es tuyo.
-                            ¡Gracias por permitirnos ser parte de tu formación como ajedrecista!
+                            El Arte del Jaque es un sitio educativo creado por Samuel como proyecto de
+                            aprendizaje de desarrollo web, y se sigue ampliando con nuevos contenidos. Si
+                            encuentras un error, tienes una sugerencia o quieres proponer un tema, puedes
+                            escribirnos desde la página de
+                            <a href="contacto.php" style="color: var(--gold);">Contacto</a>.
                         </p>
                     </div>
                 </section>

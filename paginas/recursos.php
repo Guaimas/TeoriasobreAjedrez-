@@ -53,6 +53,16 @@ require_once __DIR__ . '/../includes/nav.php';
                             <h3>Manual de Finales de Ajedrez</h3>
                             <p>De Mark Dvoretsky. Referencia exigente pero completa sobre finales de reyes, peones, torres y piezas menores.</p>
                         </div>
+                        <div class="card">
+                            <span class="pill">Principiantes</span>
+                            <h3>Fundamentos del Ajedrez</h3>
+                            <p>De José Raúl Capablanca, campeón del mundo. Explica finales básicos, medio juego y aperturas con ejemplos sencillos y un estilo muy claro.</p>
+                        </div>
+                        <div class="card">
+                            <span class="pill">Partidas comentadas</span>
+                            <h3>Mis 60 Partidas Memorables</h3>
+                            <p>De Bobby Fischer. Comenta en detalle sesenta de sus partidas: una forma excelente de ver cómo piensa un campeón del mundo.</p>
+                        </div>
                     </div>
                 </section>
 
@@ -63,7 +73,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Jugar</h2>
                         <p>Plataformas para poner en práctica lo aprendido contra otras personas.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Chess.com</h3>
                             <p>Una de las plataformas más grandes del mundo para jugar partidas online, con salas para todos los niveles.</p>
@@ -88,7 +98,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Practicar</h2>
                         <p>Ejercicios y puzzles para entrenar la vista táctica.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Puzzles de Lichess</h3>
                             <p>Miles de ejercicios tácticos gratuitos, adaptados automáticamente a tu nivel de juego.</p>
@@ -113,7 +123,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Estudiar</h2>
                         <p>Lecciones guiadas sobre teoría, aperturas, estrategia y finales.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Lichess Learn</h3>
                             <p>Lecciones interactivas gratuitas, desde el movimiento de las piezas hasta conceptos estratégicos.</p>
@@ -138,7 +148,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <h2>Analizar partidas</h2>
                         <p>Herramientas para revisar tus propias partidas y entender tus errores.</p>
                     </div>
-                    <div class="card-grid">
+                    <div class="card-grid card-grid--2">
                         <div class="card">
                             <h3>Tablero de análisis de Lichess</h3>
                             <p>Permite cargar cualquier partida y analizarla con un motor de ajedrez gratuito, señalando los errores e imprecisiones.</p>
@@ -150,6 +160,38 @@ require_once __DIR__ . '/../includes/nav.php';
                             <h3>Análisis de partidas en Chess.com</h3>
                             <p>Revisión automática de partidas jugadas en la plataforma, con clasificación de jugadas y sugerencias del motor.</p>
                             <a href="https://www.chess.com/analysis" target="_blank" rel="noopener" class="card-link">chess.com/analysis
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section class="page-section">
+                    <div class="section-heading">
+                        <h2>Entrenar gratis</h2>
+                        <p>Herramientas para practicar lo que se explica en este sitio, sin necesidad de crear una cuenta.</p>
+                    </div>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Estudios de Lichess</h3>
+                            <p>Estudios interactivos creados por la comunidad, organizados en capítulos sobre aperturas, finales y táctica.</p>
+                            <a href="https://lichess.org/study" target="_blank" rel="noopener" class="card-link">lichess.org/study
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+                            </a>
+                        </div>
+                        <div class="card">
+                            <h3>Práctica de Lichess</h3>
+                            <p>Posiciones para practicar contra el ordenador, como los mates básicos y los finales que explicamos en la sección de <a href="finales.php#mates-basicos" style="color: var(--gold);">Finales</a>.</p>
+                            <a href="https://lichess.org/practice" target="_blank" rel="noopener" class="card-link">lichess.org/practice
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+                            </a>
+                        </div>
+                        <div class="card">
+                            <h3>Entrenador de coordenadas</h3>
+                            <p>Un juego para reconocer rápidamente cada casilla del tablero. Es la mejor forma de dominar la <a href="fundamentos.php#notacion" style="color: var(--gold);">notación algebraica</a>.</p>
+                            <a href="https://lichess.org/training/coordinate" target="_blank" rel="noopener" class="card-link">lichess.org/training/coordinate
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
                             </a>
                         </div>

@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/nav.php';
                 <section class="page-section">
                     <div class="content-block">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/27098300/pexels-photo-27098300.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El medio juego en ajedrez">
+                            <img src="../img/pexels-27098300.jpg" alt="El medio juego en ajedrez">
                         </div>
                         <div>
                             <h2>Estrategia</h2>
@@ -43,25 +43,23 @@ require_once __DIR__ . '/../includes/nav.php';
                         </div>
                     </div>
 
-                    <div class="carousel-block">
-                        <button class="nav-arrow" disabled aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <div class="content-block reverse">
                         <div class="content-media">
-                            <img src="https://images.pexels.com/photos/13761311/pexels-photo-13761311.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="La batería en ajedrez">
+                            <img src="../img/pexels-13761311.jpg" alt="La batería en ajedrez">
                         </div>
                         <div>
-                            <h2>La Batería</h2>
+                            <h2>La batería</h2>
                             <p>
                                 Se crea al colocar dos o más piezas que se mueven de forma idéntica (como dos Torres,
                                 o Dama y Alfil) en la misma fila, columna o diagonal. Es como un cañón cargado: aumenta
                                 drásticamente la presión sobre un punto específico de la defensa enemiga, forzando concesiones.
                             </p>
                         </div>
-                        <button class="nav-arrow" disabled aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
                     </div>
 
-                    <div class="content-block reverse">
+                    <div class="simple-panel">
                         <div>
-                            <h2>Estrategia vs. Táctica</h2>
+                            <h2>Estrategia vs. táctica</h2>
                             <p>
                                 Conviene tener clara la diferencia entre ambos términos:
                             </p>
@@ -134,6 +132,93 @@ require_once __DIR__ . '/../includes/nav.php';
                         <div class="card">
                             <h3>Creación de planes</h3>
                             <p>Jugar con un objetivo concreto en mente, en lugar de mover piezas sin rumbo.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Puesto avanzado</h3>
+                            <p>Una casilla en el campo rival, protegida por un peón propio, que ningún peón enemigo puede atacar. Un caballo instalado allí suele ser tan fuerte como una torre.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Profilaxis</h3>
+                            <p>Antes de ejecutar tu plan, pregúntate qué quiere hacer el rival e impídelo. Aron Nimzowitsch la convirtió en una idea central del juego posicional.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Cuándo cambiar piezas</h3>
+                            <p>Con ventaja de material conviene cambiar piezas (no peones) para simplificar. Si estás peor, evita los cambios y busca complicaciones.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section class="page-section" id="estructuras-de-peones">
+                    <div class="section-heading">
+                        <h2>Estructuras de peones</h2>
+                        <p>Los peones son las únicas piezas que no pueden retroceder: su ubicación define el plan de toda la partida. Cada estructura tiene ventajas y desventajas.</p>
+                    </div>
+
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>Peón aislado</h3>
+                            <p>No tiene peones propios en las columnas vecinas, así que ningún peón puede defenderlo.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> deja columnas semiabiertas a sus lados y da espacio y actividad a las piezas.<br><strong>Desventaja:</strong> es un blanco fijo, y la casilla que tiene delante es un puesto ideal para una pieza rival.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Peones doblados</h3>
+                            <p>Dos peones del mismo color en la misma columna, normalmente tras una captura.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> la captura que los dobló suele abrir una columna para las torres.<br><strong>Desventaja:</strong> no pueden protegerse entre sí y les cuesta avanzar; en un final valen menos que dos peones sanos.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Peón retrasado</h3>
+                            <p>Quedó detrás de sus vecinos y no puede avanzar sin ser capturado, ni ser defendido por otros peones.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> a veces sostiene a los peones adelantados.<br><strong>Desventaja:</strong> está en una columna semiabierta para el rival, y la casilla que tiene delante queda débil.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Peones colgantes</h3>
+                            <p>Dos peones juntos en las columnas c y d (en la cuarta fila), sin peones propios a los costados.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> controlan muchas casillas centrales y pueden avanzar con fuerza.<br><strong>Desventaja:</strong> si el rival los bloquea o los obliga a avanzar antes de tiempo, se vuelven débiles.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Cadena de peones</h3>
+                            <p>Peones en diagonal que se protegen unos a otros, como en la <a href="aperturas.php#francesa" style="color: var(--gold);">Defensa Francesa</a>.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> es muy sólida y gana espacio.<br><strong>Desventaja:</strong> la "base" (el peón de atrás) no tiene defensa de peones; atacarla es el plan habitual del rival.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Mayoría de peones</h3>
+                            <p>Tener más peones que el rival en un flanco del tablero.</p>
+                            <p class="card-note"><strong>Ventaja:</strong> avanzándola se puede crear un peón pasado, muy valioso en el final.<br><strong>Plan típico:</strong> avanzar primero el peón que no tiene oponente en su columna.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section class="page-section" id="piezas-buenas-y-malas">
+                    <div class="section-heading">
+                        <h2>Piezas buenas y piezas malas</h2>
+                        <p>El valor de una pieza no es fijo: depende de la posición.</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div>
+                            <h2>Alfil bueno y alfil malo</h2>
+                            <p>
+                                Un alfil es <strong>"malo"</strong> cuando sus propios peones centrales están en casillas
+                                de su mismo color: le bloquean las diagonales y queda reducido a defenderlos. Es
+                                <strong>"bueno"</strong> cuando los peones están en casillas del color contrario y sus
+                                diagonales quedan libres.
+                            </p>
+                            <p>
+                                Por eso, una regla práctica es ubicar los peones en casillas del color contrario al de tu
+                                alfil, o cambiar el alfil malo por una pieza activa del rival.
+                            </p>
+                        </div>
+                        <div>
+                            <h2>Caballo contra alfil</h2>
+                            <ul>
+                                <li><strong>El caballo</strong> brilla en posiciones cerradas, con peones bloqueados, y cuando tiene un puesto avanzado. Es la única pieza que salta por encima de las demás.</li>
+                                <li><strong>El alfil</strong> brilla en posiciones abiertas y en finales con peones en ambos flancos, porque llega lejos rápidamente.</li>
+                                <li><strong>La pareja de alfiles</strong> suele ser una ventaja en posiciones abiertas: juntos controlan casillas de ambos colores.</li>
+                            </ul>
                         </div>
                     </div>
                 </section>

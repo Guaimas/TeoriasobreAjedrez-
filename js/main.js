@@ -49,16 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Muestra u oculta la solución de un ejercicio (página de Ejercicios).
-  document.querySelectorAll('.exercise-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var answer = btn.closest('.exercise-card').querySelector('.exercise-answer');
-      if (!answer) return;
-      var isHidden = answer.classList.contains('hidden');
-      answer.classList.toggle('hidden');
-      btn.textContent = isHidden ? 'Ocultar solución' : 'Mostrar solución';
-    });
-  });
+  // ---------------------------------------------------------
+  // EJERCICIOS INTERACTIVOS (página de Ejercicios)
+  // ---------------------------------------------------------
+  initEjercicios();
 
   // ---------------------------------------------------------
   // MENSAJE DE BIENVENIDA
@@ -92,7 +86,137 @@ document.addEventListener('DOMContentLoaded', function () {
   // ---------------------------------------------------------
   initModoOscuro();
 
+  // ---------------------------------------------------------
+  // BOTÓN "VOLVER ARRIBA"
+  // ---------------------------------------------------------
+  initVolverArriba();
+
+  // ---------------------------------------------------------
+  // CARRUSELES CON FLECHAS (piezas en Fundamentos, Partidas)
+  // ---------------------------------------------------------
+  initCarruseles();
+
 });
+
+/**
+ * Carruseles: muestra un tema a la vez, con flechas ‹ ›, pestañas con el
+ * nombre de cada tema y las flechas del teclado.
+ *
+ * Estructura que espera (ver paginas/fundamentos.php):
+ *   [data-carrusel]
+ *     .carousel-controls (hidden)  -> [data-anterior], .carousel-tabs, [data-siguiente]
+ *     [data-slide data-titulo="..."] (uno por tema)
+ *     .carousel-status (aria-live)
+ *
+ * Sin JavaScript los controles quedan ocultos y se ven todos los temas.
+ */
+function initCarruseles() {
+  document.querySelectorAll('[data-carrusel]').forEach(function (carrusel) {
+    var slides = Array.prototype.slice.call(carrusel.querySelectorAll('[data-slide]'));
+    if (slides.length < 2) return;
+
+    var controles = carrusel.querySelector('.carousel-controls');
+    var pestanas = carrusel.querySelector('.carousel-tabs');
+    var estado = carrusel.querySelector('.carousel-status');
+    var actual = 0;
+
+    // Una pestaña por tema, con su nombre.
+    var botones = slides.map(function (slide, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'carousel-tab';
+      b.textContent = slide.getAttribute('data-titulo');
+      b.addEventListener('click', function () { mostrar(i); });
+      pestanas.appendChild(b);
+      return b;
+    });
+
+    function mostrar(indice, anunciar) {
+      actual = (indice + slides.length) % slides.length;   // da la vuelta al llegar al final
+      slides.forEach(function (s, i) { s.hidden = i !== actual; });
+      botones.forEach(function (b, i) {
+        b.classList.toggle('active', i === actual);
+        b.setAttribute('aria-pressed', i === actual ? 'true' : 'false');
+      });
+      if (anunciar !== false && estado) {
+        estado.textContent = slides[actual].getAttribute('data-titulo') + ' (' + (actual + 1) + ' de ' + slides.length + ')';
+      }
+    }
+
+    carrusel.querySelector('[data-anterior]').addEventListener('click', function () { mostrar(actual - 1); });
+    carrusel.querySelector('[data-siguiente]').addEventListener('click', function () { mostrar(actual + 1); });
+
+    // Flechas del teclado cuando el foco está en los controles del carrusel
+    // (no dentro del contenido, para no interferir con otros botones, ej: ejercicios).
+    carrusel.addEventListener('keydown', function (e) {
+      if (!e.target.closest('.carousel-controls')) return;
+      if (e.key === 'ArrowLeft') { mostrar(actual - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { mostrar(actual + 1); e.preventDefault(); }
+    });
+
+    controles.hidden = false;
+    carrusel.classList.add('is-ready');
+    mostrar(0, false);
+
+    // Permite abrir un tema desde afuera (enlaces con #ancla).
+    carrusel.mostrarTema = function (slide) { mostrar(slides.indexOf(slide)); };
+  });
+
+  // Si un enlace apunta a un tema oculto del carrusel (ej: fundamentos.php#enroque),
+  // se abre ese tema antes de desplazarse hasta él.
+  function revelar(id) {
+    var destino = id && document.getElementById(id);
+    var slide = destino && destino.closest('[data-slide]');
+    var carrusel = slide && slide.closest('[data-carrusel]');
+    if (carrusel && carrusel.mostrarTema && slide.hidden) {
+      carrusel.mostrarTema(slide);
+      return true;
+    }
+    return false;
+  }
+
+  // Al cargar la página con un #ancla en la dirección
+  if (location.hash && revelar(decodeURIComponent(location.hash.slice(1)))) {
+    document.getElementById(decodeURIComponent(location.hash.slice(1))).scrollIntoView();
+  }
+  window.addEventListener('hashchange', function () {
+    revelar(decodeURIComponent(location.hash.slice(1)));
+  });
+  // Enlaces dentro de la misma página (ej: "captura al paso" en la ficha del peón)
+  document.addEventListener('click', function (e) {
+    var enlace = e.target.closest('a[href*="#"]');
+    if (!enlace || enlace.pathname !== location.pathname) return;
+    revelar(decodeURIComponent(enlace.hash.slice(1)));
+  });
+}
+
+/**
+ * Crea un botón "volver arriba" que aparece al bajar por la página y
+ * la lleva de nuevo al principio. Se crea desde aquí para que esté en
+ * todas las páginas sin tener que modificar cada archivo PHP.
+ */
+function initVolverArriba() {
+  var boton = document.createElement('button');
+  boton.type = 'button';
+  boton.className = 'back-to-top';
+  boton.setAttribute('aria-label', 'Volver arriba');
+  boton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+  document.body.appendChild(boton);
+
+  // Se muestra solo después de bajar más de una pantalla.
+  function actualizar() {
+    boton.classList.toggle('show', window.scrollY > window.innerHeight);
+  }
+
+  window.addEventListener('scroll', actualizar, { passive: true });
+  actualizar();
+
+  boton.addEventListener('click', function () {
+    // Respeta la preferencia del sistema de reducir animaciones.
+    var sinAnimacion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: sinAnimacion ? 'auto' : 'smooth' });
+  });
+}
 
 function initRelojFechaHora() {
   var contenedor = document.getElementById('siteClock');
@@ -117,6 +241,54 @@ function initRelojFechaHora() {
 
   actualizarReloj();
   setInterval(actualizarReloj, 1000);
+}
+
+/**
+ * Ejercicios: al hacer clic en una opción se marca como correcta (verde)
+ * o incorrecta (rojo) según su atributo data-correcta. Cuando se
+ * encuentran todas las respuestas correctas, se bloquea el ejercicio y se
+ * abre la explicación.
+ */
+function initEjercicios() {
+  var tarjetas = document.querySelectorAll('[data-ejercicio]');
+  if (!tarjetas.length) return;
+
+  tarjetas.forEach(function (tarjeta) {
+    var opciones = tarjeta.querySelectorAll('.exercise-option');
+    var feedback = tarjeta.querySelector('.exercise-feedback');
+    var solucion = tarjeta.querySelector('.exercise-solution');
+    var totalCorrectas = tarjeta.querySelectorAll('.exercise-option[data-correcta="1"]').length;
+    var encontradas = 0;
+
+    opciones.forEach(function (opcion) {
+      opcion.addEventListener('click', function () {
+        // Una opción ya marcada no cuenta dos veces.
+        if (opcion.classList.contains('is-correct') || opcion.classList.contains('is-wrong')) return;
+
+        if (opcion.getAttribute('data-correcta') === '1') {
+          opcion.classList.add('is-correct');
+          encontradas++;
+
+          if (encontradas === totalCorrectas) {
+            feedback.textContent = totalCorrectas > 1
+              ? '¡Muy bien! Encontraste todas las respuestas correctas.'
+              : '¡Correcto!';
+            feedback.className = 'exercise-feedback is-correct';
+            // Ejercicio resuelto: se bloquean las opciones y se muestra la explicación.
+            opciones.forEach(function (o) { o.disabled = true; });
+            if (solucion) solucion.open = true;
+          } else {
+            feedback.textContent = 'Correcto. Todavía falta otra respuesta correcta.';
+            feedback.className = 'exercise-feedback is-correct';
+          }
+        } else {
+          opcion.classList.add('is-wrong');
+          feedback.textContent = 'Esa no es. Inténtalo de nuevo o abre la solución.';
+          feedback.className = 'exercise-feedback is-wrong';
+        }
+      });
+    });
+  });
 }
 
 function initAcordeon() {
@@ -158,7 +330,7 @@ function mostrarBienvenida() {
     '<svg class="welcome-toast-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12M8 20c-.3-2 .2-3 1.6-4 .9-.6 1-1.2.6-2-.5-1 .2-1.6 1-1.3.6.2 1-.2.7-.9-.6-1.4.4-2.6 1.6-2.9-.3-.7.1-1.4.9-1.4 1.7 0 3.6 1.6 3.6 4.4 0 2-1 3.2-2.2 4.1-1 .8-1.4 1.6-1.3 3"/></svg>' +
     '<div class="welcome-toast-body">' +
       '<h3>¡Bienvenido a El Arte del Jaque!</h3>' +
-      '<p>Explorá fundamentos, tácticas y partidas históricas para pensar cada jugada como un gran maestro.</p>' +
+      '<p>Explora fundamentos, tácticas y partidas históricas para pensar cada jugada como un gran maestro.</p>' +
     '</div>' +
     '<button type="button" class="welcome-toast-close" aria-label="Cerrar mensaje de bienvenida">&times;</button>';
 
@@ -245,13 +417,13 @@ function initFormularioContacto() {
 
     if (campo === campos.email) {
       if (!valor) { mostrarError(campo, 'El correo electrónico es obligatorio.'); return false; }
-      if (!validarEmail(valor)) { mostrarError(campo, 'Ingresá un correo electrónico válido.'); return false; }
+      if (!validarEmail(valor)) { mostrarError(campo, 'Ingresa un correo electrónico válido.'); return false; }
       limpiarError(campo);
       return true;
     }
 
     if (campo === campos.motivo) {
-      if (!valor) { mostrarError(campo, 'Seleccioná un motivo de contacto.'); return false; }
+      if (!valor) { mostrarError(campo, 'Selecciona un motivo de contacto.'); return false; }
       limpiarError(campo);
       return true;
     }
@@ -265,7 +437,7 @@ function initFormularioContacto() {
     }
 
     if (campo === campos.aceptar) {
-      if (!campo.checked) { mostrarError(campo, 'Debés aceptar el envío del formulario.'); return false; }
+      if (!campo.checked) { mostrarError(campo, 'Debes aceptar el envío del formulario.'); return false; }
       limpiarError(campo);
       return true;
     }

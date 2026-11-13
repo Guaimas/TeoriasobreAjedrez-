@@ -29,7 +29,16 @@ Enlace al prototipo de Figma:
 ## Estructura del proyecto
 
 ```text
-el-arte-del-jaque/
+TeoriasobreAjedrez-/
+├── datos/                Contenido del sitio como arrays de PHP
+│   ├── secciones.php     Lista única de secciones: genera el menú, el paginador
+│   │                     y las tarjetas de "Sobre el sitio"
+│   ├── aperturas.php     Catálogo de 28 aperturas (fichas)
+│   ├── tipos-apertura.php Tipos de apertura (lista blanca del filtro GET)
+│   ├── trampas.php       Trampas de apertura
+│   ├── ejercicios.php    Ejercicios interactivos, con posiciones FEN
+│   └── piezas.php        Las 6 piezas (carrusel de Fundamentos)
+├── img/                  Fotografías del sitio (Pexels), guardadas localmente
 ├── clase5/               Clase 5: procesamiento de formularios y seguridad
 │   ├── seguridad.php         e() (htmlspecialchars) y limpiar() (trim)
 │   ├── procesar_contacto.php Lógica del formulario POST (contacto)
@@ -40,6 +49,10 @@ el-arte-del-jaque/
 │   ├── config.php        Carga de variables de entorno (.env) y constantes
 │   ├── header.php        DOCTYPE, <head>, meta tags, título dinámico
 │   ├── nav.php           Sidebar de navegación + barra superior (SSR: menú activo)
+│   ├── secciones.php     Funciones secciones_del_sitio() y url_seccion()
+│   ├── componentes.php   ficha_apertura(), tarjeta_trampa(), ejercicio(), tablero(),
+│   │                     casillas_alcanzables() y ficha_pieza()
+│   ├── paginacion.php    Enlaces "Anterior / Siguiente" entre secciones
 │   └── footer.php        Footer, script común y cierre de body/html
 ├── css/
 │   └── style.css
@@ -140,7 +153,7 @@ página la incluye con `require_once` antes de imprimir el HTML:
 | `clase5/seguridad.php` | Funciones `e()` (codificación de salida) y `limpiar()` (sanitización con `trim()`) |
 | `clase5/procesar_contacto.php` | Captura, sanitiza y valida el formulario POST |
 | `clase5/buscar_glosario.php` | Captura, sanitiza y valida el parámetro GET y realiza la búsqueda |
-| `clase5/datos/glosario.php` | Los 38 términos del glosario como array de PHP |
+| `clase5/datos/glosario.php` | Los términos del glosario como array de PHP (38 en la entrega; 63 desde la Fase 5) |
 
 No se usa base de datos ni librerías externas: solo funciones nativas de PHP.
 
@@ -181,8 +194,8 @@ No se usa base de datos ni librerías externas: solo funciones nativas de PHP.
   lista de términos. La caja "Buscar en el glosario..." del encabezado (visible
   en pantallas grandes) usa el mismo parámetro y lleva a esta página desde
   cualquier sección del sitio.
-- **Finalidad:** encontrar rápidamente un concepto de ajedrez entre los 38
-  términos del glosario.
+- **Finalidad:** encontrar rápidamente un concepto de ajedrez entre los términos
+  del glosario (38 en la entrega del TP; 63 desde la Fase 5).
 - **Por qué GET:** buscar no modifica nada en el servidor. Al quedar en la URL,
   el resultado se puede recargar, guardar en favoritos o compartir.
 - **Parámetro:** `termino` → por ejemplo `paginas/glosario.php?termino=enroque`.
@@ -295,15 +308,18 @@ externas, ya que el nivel del TP no lo requiere) y expone las constantes
 ### Con XAMPP
 
 1. Clonar (o descargar) este repositorio.
-2. Copiar la carpeta `el-arte-del-jaque` dentro de `htdocs` de tu instalación
-   de XAMPP (por ejemplo: `C:\xampp\htdocs\el-arte-del-jaque`).
+2. Copiar la carpeta del proyecto (`TeoriasobreAjedrez-`) dentro de `htdocs`
+   de tu instalación de XAMPP: `C:\xampp\htdocs\TeoriasobreAjedrez-`.
 3. Copiar `.env.example` como `.env` (si no existe ya) y ajustar los valores
    si hace falta.
 4. Iniciar el módulo **Apache** desde el panel de control de XAMPP.
 5. Abrir el navegador en:
    ```
-   http://localhost/el-arte-del-jaque/index.php
+   http://localhost/TeoriasobreAjedrez-/index.php
    ```
+
+> Si la carpeta tiene otro nombre dentro de `htdocs`, la dirección cambia en
+> la misma forma: `http://localhost/<nombre-de-la-carpeta>/index.php`.
 
 ### Con Laragon
 
@@ -312,7 +328,7 @@ externas, ya que el nivel del TP no lo requiere) y expone las constantes
 3. Iniciar Laragon (Apache + PHP).
 4. Abrir el navegador en:
    ```
-   http://localhost/el-arte-del-jaque/index.php
+   http://localhost/TeoriasobreAjedrez-/index.php
    ```
    o usar el dominio virtual que genera Laragon automáticamente.
 
@@ -392,6 +408,452 @@ docs: actualizar README para TP4
 - [x] Enlaces internos entre páginas actualizados a `.php`
 - [x] Diseño, contenido y estructura visual original conservados
 - [x] Contenido original del sitio conservado
+
+## Registro de cambios
+
+Mejoras realizadas después de la entrega del TP de la Clase 5. Cada fase se
+trabaja en su propia rama y se integra a `main` mediante un Pull Request.
+
+### Fase 1 — Correcciones visuales (rama `fix/fase1-correcciones-visuales`)
+
+**Componente roto ("carrusel")**
+- Los bloques *Movimiento* y *Peón* (Fundamentos), *La Batería* (Estrategias),
+  *El Rey como atacante* (Finales) y *Apertura Italiana* (Aperturas) usaban un
+  carrusel con flechas que no funcionaban: la grilla CSS tenía 3 columnas para 4
+  elementos, por lo que la imagen se veía diminuta o no aparecía. Se
+  reemplazaron por el bloque imagen + texto que ya usaba el resto del sitio.
+- Se eliminaron del CSS las reglas `.carousel-block`, que quedaron sin uso.
+
+**Tarjetas con la mitad vacía**
+- "Táctica vs. Estrategia" (Tácticas) y "Estrategia vs. Táctica" (Estrategias)
+  usaban un bloque de dos columnas sin imagen. Ahora usan el panel de ancho
+  completo (`simple-panel`).
+
+**Textos incorrectos o desactualizados**
+- Ejercicios: se eliminó la mención a una "IA" o "bot" que el sitio no tiene.
+  El bloque ahora explica cómo funcionan los ejercicios, ya no repite el
+  subtítulo y su título lleva tilde.
+- Sobre el sitio: se quitó la referencia al "bot" y se agregó **PHP** a
+  "Tecnologías utilizadas", en una grilla de 4 columnas (`card-grid--4`).
+- Inicio: el destacado de Partidas Históricas decía "Muy pronto…", aunque la
+  página ya existe. Ahora describe su contenido.
+- Aperturas: la Apertura Italiana tiene el mismo formato que las demás
+  aperturas, y se corrigió un dato histórico: Gioachino Greco la popularizó a
+  comienzos del **siglo XVII**, no del XVI.
+- Fundamentos: el texto del *Peón* repetía dos veces "captura en diagonal"; el
+  párrafo repetido ahora explica que el peón nunca puede retroceder.
+
+**Archivos modificados:** `index.php`, `paginas/fundamentos.php`,
+`paginas/tacticas.php`, `paginas/estrategias.php`, `paginas/aperturas.php`,
+`paginas/finales.php`, `paginas/ejercicios.php`, `paginas/sobre-el-sitio.php`,
+`css/style.css` y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. Se revisaron
+capturas en escritorio (1366 px) y celular (390 px) de cada página modificada.
+
+### Fase 2 — Coherencia y navegación (rama `feature/fase2-navegacion`)
+
+**Navegación**
+- **Contacto en el menú lateral:** antes solo se llegaba desde el footer.
+- **Enlaces "← Anterior / Siguiente →"** al final de las 9 secciones de
+  contenido, en el orden del menú (Fundamentos → Tácticas → … → Recursos). Se
+  generan desde un solo archivo, `includes/paginacion.php`, que incluye
+  `footer.php`; para cambiar el orden alcanza con editar su array.
+- **Menú en pantallas bajas:** en notebooks de 768 px de alto, Contacto
+  quedaba fuera de la vista. En pantallas de hasta 860 px de alto se oculta la
+  nota decorativa "Mejora cada día…" y, por debajo de 700 px, los ítems se
+  compactan.
+
+**Coherencia del texto**
+- Todo el sitio usa **"tú"**. Se cambiaron los textos que estaban en "vos":
+  los mensajes de los formularios (en PHP y en JavaScript), el aviso del
+  buscador del glosario y el cartel de bienvenida. En `clase5/` solo cambió el
+  texto de 4 mensajes; la lógica del TP no se modificó.
+
+**Sobre el sitio**
+- Las tarjetas de "¿Qué encontrarás?" ahora son **enlaces** a cada sección,
+  con una descripción breve. Se agregó Contacto, así quedan 10 tarjetas en dos
+  filas completas.
+- Se reemplazó el subtítulo y los dos recuadros finales, que sonaban a la
+  conclusión de un ensayo, por "¿Cómo aprovechar el sitio?" (orden de lectura
+  recomendado) y "Un proyecto en crecimiento".
+
+**Cartel de bienvenida**
+- En escritorio aparece debajo del encabezado, así no tapa el buscador ni el
+  botón de tema. En celular aparece abajo, así no tapa el botón ☰ del menú.
+
+**Aperturas:** las 6 aperturas tienen el mismo formato (el de la Italiana se
+unificó en la Fase 1).
+
+**Archivos nuevos:** `includes/paginacion.php`.
+**Archivos modificados:** `includes/nav.php`, `includes/footer.php`,
+`paginas/sobre-el-sitio.php`, `paginas/contacto.php`, `paginas/glosario.php`,
+`clase5/procesar_contacto.php`, `clase5/buscar_glosario.php`, `js/main.js`,
+`css/style.css` y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. Se verificó que el
+paginador encadene las 9 secciones en orden y no aparezca en Inicio, Sobre el
+sitio ni Contacto; que Contacto se marque como activo en el menú; los mensajes
+de los formularios en "tú"; y capturas en 1366×768, 1280×650 y en celular.
+
+### Fase 3 — Ordenar el código (rama `refactor/fase3-organizacion`)
+
+Fase de organización interna: **el sitio se ve exactamente igual** que antes.
+
+**Lista única de secciones**
+- Nuevo `datos/secciones.php`: un array con todas las secciones (título,
+  ícono, descripción y si forman parte del recorrido de aprendizaje).
+- A partir de ese array se generan **el menú lateral** (`nav.php` pasó de 12
+  bloques repetidos a un `foreach`), **los enlaces Anterior / Siguiente**
+  (`paginacion.php`) y **las tarjetas "¿Qué encontrarás?"** de Sobre el sitio.
+  Antes la misma información estaba copiada en tres archivos; ahora agregar o
+  reordenar una sección es editar un solo lugar.
+- Nuevo `includes/secciones.php` con dos funciones: `secciones_del_sitio()`
+  (lee el array una sola vez) y `url_seccion()` (arma el enlace correcto desde
+  la raíz o desde `/paginas`).
+
+**CSS (`css/style.css`)**
+- Se agregó un **índice** al principio del archivo con las 17 secciones.
+- El bloque RESPONSIVE estaba en el medio del archivo, con otras secciones
+  agregadas después. Ahora es la última sección ("RESPONSIVE GENERAL"). Antes
+  de moverlo se verificó con un script que ninguna regla posterior compartía
+  selector y propiedad con ese bloque, así que el resultado visual no cambia.
+
+**README:** la estructura de carpetas incluye los archivos nuevos, y las
+instrucciones de XAMPP y Laragon usan el nombre real de la carpeta
+(`TeoriasobreAjedrez-`).
+
+**Pendiente a propósito:** las funciones de componentes reutilizables (bloque
+imagen + texto, tarjeta) se van a crear en las fases 4 a 6, junto con el
+contenido que las usa (fichas de aperturas y ejercicios), para no dejar código
+sin uso.
+
+**Archivos nuevos:** `datos/secciones.php`, `includes/secciones.php`.
+**Archivos modificados:** `includes/nav.php`, `includes/paginacion.php`,
+`paginas/sobre-el-sitio.php`, `css/style.css` y este README.
+
+**Pruebas:** se guardó el HTML que generaban las 12 páginas antes de los
+cambios y se comparó con el de después: **idéntico** en las 12, sin contar
+espacios. El CSS tiene exactamente las mismas reglas, solo cambió el orden y
+los comentarios. Revisión visual en escritorio, tablet (1000 px) y celular.
+
+### Fase 4A — Catálogo de aperturas (rama `feature/fase4a-aperturas`)
+
+**De 6 aperturas fijas a un catálogo de 15**
+- Las aperturas pasaron del HTML a datos (`datos/aperturas.php`), con una
+  **ficha común** para todas: tipo, código ECO, nivel recomendado, jugadas
+  iniciales, resumen e historia, idea de las blancas, idea de las negras,
+  conceptos que enseña y una sección desplegable (`<details>`) con planes
+  típicos, errores comunes y trampas, y jugadores que la usan.
+- Se ampliaron las 6 existentes (Italiana, Española, Siciliana, Francesa,
+  Caro-Kann y Gambito de Dama) y se agregaron 9:
+  - **Abiertas:** Dos Caballos, Escocesa, Gambito de Rey, Petrov y Vienesa.
+  - **Semiabiertas:** Escandinava, Pirc, Alekhine y Moderna.
+- Las trampas incluyen la secuencia completa de jugadas: Blackburne-Shilling,
+  "Hígado frito", Elefante, el mate de Cd6 en la Caro-Kann, el jaque
+  descubierto en la Petrov y la pérdida de dama en la Escocesa.
+- Se corrigió la fecha de Greco (siglo XVII) y se sumaron 3 principios de
+  apertura: *Vigila f7 y f2*, *Caballos antes que alfiles* e *Ideas antes que
+  jugadas*.
+
+**Filtro por tipo (método GET)**
+- `aperturas.php?tipo=abierta|semiabierta|cerrada`, con el mismo tratamiento
+  de seguridad que el buscador del glosario:
+  - captura con `filter_input()` y `FILTER_REQUIRE_SCALAR` (rechaza arrays);
+  - `trim()` con `limpiar()`;
+  - validación contra una **lista blanca** (`datos/tipos-apertura.php`);
+  - salida con `e()`.
+- Un valor inválido muestra un aviso y todas las aperturas.
+- Solo se ofrecen los tipos que ya tienen aperturas cargadas. Indias y de
+  flanco se suman en la Fase 4B.
+
+**Componentes reutilizables (tarea 3.3)**
+- Nuevo `includes/componentes.php` con `ficha_apertura()` y `lista_jugadas()`.
+  Imprimen el HTML a partir de los datos y escapan todo con el `e()` de la
+  Clase 5.
+
+**Archivos nuevos:** `datos/aperturas.php`, `datos/tipos-apertura.php`,
+`includes/componentes.php`.
+**Archivos modificados:** `paginas/aperturas.php`, `datos/secciones.php`
+(descripción de Aperturas), `css/style.css` (nueva sección "Catálogo de
+aperturas") y este README.
+
+**Pruebas:** la página carga sin errores de PHP y muestra 15 fichas en 3
+grupos. El filtro devuelve 7 aperturas abiertas, 7 semiabiertas y 1 cerrada.
+Se probaron un tipo inexistente, uno todavía sin aperturas, un valor con
+espacios, un array (`?tipo[]=`) y un intento de XSS (`<script>`): todos se
+rechazan o se corrigen sin errores. Capturas en escritorio y celular.
+
+### Fase 4B — Catálogo completo y trampas de apertura (rama `feature/fase4b-aperturas`)
+
+**13 aperturas nuevas (de 15 a 28)**
+- **Cerradas:** Eslava, Sistema Londres, Sistema Colle y Catalana.
+- **Indias y otras defensas contra 1.d4:** India de Rey, Nimzoindia, India de
+  Dama, Grünfeld, Benoni Moderna y Holandesa.
+- **De flanco:** Inglesa, Réti y Bird.
+- Cada una tiene la ficha completa de la Fase 4A, con datos históricos que
+  conectan con otras secciones. Por ejemplo, la "Partida del Siglo" de Fischer
+  (1956) empezó con una Grünfeld, y Fischer jugó la Inglesa en el Mundial
+  de 1972.
+- El filtro GET suma los tipos `india` y `flanco`; el catálogo queda con 5
+  grupos: 7 abiertas, 7 semiabiertas, 5 cerradas, 6 indias y 3 de flanco.
+
+**Nueva sección: Trampas de apertura**
+- Nuevo `datos/trampas.php` con 8 trampas clásicas: Mate del Loco, Mate del
+  Pastor, Mate de Légal, Blackburne-Shilling, Trampa de la Petrov, Mate en la
+  Caro-Kann, Trampa del Elefante y Gambito From.
+- Cada tarjeta muestra la secuencia completa, por qué funciona y la lección
+  (cómo evitarla). Si la trampa pertenece a una apertura del catálogo, enlaza
+  a su ficha (`aperturas.php#italiana`).
+- Nueva función `tarjeta_trampa()` en `includes/componentes.php`.
+
+**Revisión de exactitud:** se verificó casilla por casilla cada secuencia de
+mate (Légal, Blackburne-Shilling, Caro-Kann, Gambito From y Pastor) y los
+rangos ECO. Se usa el término "mate de la coz", y no "mate ahogado", para no
+confundirlo con el ahogado (tablas) del glosario.
+
+**Archivos nuevos:** `datos/trampas.php`.
+**Archivos modificados:** `datos/aperturas.php`, `datos/tipos-apertura.php`,
+`includes/componentes.php`, `paginas/aperturas.php`, `css/style.css` y este
+README.
+
+**Pruebas:** la página carga sin errores de PHP y muestra 28 fichas en 5
+grupos y 8 trampas. Cada filtro devuelve la cantidad esperada, los 6 enlaces
+de las trampas apuntan a fichas que existen y un intento de XSS en `?tipo=` se
+rechaza. El resto del sitio sigue respondiendo bien.
+
+### Fase 5 — Ampliar el contenido (rama `feature/fase5-contenido`)
+
+Cada sección ampliada se guarda en un commit propio dentro de la rama.
+
+**5.1 Tácticas: ejemplos concretos**
+- Cada una de las 11 tácticas tiene un desplegable **"Ver ejemplo"** con una
+  situación concreta (casillas y jugadas). Ejemplo: la horquilla Cc7+ contra
+  el rey de e8 y la torre de a8. Las geometrías se verificaron una por una
+  (diagonales libres, saltos de caballo, filas abiertas).
+- Nueva táctica número 12: **Jugada intermedia**, con el ejemplo de la Trampa
+  del Elefante (7...Ab4+). Ahora son 12 tarjetas en 4 filas completas.
+- Los ejemplos enlazan a otras secciones: el jaque descubierto, a la trampa de
+  la Petrov; el sacrificio, a la Partida Inmortal.
+
+**5.2 Patrones de mate (nueva sección en Tácticas)**
+- Seis patrones con su descripción y una nota sobre cómo reconocerlos o
+  evitarlos: pasillo, coz, Anastasia, Boden, beso y escalera.
+
+**5.3 Finales**
+- Nueva sección **"Mates básicos paso a paso"** (`finales.php#mates-basicos`):
+  rey y dama contra rey (con la advertencia del ahogado), rey y torre contra
+  rey (método de la caja y la oposición) y dos torres contra rey (mate de la
+  escalera), con instrucciones numeradas.
+- Nueva sección **"Finales teóricos"**: la posición de Lucena (cómo ganar
+  "construyendo un puente") y la de Philidor (cómo defender con la torre en la
+  tercera fila y después jaques desde atrás).
+- Dos conceptos nuevos: **Triangulación** y **Fortaleza** (10 tarjetas en
+  dos filas completas). La tarjeta "Conceptos básicos de mate" enlaza a la
+  explicación paso a paso.
+
+**5.4 Estrategias**
+- Tres conceptos nuevos: **Puesto avanzado**, **Profilaxis** y **Cuándo
+  cambiar piezas** (15 tarjetas en tres filas completas).
+- Nueva sección **"Estructuras de peones"**: peón aislado, peones doblados,
+  peón retrasado, peones colgantes, cadena de peones y mayoría de peones, cada
+  una con su ventaja y su desventaja.
+- Nueva sección **"Piezas buenas y piezas malas"**: alfil bueno y alfil malo, y
+  caballo contra alfil.
+
+**5.5 Fundamentos**
+- **Captura al paso** explicada con un ejemplo (faltaba en el sitio).
+- Secciones nuevas: **Notación algebraica** (cómo se anotan las jugadas en
+  todo el sitio), **Ritmos de juego y reloj** (bala, blitz, rápidas, clásicas e
+  incremento), **La puntuación ELO** (con valores de referencia) y **Reglas de
+  torneo** (pieza tocada, "compongo", jugadas ilegales, ofrecer tablas, una
+  sola mano y teléfono celular), según las Leyes del Ajedrez de la FIDE.
+
+**5.6 Partidas Históricas**
+- Cada partida tiene un **"Momento clave"** con las jugadas decisivas, por
+  ejemplo 18.Ad6!! en la Inmortal y 24.Txd4!! en Kasparov vs. Topalov.
+- La Inmortal y la de la Ópera incluyen la **partida completa** en un
+  desplegable. Las partidas enlazan a su apertura y a la explicación de la
+  notación.
+
+**5.7 Glosario**
+- De **38 a 63 términos**: Blitz, Bloqueo, Calidad, ELO, Fianchetto,
+  Fortaleza, Gran Maestro, Hipermoderno, Iniciativa, Jaque perpetuo, Jugada
+  intermedia, Mate del pasillo, Peón aislado, Peones doblados, Pieza mayor,
+  Pieza menor, Profilaxis, Puesto avanzado, Rayos X, Regla de los 50
+  movimientos, Repetición de jugadas, Ruptura, Tempo, Triangulación y Variante.
+- Se agregaron a `clase5/datos/glosario.php` con un script que conserva el
+  orden alfabético. Es solo contenido: el buscador GET del TP los incluye sin
+  ningún cambio en su lógica.
+
+**5.8 Recursos**
+- Dos libros nuevos: *Fundamentos del Ajedrez* (Capablanca) y *Mis 60
+  Partidas Memorables* (Fischer). Son 6 en total, en dos filas completas.
+- Nueva sección **"Entrenar gratis"**: estudios, práctica y entrenador de
+  coordenadas de Lichess. Se verificó que los 11 enlaces externos de la página
+  respondan correctamente.
+
+**Archivos modificados en la Fase 5:** `paginas/tacticas.php`,
+`paginas/finales.php`, `paginas/estrategias.php`, `paginas/fundamentos.php`,
+`paginas/partidas.php`, `paginas/recursos.php`, `paginas/glosario.php` (meta
+descripción), `clase5/datos/glosario.php` (términos nuevos), `css/style.css`
+y este README.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP. El buscador del
+glosario encuentra los términos nuevos y sigue rechazando el XSS, el
+formulario de contacto valida igual que antes y el filtro de aperturas
+funciona. Todos los enlaces internos con ancla (`#mates-basicos`,
+`#notacion`, `#trampas`, `#reglas`) llevan a secciones que existen. Capturas
+de Tácticas, Finales, Fundamentos y Partidas.
+
+### Fase 6 — Ejercicios interactivos (rama `feature/fase6-ejercicios`)
+
+**De 8 a 20 ejercicios, con datos separados**
+- Los ejercicios pasaron a `datos/ejercicios.php`: 5 por tema
+  (fundamentos, tácticas, estrategia y finales), cada uno con su nivel.
+- Se corrigieron los ejercicios anteriores: los dos que tenían más de una
+  respuesta correcta ahora lo avisan ("Hay 2 respuestas correctas"), el que
+  preguntaba al revés ("¿qué deberías evitar?") se reemplazó, y el primero de
+  tácticas, que era demasiado obvio, se cambió por una horquilla real.
+
+**Interactivos**
+- Las opciones son botones: al hacer clic se marcan en **verde** (correcta)
+  o en **rojo** (incorrecta), con un mensaje. Al encontrar todas las correctas,
+  el ejercicio se bloquea y se abre la explicación (`initEjercicios()` en
+  `js/main.js`).
+- La explicación está en un `<details>`, así que también se puede leer con
+  JavaScript desactivado.
+- Se agregaron los colores `--success` y `--success-bg`, con su versión para
+  el modo claro.
+
+**Diagramas de tablero**
+- Nueva función `tablero()` en `includes/componentes.php`: dibuja el tablero
+  con HTML/CSS a partir de una posición en formato FEN, con coordenadas y
+  piezas Unicode. Para lectores de pantalla genera una descripción en texto
+  ("Blancas: Ce4. Negras: …").
+- 10 ejercicios tienen diagrama: horquilla, mate del pasillo, Mate del Pastor,
+  jaque descubierto de la Petrov, mate de la coz en dos jugadas, captura al
+  paso, ahogado, mate con dama y regla del cuadrado.
+
+**Verificación de las posiciones:** un script de prueba calcula las casillas
+atacadas y confirmó cada mate y cada ahogado de los enunciados. Encontró un
+error que se corrigió antes de publicar: en un ejercicio de finales, la
+jugada que debía ser ahogado no lo era, porque el rey blanco tapaba la
+columna.
+
+**Pruebas:** la página genera 20 ejercicios, 10 diagramas y 22 respuestas
+correctas, sin errores de PHP. Con Chrome controlado por su protocolo de
+depuración se simularon clics reales: una opción incorrecta se marca en rojo;
+la primera de dos correctas avisa que falta otra; al completar, el ejercicio
+se bloquea y se abre la solución; los demás ejercicios no se ven afectados.
+Las capturas de primer plano detectaron filas de distinta altura en el
+tablero, que se corrigieron.
+
+### Fase 7 — Páginas nuevas y ajustes finales (rama `feature/fase7-plan-de-estudio`)
+
+> **Nota:** las páginas Plan de Estudio e Historia, descritas en esta fase,
+> se eliminaron después, en los *Ajustes de diseño* (ver más abajo).
+
+Se hizo toda la fase salvo la página 404, que requeriría configurar Apache
+(`.htaccess`).
+
+**Plan de Estudio (nueva página `paginas/plan-de-estudio.php`)**
+- Ordena en tres niveles (principiante, intermedio y avanzado) las secciones
+  que ya existen. **No agrega contenido nuevo**: cada paso enlaza
+  directamente a la parte del sitio donde se explica (por ejemplo
+  `fundamentos.php#notacion` o `aperturas.php?tipo=india#catalogo`).
+- Se agregó al menú lateral con una sola entrada en `datos/secciones.php`, y
+  se enlaza desde "¿Cómo aprovechar el sitio?" en Sobre el sitio.
+
+**Recursos:** las secciones con 2 tarjetas (Jugar, Practicar, Estudiar y
+Analizar partidas) usan la nueva variante `card-grid--2` y ya no dejan un
+hueco por fila. Tiene sus reglas responsive para que la grilla general no la
+pise en pantallas medianas.
+
+**Historia y campeones del mundo (nueva página `paginas/historia.php`)**
+- Línea de tiempo con 13 hitos, del chaturanga (siglo VI) al auge del ajedrez
+  online (2020), y tabla con los 18 campeones del mundo, de Steinitz (1886) a
+  Gukesh (desde 2024). Los datos están en `datos/historia.php`.
+- Notas sobre el título dividido entre 1993 y 2006 (con los campeones de la
+  FIDE de ese período) y los títulos que cambiaron de manos sin jugar. La
+  página aclara que los datos están actualizados a mediados de 2026.
+- Está en el menú y en el recorrido Anterior/Siguiente (entre Partidas y
+  Ejercicios), y se enlaza desde el Plan de Estudio.
+
+**Imágenes locales (`img/`)**
+- Las 15 fotografías de Pexels, que antes se cargaban desde su servidor, se
+  guardan en `img/` (1,2 MB en total). Se reemplazaron las 23 referencias en
+  6 archivos: el sitio ya no depende de un servidor externo para las imágenes.
+- La única imagen en PNG (1,3 MB) se descargó en formato JPG (81 KB).
+- Cada descarga se verificó: que fuera una imagen válida y que el archivo
+  estuviera completo (marca final `FFD9`). Dos descargas habían quedado cortadas
+  y se veían a la mitad; se detectaron en las capturas y se volvieron a
+  descargar.
+- Nuevo recuadro **"Créditos de las imágenes"** en Sobre el sitio, con el
+  origen (Pexels) y su licencia.
+
+**Botón "volver arriba"**
+- `initVolverArriba()` en `js/main.js` lo crea en todas las páginas sin tocar
+  los archivos PHP. Aparece al bajar más de una pantalla y respeta la
+  preferencia del sistema de reducir animaciones.
+
+**Menú con 14 ítems:** en pantallas de hasta 860 px de alto los ítems se
+compactan, para que el menú entre completo en notebooks de 768 px.
+
+**`sitemap.xml`:** se sumaron las dos páginas nuevas (14 URLs, XML válido).
+
+**Pruebas:** las 14 páginas responden sin errores de PHP. Se verificó con un
+script que los 23 enlaces del Plan de Estudio llevan a páginas y anclas que
+existen, y que las 22 imágenes de todas las páginas cargan desde `img/`. El
+botón "volver arriba" se probó con clics simulados en Chrome: oculto al
+principio, visible al bajar y vuelve al inicio. El menú entra completo en
+1366×768 y 1280×650, y el sitemap es XML válido.
+
+### Ajustes de diseño (rama `feature/ajustes-diseno`)
+
+**Páginas eliminadas:** Plan de Estudio e Historia, con sus datos
+(`datos/historia.php`), sus entradas en el menú y en el sitemap, el enlace
+desde Sobre el sitio y sus estilos CSS. El sitio vuelve a tener 12 páginas.
+
+**Carruseles con flechas para cambiar de tema**
+- Nuevo componente reutilizable: `initCarruseles()` en `js/main.js`. Muestra
+  un tema a la vez, con flechas ‹ ›, pestañas con el nombre de cada tema y las
+  flechas del teclado (cuando el foco está en los controles). Anuncia el tema
+  actual a los lectores de pantalla.
+- Sin JavaScript, los controles quedan ocultos y todos los temas se ven uno
+  debajo de otro, así que el contenido nunca se pierde.
+- Si un enlace apunta a un tema oculto (por ejemplo
+  `fundamentos.php#enroque` o `ejercicios.php#finales`), el carrusel abre ese
+  tema automáticamente.
+- Se usa en cuatro lugares:
+  1. **Fundamentos, piezas.** El Peón tenía un bloque grande con foto y las
+     demás piezas eran tarjetas chicas. Ahora las 6 piezas tienen la misma
+     ficha (`datos/piezas.php` + `ficha_pieza()`): un diagrama con las
+     casillas a las que puede ir, cómo se mueve, cómo captura, un consejo y un
+     dato curioso. Las casillas las calcula PHP (`casillas_alcanzables()`).
+  2. **Fundamentos, reglas del juego.** Capturas, captura al paso, jaque y
+     mate, enroque y promoción, antes cinco paneles apilados, ahora tienen
+     cada uno un diagrama explicativo.
+  3. **Partidas Históricas:** una partida a la vez.
+  4. **Ejercicios:** un tema a la vez. La página pasó de unos 11.000 px a
+     3.800 px de alto.
+- `tablero()` acepta casillas marcadas: puntos para los movimientos y anillos
+  para las capturas.
+
+**Correcciones visuales encontradas en la revisión**
+- Botones "Enviar"/"Borrar" (Contacto) y "Buscar" (Glosario) desalineados:
+  `.btn-gold` tenía un margen superior pensado para la portada.
+- Títulos con Mayúsculas Al Estilo Inglés pasados al uso del español
+  (por ejemplo "El rey como atacante" y "Reglas básicas"), en 12 títulos.
+- Se revisaron las 12 páginas en **modo claro**, que no se había revisado
+  antes: el contraste, los tableros y los botones se ven correctamente.
+
+**Pruebas:** las 12 páginas responden sin errores de PHP y las páginas
+eliminadas devuelven 404 sin enlaces que apunten a ellas. Los 4 carruseles se
+probaron con clics simulados en Chrome: flechas, pestañas, vuelta al
+principio, teclado, anclas y celular. Los 72 movimientos marcados en los
+diagramas de las piezas coinciden con las reglas, las imágenes cargan, y el
+buscador y el formulario del TP de la Clase 5 siguen funcionando.
 
 ## Créditos
 

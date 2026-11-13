@@ -41,7 +41,7 @@ require_once __DIR__ . '/../includes/nav.php';
                         <?php if ($envio_exitoso): ?>
                         <p class="field-success" id="formSuccess" role="status">¡Gracias, <?= e($nombre_enviado) ?>! Recibimos tu mensaje (<?= e($motivo_enviado) ?>) correctamente.</p>
                         <?php elseif (!empty($errores)): ?>
-                        <p class="form-alert" role="alert">No se pudo enviar el formulario. Revisá los campos marcados en rojo.</p>
+                        <p class="form-alert" role="alert">No se pudo enviar el formulario. Revisa los campos marcados en rojo.</p>
                         <?php endif; ?>
 
                         <div class="form-group<?= clase_error('nombre', $errores) ?>">

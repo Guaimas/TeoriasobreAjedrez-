@@ -91,7 +91,7 @@ $resultados     = [];
 // -------------------------------------------------------------------
 if ($hay_busqueda) {
     if (empty($termino)) {
-        $error_busqueda = 'Escribí una palabra para buscar en el glosario.';
+        $error_busqueda = 'Escribe una palabra para buscar en el glosario.';
     } elseif (largo($termino) < $TERMINO_MIN) {
         $error_busqueda = "La búsqueda debe tener al menos $TERMINO_MIN caracteres.";
     } elseif (largo($termino) > $TERMINO_MAX) {

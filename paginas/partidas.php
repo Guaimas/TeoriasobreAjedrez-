@@ -35,14 +35,21 @@ require_once __DIR__ . '/../includes/nav.php';
                             situaciones reales. Cada una de estas cinco partidas se volvió famosa porque
                             enseña algo concreto: una combinación brillante, un sacrificio audaz o una forma
                             distinta de entender el tablero. No hace falta memorizar los movimientos exactos;
-                            basta con entender la idea detrás de cada una.
+                            basta con entender la idea detrás de cada una. Las jugadas están escritas en <a href="fundamentos.php#notacion" style="color: var(--gold);">notación algebraica</a>.
                         </p>
                     </div>
                 </section>
 
                 <section class="page-section">
 
-                    <article class="game-card">
+                    <!-- Carrusel: una partida a la vez, con flechas y pestañas (initCarruseles() en main.js) -->
+                    <div class="carousel" data-carrusel aria-roledescription="carrusel" aria-label="Partidas históricas">
+                        <div class="carousel-controls" hidden>
+                            <button type="button" class="nav-arrow" data-anterior aria-label="Partida anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                            <div class="carousel-tabs"></div>
+                            <button type="button" class="nav-arrow" data-siguiente aria-label="Partida siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+                        </div>
+                    <article class="game-card carousel-slide" data-slide data-titulo="Inmortal (1851)" aria-label="La Partida Inmortal">
                         <span class="eyebrow">1851</span>
                         <h2>La Partida Inmortal</h2>
                         <p class="game-players">Adolf Anderssen vs. Lionel Kieseritzky</p>
@@ -55,9 +62,16 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <h4>Qué se puede aprender</h4>
                         <p>El valor del material es relativo cuando el rey rival queda expuesto: a veces entregar piezas está justificado si el ataque es lo bastante fuerte. También muestra la importancia de calcular una secuencia forzada hasta el final antes de sacrificar.</p>
+
+                        <h4>Momento clave</h4>
+                        <p>Tras 17...Dxb2, Anderssen juega <strong>18.Ad6!!</strong> y deja que las negras se coman sus dos torres (18...Axg1 19.e5 Dxa1+ 20.Re2). Con las piezas menores y la dama arma una red de mate: <strong>21.Cxg7+ Rd8 22.Df6+!! Cxf6 23.Ae7#</strong>. La partida empezó con un <a href="aperturas.php#gambito-rey">Gambito de Rey</a>.</p>
+                        <details class="opening-more">
+                            <summary>Ver la partida completa</summary>
+                            <p class="trap-line">1.e4 e5 2.f4 exf4 3.Ac4 Dh4+ 4.Rf1 b5 5.Axb5 Cf6 6.Cf3 Dh6 7.d3 Ch5 8.Ch4 Dg5 9.Cf5 c6 10.g4 Cf6 11.Tg1 cxb5 12.h4 Dg6 13.h5 Dg5 14.Df3 Cg8 15.Axf4 Df6 16.Cc3 Ac5 17.Cd5 Dxb2 18.Ad6 Axg1 19.e5 Dxa1+ 20.Re2 Ca6 21.Cxg7+ Rd8 22.Df6+ Cxf6 23.Ae7#</p>
+                        </details>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Ópera (1858)" aria-label="La Partida de la Ópera">
                         <span class="eyebrow">1858</span>
                         <h2>La Partida de la Ópera</h2>
                         <p class="game-players">Paul Morphy vs. Duque de Brunswick y Conde de Isouard</p>
@@ -70,9 +84,16 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <h4>Qué se puede aprender</h4>
                         <p>La importancia de desarrollar las piezas rápido, no mover la misma pieza dos veces sin motivo, y cómo la ventaja de desarrollo se puede convertir en un ataque decisivo.</p>
+
+                        <h4>Momento clave</h4>
+                        <p>Con todas sus piezas desarrolladas, Morphy remata con <strong>16.Db8+!!</strong>: entrega la dama para que el caballo negro la capture (16...Cxb8) y la torre da mate en la última fila: <strong>17.Td8#</strong>. Las negras jugaron la Defensa Philidor (1.e4 e5 2.Cf3 d6).</p>
+                        <details class="opening-more">
+                            <summary>Ver la partida completa</summary>
+                            <p class="trap-line">1.e4 e5 2.Cf3 d6 3.d4 Ag4 4.dxe5 Axf3 5.Dxf3 dxe5 6.Ac4 Cf6 7.Db3 De7 8.Cc3 c6 9.Ag5 b5 10.Cxb5 cxb5 11.Axb5+ Cbd7 12.O-O-O Td8 13.Txd7 Txd7 14.Td1 De6 15.Axd7+ Cxd7 16.Db8+ Cxb8 17.Td8#</p>
+                        </details>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Capablanca–Marshall (1918)" aria-label="Capablanca vs. Marshall">
                         <span class="eyebrow">1918</span>
                         <h2>Capablanca vs. Marshall</h2>
                         <p class="game-players">José Raúl Capablanca vs. Frank Marshall</p>
@@ -85,9 +106,12 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <h4>Qué se puede aprender</h4>
                         <p>El valor de la defensa precisa y la calma bajo presión frente a un ataque preparado, además de mostrar cómo nace una apertura: muchas variantes que hoy conocemos surgieron de una sola partida histórica.</p>
+
+                        <h4>Momento clave</h4>
+                        <p>En una <a href="aperturas.php#espanola">Apertura Española</a> (1.e4 e5 2.Cf3 Cc6 3.Ab5 a6 4.Aa4 Cf6 5.O-O Ae7 6.Te1 b5 7.Ab3 O-O 8.c3), Marshall sorprendió con <strong>8...d5!?</strong>, entregando un peón para lanzar un ataque contra el rey blanco. Capablanca aceptó el desafío con 9.exd5 Cxd5 10.Cxe5 y se defendió con precisión hasta ganar.</p>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Fischer–Spassky (1972)" aria-label="Fischer vs. Spassky">
                         <span class="eyebrow">1972</span>
                         <h2>Fischer vs. Spassky</h2>
                         <p class="game-players">Bobby Fischer vs. Boris Spassky</p>
@@ -100,9 +124,12 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <h4>Qué se puede aprender</h4>
                         <p>La preparación exhaustiva de aperturas, la fortaleza psicológica durante un match largo y la importancia de aprovechar cada pequeño error del rival en partidas de altísimo nivel.</p>
+
+                        <h4>Momento clave</h4>
+                        <p>En la sexta partida del match, Fischer, que casi siempre abría con 1.e4, sorprendió con <strong>1.c4</strong> (<a href="aperturas.php#inglesa">Apertura Inglesa</a>), que llevó a un Gambito de Dama Rehusado. Ganó con un juego posicional impecable, y al terminar el propio Spassky se sumó a los aplausos del público.</p>
                     </article>
 
-                    <article class="game-card">
+                    <article class="game-card carousel-slide" data-slide data-titulo="Kasparov–Topalov (1999)" aria-label="Kasparov vs. Topalov">
                         <span class="eyebrow">1999</span>
                         <h2>Kasparov vs. Topalov</h2>
                         <p class="game-players">Garry Kasparov vs. Veselin Topalov</p>
@@ -115,7 +142,12 @@ require_once __DIR__ . '/../includes/nav.php';
 
                         <h4>Qué se puede aprender</h4>
                         <p>Hasta qué punto se puede llevar el cálculo táctico cuando se combina con una visión estratégica clara del final de la combinación: cada sacrificio tenía un propósito exacto dentro del plan general.</p>
+
+                        <h4>Momento clave</h4>
+                        <p>En la jugada 24, Kasparov sacrificó una torre con <strong>24.Txd4!!</strong>. Para justificarlo había calculado una cacería del rey negro que lo arrastró desde su refugio hasta el otro extremo del tablero, con más de 15 jugadas de profundidad.</p>
                     </article>
+                        <p class="carousel-status" aria-live="polite"></p>
+                    </div>
 
                 </section>
 

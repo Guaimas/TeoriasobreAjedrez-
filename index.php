@@ -37,7 +37,7 @@ require_once __DIR__ . '/includes/nav.php';
                             </p>
                         </div>
                         <div class="hero-media">
-                            <img src="https://images.pexels.com/photos/4576336/pexels-photo-4576336.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Piezas de ajedrez sobre un tablero">
+                            <img src="img/pexels-4576336.jpg" alt="Piezas de ajedrez sobre un tablero">
                         </div>
                     </div>
                 </section>
@@ -147,15 +147,15 @@ require_once __DIR__ . '/includes/nav.php';
                             <span class="eyebrow">Recurso destacado</span>
                             <h3>Partidas Históricas</h3>
                             <p>
-                                Muy pronto podrás estudiar partidas memorables de grandes maestros
-                                y aprender de sus mejores jugadas.
+                                Cinco partidas que marcaron la historia del ajedrez, de la Partida Inmortal
+                                de 1851 a Kasparov vs. Topalov: su contexto y lo que puedes aprender de cada una.
                             </p>
                             <a href="paginas/partidas.php" class="btn-gold">Ver partidas
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
                             </a>
                         </div>
                         <div class="feature-banner-media">
-                            <img src="https://images.pexels.com/photos/59197/pexels-photo-59197.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Batalla entre piezas de ajedrez">
+                            <img src="img/pexels-59197.jpg" alt="Batalla entre piezas de ajedrez">
                         </div>
                     </div>
                 </section>
